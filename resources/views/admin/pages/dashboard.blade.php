@@ -4,7 +4,6 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-
 @php
     $hora = Carbon\Carbon::now()->format('H');
     $firstdate = Carbon\Carbon::now()->format('Y-m-d');
@@ -31,8 +30,8 @@
 @section('content')
 
 
-    {{-- SCRIPT CALENDARIO --}}
-    <script src="/js/calendar.js"></script> 
+
+
 
     {{-- PRELOADER --}}
     <style>
@@ -53,14 +52,17 @@
             height: 600px;
             overflow: scroll;
         }
-
-
     </style>
+
     <div class="preloader">
         <div class="card-info conteudo-preloader">
             <img width="150px" height="150px" src="/img/brand.png" alt="">
         </div>
-     </div>
+    </div>
+
+    {{-- SCRIPT CALENDARIO --}}
+
+    <script src="/js/calendar.js"></script> 
 
 
 
@@ -367,5 +369,7 @@
              </div>
             </div>
     </div>
+
+
 
 @stop

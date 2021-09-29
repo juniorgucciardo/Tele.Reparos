@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    events: "http://192.168.100.163:8000/admin/OS/getData",
+    events: "http://localhost:8000/admin/OS/getData",
     lang: 'pt-br',
     locale: 'pt-br',
     themeSystem: 'bootstrap',
