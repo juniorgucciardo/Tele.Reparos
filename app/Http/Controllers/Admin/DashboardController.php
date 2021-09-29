@@ -13,10 +13,8 @@ use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
-class PlanosController extends Controller
+class DashBoardController extends Controller
 {
-    // VAI FICAR PLANOS MESMO, MAS ESSE É PO CONTROLADOR DO VIEW
-    //ESSE É O CONTROLADOR DO DASHBOARD, TELA INICIAL
 
     private $repositoryService;
     private $repositoryOS;

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/admin', [App\Http\Controllers\Admin\PlanosController::class, 'index'])->name('planos');
+    Route::get('/admin', [App\Http\Controllers\Admin\DashBoardController::class, 'index'])->name('dashboard');
 
     //SERVICOS
     Route::get('/admin/servicos', [App\Http\Controllers\Admin\ServicesController::class, 'index'])->name('service');
