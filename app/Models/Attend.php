@@ -15,7 +15,9 @@ class Attend extends Model
         return $this->belongsTo('App\Models', 'order_id');
     }
 
-    public function users(){
-        return $this->belongsToMany('App\Models');
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Models\User', 'attend_user', 'attend_id', 'user_id');
     }
 }

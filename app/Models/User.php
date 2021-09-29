@@ -34,6 +34,12 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\service_order', 'service_order_user', 'user_id', 'service_order_id');
     }
 
+    
+    public function attends(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Models\Attend', 'attend_user', 'user_id', 'attend_id');
+    }
+
 
 
     /**
