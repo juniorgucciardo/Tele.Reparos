@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Models;
+
+use Database\Factories\service_orderFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class service_order extends Model
+{
+    use HasFactory;
+
+    protected $table = 'service_orders';
+
+    protected $fillable = [
+        'nome_cliente',
+        'rua_cliente',
+        'numero_cliente',
+        'bairro_cliente',
+        'cidade_cliente',
+        'contato_cliente',
+        'descricao_servico',
+        'id_service',
+        'data_ordem',
+        'hora_ordem',
+        'status_id',
+        'type_id'
+    ];
+
+    public function service(){
+
+        //ordem de serviço pertence a uma categoria de serviço
+        return $this->belongsTo('App\Models\Service', 'id_service', 'id');
+    }
+
+    public function status(){
+        return $this->belongsTo('App\Models\Status', 'status_id', 'id');
+    }
+
+    public function user(){
+
+        return $this->belongsToMany('App\Models\User', 'service_order_user', 'service_order_id', 'user_id');
+    }
+
+    public function type(){
+
+        return $this->belongsTo('App\Models\Type', 'type_id', 'id');
+    }
+    
+
+    protected static function service_orderFactory()
+    {
+        return service_orderFactory::new();
+    }
+}

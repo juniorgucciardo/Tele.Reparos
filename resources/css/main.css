@@ -1,0 +1,298 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.text-green {
+  color: #00ff8b;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+.section-container {
+  margin: 2.5rem auto;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.section-title {
+  color: #01060c;
+  font-size: 2rem;
+  position: relative;
+  width: 50%;
+}
+.section-title:before {
+  content: "";
+  position: absolute;
+  width: 25%;
+  height: 5px;
+  background: linear-gradient(90deg, #00ff8b 0%, #03bd69 100%);
+  bottom: 0;
+  left: 1px;
+}
+
+nav {
+  background: linear-gradient(90deg, #0a223e 0%, #062a46 100%);
+  padding: 1.1em 0;
+  width: 100%;
+  position: relative;
+}
+nav .navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav .navbar-container .brand {
+  display: flex;
+  align-items: center;
+}
+nav .navbar-container .brand .brand-img img {
+  max-width: 50px;
+  max-height: 50px;
+  margin: 0 0.6em;
+}
+nav .navbar-container .brand .brand-title {
+  font-family: "Times New Roman", Times, serif;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+nav .navbar-container .menu {
+  display: flex;
+  align-items: center;
+  font-family: "Roboto Slab", serif;
+  font-size: 1em;
+  font-weight: 300;
+}
+nav .navbar-container .menu a {
+  margin: 0 10px;
+  color: #d7dcff;
+  text-decoration: none;
+}
+nav .navbar-container .menu .menu-destak-btn {
+  font-family: "Source Sans Pro", sans-serif;
+  background: linear-gradient(90deg, #00ff8b 0%, #03bd69 100%);
+  padding: 0.8em 1.2em;
+  border-radius: 25px;
+  font-weight: 600;
+  color: #fff;
+  transition: 0.2s;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+nav .navbar-container .menu .menu-destak-btn:hover {
+  background: linear-gradient(90deg, #00ff8b 0%, #007e45 100%);
+  padding: 0.9em 1.3em;
+  font-size: 1.1rem;
+}
+
+.hero {
+  font-family: "Source Sans Pro", sans-serif;
+  background: linear-gradient(90deg, #095fa0 0%, #094b7f 100%);
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+.hero .hero-content {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hero .hero-content .hero-text {
+  color: #fff;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+.hero .hero-content .hero-text h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 1rem 0;
+}
+.hero .hero-content .hero-text h3 {
+  font-size: 1.4rem;
+  font-family: "Roboto Slab", serif;
+  font-weight: 300;
+}
+.hero .hero-content .hero-text .destak-btn {
+  background: linear-gradient(90deg, #00ff8b 0%, #03bd69 100%);
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 0.8em 1.2em;
+  border-radius: 25px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.hero .hero-content .hero-img img {
+  width: 100%;
+}
+
+.cards-row {
+  width: 100%;
+  height: 100%;
+  margin: 1.2rem 0;
+  display: flex;
+  gap: 1.1rem;
+  padding: 1rem 0.4rem;
+  overflow-x: scroll;
+}
+.cards-row .card {
+  min-width: 180px;
+  height: 220px;
+  position: relative;
+  border-radius: 10px;
+}
+.cards-row .card .card-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #0a223e;
+  border-radius: 10px;
+  opacity: 0.65;
+}
+.cards-row .card .card-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.cards-row .card .card-content .card-title {
+  margin: 0 auto;
+  padding: 1.5rem 0;
+  text-align: center;
+  position: relative;
+  color: #fff;
+}
+.cards-row .card .card-content .card-title details {
+  text-align: left;
+  font-family: "Roboto Slab", serif;
+  font-size: 1rem;
+  font-weight: 300;
+}
+.cards-row .card .card-content .card-title details summary {
+  content: "+";
+  background: linear-gradient(90deg, #00ff8b 0%, #03bd69 100%);
+  position: absolute;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  right: -0.3rem;
+  bottom: -0.3rem;
+  transition: 0.3s;
+}
+.cards-row .jardinagem {
+  background-image: url(../img/jardinagem.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.cards-row .placa-solar {
+  background-image: url(../img/energia-solar.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.cards-row .reparos-hidraulicos {
+  background-image: url(../img/hidraulica.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.cards-row .reparos-eletricos {
+  background-image: url(../img/eletricista.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.cards-row .limpeza-residencial {
+  background-image: url(../img/limpeza-residencial.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.cards-row .limpeza-posobra {
+  background-image: url(../img/pos-obra.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.row {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.row .container-text {
+  width: 38%;
+}
+.row .container-text h2 {
+  color: #020c18;
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  opacity: 0.9;
+}
+.row .container-text p {
+  font-weight: 400;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+.row .container-img {
+  width: 28%;
+}
+
+@media (max-width: 600px) {
+  nav .navbar-container {
+    justify-content: center;
+  }
+  nav .navbar-container .menu {
+    display: none;
+  }
+
+  .container {
+    width: 98%;
+    margin: 0 auto;
+  }
+
+  .hero .hero-content {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero .hero-content .hero-text {
+    width: 80%;
+    margin-bottom: 2em;
+    align-items: center;
+    text-align: center;
+  }
+
+  .row {
+    flex-direction: column;
+    margin: 1.1rem 0;
+  }
+  .row .container-text {
+    width: 100%;
+    padding: 1rem 0;
+  }
+  .row .container-img {
+    width: 80%;
+  }
+  .row:nth-child(3) .container-text {
+    order: 1;
+  }
+  .row:nth-child(3) .container-img {
+    order: 2;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */
