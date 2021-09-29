@@ -33,6 +33,12 @@ class service_order extends Model
         return $this->belongsTo('App\Models\Service', 'id_service', 'id');
     }
 
+    public function attends(){
+
+        //ordem de serviço possui varios atendimentos
+        return $this->hasMany('App\Models\Attend', 'order_id');   
+    }
+
     public function status(){
         return $this->belongsTo('App\Models\Status', 'status_id', 'id');
     }

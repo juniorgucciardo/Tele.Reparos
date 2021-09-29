@@ -15,7 +15,11 @@ class CreateAttendsTable extends Migration
     {
         Schema::create('attends', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id');
             $table->timestamps();
+
+
+            $table->foreign('order_id')->references('id')->on('order');
         });
     }
 
