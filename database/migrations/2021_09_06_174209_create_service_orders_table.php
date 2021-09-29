@@ -13,7 +13,7 @@ class CreateServiceOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('service_orders', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             // Essa parte sera desacoplada do código
             $table->string('nome_cliente');

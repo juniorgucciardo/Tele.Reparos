@@ -20,7 +20,7 @@ class CreateServiceOrderUser extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('service_order_id')->references('id')->on('service_orders');
+            $table->foreign('service_order_id')->references('id')->on('orders');
         });
     }
 

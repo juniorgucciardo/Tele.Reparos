@@ -19,7 +19,7 @@ class CreateAttendsTable extends Migration
             $table->timestamps();
 
 
-            $table->foreign('order_id')->references('id')->on('order');
+            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 

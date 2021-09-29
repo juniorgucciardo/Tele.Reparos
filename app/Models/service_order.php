@@ -10,7 +10,7 @@ class service_order extends Model
 {
     use HasFactory;
 
-    protected $table = 'service_orders';
+    protected $table = 'orders';
 
     protected $fillable = [
         'nome_cliente',
