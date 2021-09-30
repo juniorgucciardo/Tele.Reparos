@@ -13,14 +13,14 @@ class CreateServiceOrderUser extends Migration
      */
     public function up()
     {
-        Schema::create('service_order_user', function (Blueprint $table) {
+        Schema::create('order_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('service_order_id');
+            $table->foreignId('order_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('service_order_id')->references('id')->on('orders');
+            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 

@@ -31,7 +31,7 @@ class User extends Authenticatable
     ];
 
     public function service_order(){
-        return $this->belongsToMany('App\Models\service_order', 'service_order_user', 'user_id', 'service_order_id');
+        return $this->belongsToMany('App\Models\service_order', 'order_user', 'user_id', 'order_id');
     }
 
     

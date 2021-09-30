@@ -48,7 +48,7 @@ class service_order extends Model
 
     public function user(){
 
-        return $this->belongsToMany('App\Models\User', 'service_order_user', 'service_order_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'order_user', 'order_id', 'user_id');
     }
 
     public function type(){
