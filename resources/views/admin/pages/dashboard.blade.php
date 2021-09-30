@@ -190,10 +190,10 @@
                                   <div class="ml-auto flex-column">
                                       
                                       <span>{{$order->status->status_title}}</span>
-                                      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#statusModal{{$order->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
+                                      {{-- <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#statusModal{{$order->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
                                       @include('admin.pages.modal.status-modal')
                                       <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#osDetails{{$order->id}}" data-whatever="@getbootstrap"><i class="fas fa-info-circle"></i></button>
-                                      @include('admin.pages.modal.osDetails')
+                                      @include('admin.pages.modal.osDetails') --}}
 
 
                                   </div>

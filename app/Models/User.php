@@ -35,9 +35,9 @@ class User extends Authenticatable
     }
 
     
-    public function attends(): BelongsToMany
+    public function attends()
     {
-        return $this->belongsToMany('App\Models\Attend', 'attend_user', 'user_id', 'attend_id');
+        return $this->belongsToMany('App\Models\Attend', 'attend_user');
     }
 
 

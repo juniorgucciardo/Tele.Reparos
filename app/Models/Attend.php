@@ -12,12 +12,12 @@ class Attend extends Model
     protected $table = 'attends';
 
     public function orders(){
-        return $this->belongsTo('App\Models', 'order_id');
+        return $this->belongsTo('App\Models\service_order', 'order_id');
     }
 
 
-    public function users(): BelongsToMany
+    public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'attend_user', 'attend_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'attend_user');
     }
 }

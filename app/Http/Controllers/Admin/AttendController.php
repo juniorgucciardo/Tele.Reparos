@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Attend;
+use App\Models\service_order;
 use Illuminate\Http\Request;
 
 class AttendController extends Controller
@@ -14,7 +16,8 @@ class AttendController extends Controller
      */
     public function index()
     {
-        return('its working');
+        $attend = Attend::with('orders.service')->get();
+        dd($attend);
     }
 
     /**

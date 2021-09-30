@@ -40,7 +40,7 @@
               </div>
 
               {{-- select --}}
-              <div class="col-md-6 col-12">
+              {{-- <div class="col-md-6 col-12">
                 <label for="exampleInputEmail1">Status:</label>
                 <select name="status_id" class="form-control">
                     <option selected class="bg-primary" value="{{$status[1]->id}}">{{$status[1]->status_title}}</option>
@@ -53,7 +53,7 @@
              </div>
   
           </div>
-        </div>
+        </div> --}}
         
 
         <div class="modal-footer">
