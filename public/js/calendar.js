@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     eventLimit: true, // for all non-TimeGrid views
   views: {
     dayGridMonth: {
-      eventLimit: 4, // adjust to 6 only for timeGridWeek/timeGridDay
-      dayMaxEventRows: 4
+      eventLimit: 3, // adjust to 6 only for timeGridWeek/timeGridDay
+      dayMaxEventRows: 3
     }
   },
     

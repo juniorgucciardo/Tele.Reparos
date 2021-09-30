@@ -250,7 +250,7 @@ class DatabaseSeeder extends Seeder
                 'data_final' => $d2
             ]);
             
-            $d1 = date('Y-m-d H:i:s', strtotime('+1 days'. $d1));
+            $d1 = date('Y-m-d H:i:s', strtotime('+1 days'.$d1));
             $a->users()->attach(1);
         }
 
@@ -277,7 +277,7 @@ class DatabaseSeeder extends Seeder
         $hj = '2021-09-15';
         $hours = 4;
         $d1 = date('Y-m-d H:i:s', strtotime($hj.'08:00:00'));
-        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+2 hours'));
+        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+6 hours'));
 
         for ($i=0; $i < 15; $i++) { 
             $a = Attend::create([
@@ -286,8 +286,44 @@ class DatabaseSeeder extends Seeder
                 'data_final' => $d2
             ]);
             
-            $d1 = date('Y-m-d H:i:s', strtotime('+3 days'. $d1));
+            $d1 = date('Y-m-d H:i:s', strtotime('+3 days'.$d1));
             $a->users()->attach([1,2]);
+        }
+
+        service_order::create([
+            'id' => 5,
+            'nome_cliente' => 'Paulo Ferraza',
+            'rua_cliente' => 'David Canabarro',
+            'numero_cliente' => '369',
+            'bairro_cliente' => 'Centro',
+            'cidade_cliente' => 'Santo Ângelo',
+            'contato_cliente' => '55 999190832',
+            'descricao_servico' => 'limpeza do escritório, vidros e calçadas',
+            'id_service' => 5,
+            'data_ordem' => '21-09-28',
+            'hora_ordem' => '11:40',
+            'status_id' => 2,
+            'type_id' => 2,
+            'is_recurrent' => true,
+            'recurrence' => 15,
+            'amount' => 6
+        ]);
+
+
+        $hj = '2021-09-18';
+        $hours = 4;
+        $d1 = date('Y-m-d H:i:s', strtotime($hj.'13:30:00'));
+        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+2 hours'));
+
+        for ($i=0; $i < 10; $i++) { 
+            $a = Attend::create([
+                'order_id' => 5,
+                'data_inicial' => $d1,
+                'data_final' => $d2
+            ]);
+            
+            $d1 = date('Y-m-d H:i:s', strtotime('+2 days'.$d1));
+            $a->users()->attach([2]);
         }
 
         

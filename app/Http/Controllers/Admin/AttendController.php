@@ -18,7 +18,7 @@ class AttendController extends Controller
     {
 
 
-        $attends = Attend::where('data_inicial', '2021-09-30 08:00:00')->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+        $attends = Attend::whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-09-30 18:00:00'])->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
                dd($attends);
 
     }
@@ -52,13 +52,13 @@ class AttendController extends Controller
                     }
                     $start_date = date($a->data_inicial);
                     $end_date = date($a->data_final);
+
                     
                     $collection->push([
                     'title' => $a->orders->nome_cliente,
                     'color' => $color,
                     'start' => $start_date,
                     'end' => $end_date
-                
                     ]);
                 }
 

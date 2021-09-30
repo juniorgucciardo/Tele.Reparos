@@ -157,14 +157,14 @@
                 </div>
                 <div class="card-body servicesNow">
                     {{-- laço dos cards --}}
-                  @foreach ($service_demands->where('data_ordem', $firstdate)->where('status_id', '3')->sortBy('hora_ordem') as $order)
+                  @foreach ($attends->whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-09-30 18:00:00']) as $attend)
                     {{-- CARD DAS DEMANDAS DE HOJE --}}
                       <div class="card card-outline card-info shadow rounded">
                           <div class="card-header">
                               <div class="d-flex d-flex-row justify-content-between">
-                                  <span>{{$order->service->service_title}}</span>
+                                  <span>{{$attend->orders->service->service_title}}</span>
                                   <div>
-                                      <span class="mx-3">{{$order->hora_ordem}}</span>
+                                      <span class="mx-3">{{explode(' ', $attend->data_inicial)[1]}}</span>
                                       <span><i class=" fas fa-eye"></i></span>
                                   </div>
                               </div>
@@ -173,11 +173,11 @@
                               <div class="d-flex d-flex-row justify-content-between">
                                   <div class="mr-auto flex-column w-100">
                                       <div>
-                                          Cliente: <span>{{mb_strimwidth($order->nome_cliente, 0, 16, "...")}}</span>
+                                          Cliente: <span>{{mb_strimwidth($attend->orders->nome_cliente, 0, 16, "...")}}</span>
                                       </div>
                                       <div>
                                           <div class="flex-row">  
-                                              @foreach ($order->user as $user)
+                                              @foreach ($attend->users as $user)
                                                 @php
                                                     $name = explode(' ', $user->name);
                                                 @endphp
@@ -189,11 +189,11 @@
                                   </div>
                                   <div class="ml-auto flex-column">
                                       
-                                      <span>{{$order->status->status_title}}</span>
-                                      {{-- <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#statusModal{{$order->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
+                                      <span>{{$attend->orders->status->status_title}}</span>
+                                      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#statusModal{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
                                       @include('admin.pages.modal.status-modal')
-                                      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#osDetails{{$order->id}}" data-whatever="@getbootstrap"><i class="fas fa-info-circle"></i></button>
-                                      @include('admin.pages.modal.osDetails') --}}
+                                      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#osDetails{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-info-circle"></i></button>
+                                      @include('admin.pages.modal.osDetails')
 
 
                                   </div>

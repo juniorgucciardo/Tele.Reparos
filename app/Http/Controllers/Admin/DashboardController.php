@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Models\Status;
 use App\Models\User;
+use App\Models\Attend;
 use Illuminate\Http\Request;
 use App\Models\service_order;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,12 +21,14 @@ class DashBoardController extends Controller
     private $repositoryOS;
     private $repositoryStatus;
     private $repositoryUser;
+    private $repositoryAttend;
 
     public function __construct(){
         $this->repositoryService = new Service();
         $this->repositoryOS = new service_order();
         $this->repositoryStatus = new Status();
         $this->repositoryUser = new User();
+        $this->repositoryAttend = new Attend();
     }
 
     public function index(){
@@ -35,7 +38,7 @@ class DashBoardController extends Controller
 
         if(auth()->user()->hasPermissionTo('view_service_demands')){ // Verifica a permissão do usuário logado
             $service_demands = $this->repositoryOS->with('user')->with('status')->with('service')->get(); 
-
+            $orders =  Attend::with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
             // relacionamento avançado (NIVEL)
 //            dd($this->repositoryOS->whereHas('user', function($query){
 //                $query->where('user_id', '=', 1);
@@ -52,7 +55,8 @@ class DashBoardController extends Controller
                 'service_demands' => $service_demands,
                 'username' => $username[0],
                 'users' => $users,
-                'status' => $status
+                'status' => $status,
+                'attends' => $orders,
             ]);
         };
 

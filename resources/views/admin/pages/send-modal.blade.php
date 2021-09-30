@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModal{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal{{$attend->orders->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
 
@@ -12,18 +12,18 @@
         <div class="card card-info card-outline">
           <div class="modal-body">
             <span>Antes de enviar para o prestador você precisa definir algumas informações: </span><br>
-            <form action="{{ route('accept.OS', $order->id)}}" method="POST">
+            <form action="{{ route('accept.OS', $attend->orders->id)}}" method="POST">
               @method('PUT')
               @csrf
   
              <div class="row">
               <div class="form-group col-12 col-md-6">
                 <label for="recipient-name" class="col-form-label">Data:</label>
-                <input type="date" name="data_ordem" class="form-control" id="recipient-name" value="{{$order->data_ordem}}">
+                <input type="date" name="data_ordem" class="form-control" id="recipient-name" value="{{$attend->orders->data_ordem}}">
               </div>
               <div class="form-group col-12 col-md-6">
                 <label for="message-text" class="col-form-label">Hora:</label>
-                <input type="time" name="hora_ordem" class="form-control" id="recipient-name" value="{{$order->hora_ordem}}">
+                <input type="time" name="hora_ordem" class="form-control" id="recipient-name" value="{{$attend->orders->hora_ordem}}">
               </div>
              </div>
   
