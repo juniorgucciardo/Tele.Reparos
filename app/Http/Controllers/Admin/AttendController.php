@@ -16,7 +16,7 @@ class AttendController extends Controller
      */
     public function index()
     {
-        $attend = Attend::with('orders.service')->get();
+        $attend = Attend::with('orders.service')->with('orders.status')->get();
         dd($attend);
     }
 

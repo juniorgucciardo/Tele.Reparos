@@ -24,7 +24,10 @@ class service_order extends Model
         'data_ordem',
         'hora_ordem',
         'status_id',
-        'type_id'
+        'type_id',
+        'is_recurrent',
+        'recurrence',
+        'amount'
     ];
 
     public function service(){
