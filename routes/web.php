@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/cadastros/export', [App\Http\Controllers\Admin\UserController::class, 'export'])->name('user.export');
 
     Route::get('/admin/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
+    Route::get('/admin/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');
 
 
 

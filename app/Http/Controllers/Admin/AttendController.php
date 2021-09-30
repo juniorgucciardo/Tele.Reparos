@@ -16,9 +16,56 @@ class AttendController extends Controller
      */
     public function index()
     {
-        $attend = Attend::with('orders.service')->with('orders.status')->get();
-        dd($attend);
+
+
+        $attends = Attend::where('data_inicial', '2021-09-30 08:00:00')->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+               dd($attends);
+
     }
+
+
+    public function calendar()
+    {
+
+
+        $attends = Attend::with('users')->with('orders.service')->with('orders.status')->get();
+                $collection = collect();
+        
+
+                foreach($attends as $a){
+                    switch ($a->orders->service->id) {
+                        case 1:
+                            $color = '#0062cc';
+                            break;
+                        case 2:
+                            $color = '#dc3545';
+                            break;
+                        case 3:
+                            $color = '#28a745';
+                            break;
+                        case 4:
+                            $color = '#17a2b8';
+                            break;
+                        default:
+                            $color = '#ffc107';
+                            break;
+                    }
+                    $start_date = date($a->data_inicial);
+                    $end_date = date($a->data_final);
+                    
+                    $collection->push([
+                    'title' => $a->orders->nome_cliente,
+                    'color' => $color,
+                    'start' => $start_date,
+                    'end' => $end_date
+                
+                    ]);
+                }
+
+                return response()->json($collection);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

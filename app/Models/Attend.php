@@ -11,6 +11,13 @@ class Attend extends Model
 
     protected $table = 'attends';
 
+    protected $fillable = [
+        'id',
+        'data_inicial',
+        'data_final',
+        'order_id'
+    ];
+
     public function orders(){
         return $this->belongsTo('App\Models\service_order', 'order_id');
     }
