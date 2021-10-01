@@ -139,9 +139,13 @@ class DatabaseSeeder extends Seeder
 
         //experimental
 
+        $this->createDemands();
 
 
-        service_order::create([
+    }
+
+    public function createDemands(){
+        $demand = service_order::create([
             'id' => 1,
             'nome_cliente' => 'José Gilberto Junior',
             'rua_cliente' => 'David Canabarro',
@@ -151,8 +155,8 @@ class DatabaseSeeder extends Seeder
             'contato_cliente' => '55 999190832',
             'descricao_servico' => 'roçada de terreno grande frente e tras de casa',
             'id_service' => 1,
-            'data_ordem' => '21-09-30',
-            'hora_ordem' => '11:40',
+            'data_ordem' => '2021-09-30',
+            'hora_ordem' => '10:00',
             'status_id' => 2,
             'type_id' => 1,
             'is_recurrent' => false,
@@ -161,180 +165,20 @@ class DatabaseSeeder extends Seeder
         ]);
         
         
-        $hj = '2021-09-28';
-        $hours = 2;
-        $d1 = date('Y-m-d H:i:s', strtotime($hj.'13:30:00'));
-        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+2 hours'));
-
-        for ($i=0; $i < 4; $i++) { 
-            $a = Attend::create([
-                'order_id' => 1,
-                'data_inicial' => $d1,
-                'data_final' => $d2
-            ]);
-            
-            $d1 = date('Y-m-d H:i:s', strtotime('+3 days'. $d1));
-            $a->users()->attach(1);
-        }
-
-
-        service_order::create([
-            'id' => 2,
-            'nome_cliente' => 'jane Netz',
-            'rua_cliente' => 'David Canabarro',
-            'numero_cliente' => '369',
-            'bairro_cliente' => 'Centro',
-            'cidade_cliente' => 'Santo Ângelo',
-            'contato_cliente' => '55 999190832',
-            'descricao_servico' => 'limpeza residencial',
-            'id_service' => 3,
-            'data_ordem' => '21-10-01',
-            'hora_ordem' => '11:40',
-            'status_id' => 2,
-            'type_id' => 1,
-            'is_recurrent' => true,
-            'recurrence' => 15,
-            'amount' => 6
-        ]);
-
-        $hj = '2021-09-28';
-        $hours = 4;
-        $d1 = date('Y-m-d H:i:s', strtotime($hj.'08:00:00'));
-        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+8 hours'));
-
-        for ($i=0; $i < 8; $i++) { 
-            $a = Attend::create([
-                'order_id' => 2,
-                'data_inicial' => $d1,
-                'data_final' => $d2
-            ]);
-            
-            $d1 = date('Y-m-d H:i:s', strtotime('+2 days'. $d1));
-            $a->users()->attach(1);
-        }
-        
-        
-
-
-
-        
-        service_order::create([
-            'id' => 3,
-            'nome_cliente' => 'Gilberto Ferreira da Silva',
-            'rua_cliente' => 'David Canabarro',
-            'numero_cliente' => '369',
-            'bairro_cliente' => 'Centro',
-            'cidade_cliente' => 'Santo Ângelo',
-            'contato_cliente' => '55 999190832',
-            'descricao_servico' => 'limpeza do escritório, vidros e calçadas',
-            'id_service' => 4,
-            'data_ordem' => '21-09-28',
-            'hora_ordem' => '11:40',
-            'status_id' => 2,
-            'type_id' => 1,
-            'is_recurrent' => true,
-            'recurrence' => 15,
-            'amount' => 6
-        ]);
-
-
-        $hj = '2021-09-28';
-        $hours = 4;
-        $d1 = date('Y-m-d H:i:s', strtotime($hj.'08:00:00'));
-        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+4 hours'));
-
-        for ($i=0; $i < 12; $i++) { 
-            $a = Attend::create([
-                'order_id' => 3,
-                'data_inicial' => $d1,
-                'data_final' => $d2
-            ]);
-            
-            $d1 = date('Y-m-d H:i:s', strtotime('+1 days'.$d1));
-            $a->users()->attach(1);
-        }
-
-        service_order::create([
-            'id' => 4,
-            'nome_cliente' => 'Paulo Ferraza',
-            'rua_cliente' => 'David Canabarro',
-            'numero_cliente' => '369',
-            'bairro_cliente' => 'Centro',
-            'cidade_cliente' => 'Santo Ângelo',
-            'contato_cliente' => '55 999190832',
-            'descricao_servico' => 'limpeza do escritório, vidros e calçadas',
-            'id_service' => 2,
-            'data_ordem' => '21-09-28',
-            'hora_ordem' => '11:40',
-            'status_id' => 2,
-            'type_id' => 2,
-            'is_recurrent' => true,
-            'recurrence' => 15,
-            'amount' => 6
-        ]);
-
-
-        $hj = '2021-09-15';
-        $hours = 4;
-        $d1 = date('Y-m-d H:i:s', strtotime($hj.'08:00:00'));
-        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+6 hours'));
-
-        for ($i=0; $i < 15; $i++) { 
-            $a = Attend::create([
-                'order_id' => 4,
-                'data_inicial' => $d1,
-                'data_final' => $d2
-            ]);
-            
-            $d1 = date('Y-m-d H:i:s', strtotime('+3 days'.$d1));
-            $a->users()->attach([1,2]);
-        }
-
-        service_order::create([
-            'id' => 5,
-            'nome_cliente' => 'Paulo Ferraza',
-            'rua_cliente' => 'David Canabarro',
-            'numero_cliente' => '369',
-            'bairro_cliente' => 'Centro',
-            'cidade_cliente' => 'Santo Ângelo',
-            'contato_cliente' => '55 999190832',
-            'descricao_servico' => 'limpeza do escritório, vidros e calçadas',
-            'id_service' => 5,
-            'data_ordem' => '21-09-28',
-            'hora_ordem' => '11:40',
-            'status_id' => 2,
-            'type_id' => 2,
-            'is_recurrent' => true,
-            'recurrence' => 15,
-            'amount' => 6
-        ]);
-
-
-        $hj = '2021-09-18';
-        $hours = 4;
-        $d1 = date('Y-m-d H:i:s', strtotime($hj.'13:30:00'));
-        $d2 = date('Y-m-d H:i:s', strtotime($d1.'+2 hours'));
+        $hj = $demand->data_ordem;
+        $inicial_hour = $demand->hora_ordem;
+        $final_hour = date('H:i:s', strtotime($inicial_hour.'+4 hours'));
 
         for ($i=0; $i < 10; $i++) { 
             $a = Attend::create([
-                'order_id' => 5,
-                'data_inicial' => $d1,
-                'data_final' => $d2
+                'order_id' => 1,
+                'data_inicial' => date('Y-m-d H:i:s', strtotime($hj.$inicial_hour)),
+                'data_final' => date('Y-m-d H:i:s', strtotime($hj.$final_hour))
             ]);
             
-            $d1 = date('Y-m-d H:i:s', strtotime('+2 days'.$d1));
-            $a->users()->attach([2]);
+            $hj = date('Y-m-d', strtotime('+1 days'. $hj));
+            $a->users()->attach([1,2]);
         }
-
-        
-        
-        
-        
-
-        
-
-        
-
-
     }
+
 }

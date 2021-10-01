@@ -19,8 +19,8 @@ class CreateAttendUser extends Migration
             $table->foreignId('attend_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('attend_id')->references('id')->on('attends');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('attend_id')->references('id')->on('attends')->onDelete('cascade');
         });
     }
 

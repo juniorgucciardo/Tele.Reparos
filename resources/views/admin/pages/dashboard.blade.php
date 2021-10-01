@@ -157,7 +157,7 @@
                 </div>
                 <div class="card-body servicesNow">
                     {{-- laço dos cards --}}
-                  @foreach ($attends->whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-09-30 18:00:00']) as $attend)
+                  @foreach ($attends->whereBetween('data_inicial', ['2021-10-01 08:00:00', '2021-10-01 18:00:00']) as $attend)
                     {{-- CARD DAS DEMANDAS DE HOJE --}}
                       <div class="card card-outline card-info shadow rounded">
                           <div class="card-header">
@@ -245,11 +245,8 @@
                       <div class="card card-outline card-success shadow p-3 mb-5 bg-white rounded">
                           <div class="card-header">
                               <div class="row">
-                                  <span class="d-flex flex justify-content-between">
-                                      {{$order->service->service_title}} - 
-                                  </span>
-                                  <span>
-                                    {{$order->type->type_title}}
+                                  <span class="mx-auto font">
+                                      {{$order->service->service_title}} 
                                   </span>
                                   
                               </div>

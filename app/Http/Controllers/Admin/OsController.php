@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\service_order;
 use App\Models\Service;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Attend;
 use App\Models\Type;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -114,8 +116,31 @@ class OsController extends Controller
                 'data_ordem' => $request->data_ordem,
                 'hora_ordem' => $request->hora_ordem,
                 'type_id' => $type,
-                'status_id' => $status
+                'status_id' => $status,
+                'is_recurrent' => true,
+                'recurrence' => $request->recurrence,
+                'amount' => $request->amount
             ]);
+
+            $data = $request->data_ordem;
+            $hora = $request->hora_ordem;
+
+            $add_days = '+'.$request->recurrence.' days';
+            $hora_start = date('Y-m-d H:i:s', strtotime($data.$hora));
+            $hora_end = date('Y-m-d H:i:s', strtotime($hora_start. '+4 hours'));
+            
+            for ($i=0; $i < $request->amount; $i++){
+                $a = Attend::create([
+                    'order_id' => $service_order->id,
+                    'data_inicial' => $hora_start,
+                    'data_final' => $hora_end
+                ]);
+                
+                $hora_start = date('Y-m-d H:i:s', strtotime($hora_start. $add_days));
+                $hora_end = date('Y-m-d H:i:s', strtotime($hora_start. '+4 hours'));
+
+                $a->users()->attach([1,2]);
+            }
 
             $service_order->user()->sync($request->user_id);
 

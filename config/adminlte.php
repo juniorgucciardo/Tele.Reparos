@@ -147,12 +147,12 @@ return [
     */
 
     'sidebar_mini' => 'md',
-    'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => true,
-    'sidebar_collapse_remember' => true,
+    'sidebar_collapse' => true,
+    'sidebar_collapse_auto_size' => false,
+    'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => false,
     'sidebar_scrollbar_theme' => 'os-theme-dark',
-    'sidebar_scrollbar_auto_hide' => 'l',
+    'sidebar_scrollbar_auto_hide' => 's',
     'sidebar_nav_accordion' => false,
     'sidebar_nav_animation_speed' => 50,
 

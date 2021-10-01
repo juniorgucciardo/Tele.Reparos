@@ -136,7 +136,7 @@ function showCheckboxes() {
                     </div>
                   </div>
                   <div class="row my-3">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                       <label for="exampleInputEmail1">Status:</label>
                       <select name="status" class="form-control">
                         <option selected disable value="">Escolha um status</option>
@@ -153,6 +153,23 @@ function showCheckboxes() {
                             <option value="{{$type->id}}">{{$type->type_title}}</option>
                         @endforeach
                       </select>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-check">
+                        <input name="is_recurrent" type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">É recorrente?</label>
+                      </div>
+                    </div>
+                    <div class="row my-3">
+                      <div class="col-md-6 col-12">
+                        <label for="exampleInputEmail1">Recorrencia:</label>
+                      <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                      
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <label for="exampleInputEmail1">Quantidade:</label>
+                      <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                      </div>
                     </div>
                   </div>
                 </div>
