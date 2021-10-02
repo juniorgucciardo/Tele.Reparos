@@ -139,10 +139,9 @@ class OsController extends Controller
                 $hora_start = date('Y-m-d H:i:s', strtotime($hora_start. $add_days));
                 $hora_end = date('Y-m-d H:i:s', strtotime($hora_start. '+4 hours'));
 
-                $a->users()->attach([1,2]);
+                $a->users()->attach($request->user_id);
             }
 
-            $service_order->user()->sync($request->user_id);
 
             return redirect('admin/OS');
         } else {

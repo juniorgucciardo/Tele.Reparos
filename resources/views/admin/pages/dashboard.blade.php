@@ -52,6 +52,15 @@
             height: 600px;
             overflow: scroll;
         }
+
+        .servicosAgendados{
+            display: flex;
+            flex-wrap: unset;
+            max-height: 375px;
+            overflow-x: scroll;
+        }
+
+
     </style>
 
     <div class="preloader">
@@ -63,6 +72,7 @@
     {{-- SCRIPT CALENDARIO --}}
 
     <script src="/js/calendar.js"></script> 
+    @include('admin.pages.modal.eventDetails')
 
 
 
@@ -157,7 +167,13 @@
                 </div>
                 <div class="card-body servicesNow">
                     {{-- laço dos cards --}}
-                  @foreach ($attends->whereBetween('data_inicial', ['2021-10-01 08:00:00', '2021-10-01 18:00:00']) as $attend)
+                    @php
+                        $d1 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '08:00:00'));
+                        $d2 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '18:00:00'));
+                    @endphp
+
+                  @foreach ($attends->whereBetween('data_inicial', [$d1, $d2]) as $attend)
+                  
                     {{-- CARD DAS DEMANDAS DE HOJE --}}
                       <div class="card card-outline card-info shadow rounded">
                           <div class="card-header">
@@ -214,9 +230,10 @@
             
             <div class="card-info shadow-xs bg-light">
                 <div class="card-header">
-                    Calendário
+                    Calendário 
 
-                    <button type="button" class="mx-1 btn btn-outline-light shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><i class="fas fa-plus-square"></i> Cadastrar</button>
+                    <button type="button" class="mx-1 btn btn-outline-light shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><i class="fas fa-plus-square"></i> contrato</button>
+                    <button type="button" class="mx-1 btn btn-outline-light shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><i class="fas fa-plus-square"></i> Atendimento</button>
 
                 </div>
                 <div class="card-body">
@@ -232,21 +249,21 @@
       <div class="card card-info">
         <div class="card-header">
             @php
-            $d1 = Carbon\Carbon::now()->format('Y-m-d');
-            $d2 = date('y-m-d', strtotime($firstdate. ' + 7 days')); //gerar data somando 7 dias da data atual
+            $d1 = Carbon\Carbon::now()->format('Y-m-d H:i:s');
+            $d2 = date('Y-m-d H:i:s', strtotime($firstdate. ' + 8 days')); //gerar data somando 7 dias da data atual
             @endphp
             <span style="text-color: #fff; font-weight:600">Agendados para esta semana, de {{date('d/m', strtotime($d1))}}, até {{date('d/m', strtotime($d2))}}</span>
         </div>
         <div class="card-body">
-         <div class="row">
-              @foreach ($service_demands->sortBy('data_ordem')->where('status_id', 2)->whereBetween('data_ordem', [$d1, $d2]) as $order)
+         <div class="row servicosAgendados">
+              @foreach ($attends->sortBy('data_inicial')->whereBetween('data_inicial', [$d1, $d2]) as $attend)
                   <div class="col-md-3 col-sm-6 col-6">
                       {{-- card start --}}
                       <div class="card card-outline card-success shadow p-3 mb-5 bg-white rounded">
                           <div class="card-header">
                               <div class="row">
                                   <span class="mx-auto font">
-                                      {{$order->service->service_title}} 
+                                      {{$attend->orders->service->service_title}} 
                                   </span>
                                   
                               </div>
@@ -255,22 +272,22 @@
                               
                                       <div class="row">
                                         <span>
-                                            <i class="far fa-user-circle"></i> {{$order->nome_cliente}}
+                                            <i class="far fa-user-circle"></i> {{$attend->orders->nome_cliente}}
                                         </span>
                                       </div>
                                       <div class="row">
                                           @php
-                                          $data = date('d/m', strtotime($order->data_ordem));
-                                          $hora = date('h:m:s', strtotime($order->hora_ordem));
+                                          $data = date('d/m', strtotime($attend->data_inicial));
+                                          $hora = date('h:m:s', strtotime($attend->orders->hora_ordem));
                                           @endphp
                                           <span>Data: {{$data}}</span>
                                           <span>  -  Hora: {{$hora}}</span>
 
                                       </div>
                                       <div class="row">
-                                        @foreach ($order->user as $user)
+                                        @foreach ($attend->orders->user as $user)
                                         @php
-                                            $name = explode(' ', $user->name);
+                                            $name = explode(' ', $attend->users->name);
                                         @endphp
                                         <span>{{$name[0]}}
                                             @php
@@ -298,7 +315,7 @@
         </div>
     </div>
     <div class="card-info">
-        <div class="card card-info">
+        <div class="card card-info servicosAgendados">
             <div class="card-header">
                 <span style="text-color: #fff; font-weight:600">Serviços solicitados</span>
             </div>
@@ -356,7 +373,7 @@
                                   </div>
                                   <div class="row my-2">
                                     <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$order->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar ao prestador</button>
-                                    @include('admin.pages.send-modal')
+                                    @include('admin.pages.modal.send-modal')
 
                                   </div>
                               </div>

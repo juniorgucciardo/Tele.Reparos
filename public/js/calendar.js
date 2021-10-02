@@ -3,12 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    events: "http://localhost:8000/admin/getCalendario",
+    events: "http://192.168.100.163:8000/admin/getCalendario",
     lang: 'pt-br',
     locale: 'pt-br',
     themeSystem: 'bootstrap',
     selectable: true,
     dayMaxEventRows: true,
+    views:{
+      resourceTimelineWeek: {
+        slotDuration: { days: 1 }
+      }
+  },
 
     headerToolbar: {
         left: 'prev,next',
@@ -25,6 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
       startTime: '08:00', // 10am
       endTime: '12:00' // 4pm
     },
+
+    eventClick:  function(event, jsEvent, view) {
+      $('#details').modal('show');
+
+    $('#details').find('.modal-title').text(event.event.title)
+    $('#details').find('.modal-data').text(event.event.start)
+  },
+  
 
     eventLimit: true, // for all non-TimeGrid views
   views: {

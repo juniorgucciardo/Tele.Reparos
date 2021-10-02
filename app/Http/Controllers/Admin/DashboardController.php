@@ -35,10 +35,14 @@ class DashBoardController extends Controller
         $user = auth()->user();
         $username = $user->name; //username que vai ser usado durante a exibição do dashboard
         $username = explode(' ', $username);
+        $d1 = Carbon::now()->format('Y-m-d H:i:s');
+        $d1 = date('Y-m-d H:i:s', strtotime($d1. ' - 5 days'));
+        $d2 = date('Y-m-d H:i:s', strtotime($d1. ' + 12 days'));
 
         if(auth()->user()->hasPermissionTo('view_service_demands')){ // Verifica a permissão do usuário logado
+
             $service_demands = $this->repositoryOS->with('user')->with('status')->with('service')->get(); 
-            $orders =  Attend::with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+            $orders =  Attend::whereBetween('data_inicial', [$d1, $d2])->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
             // relacionamento avançado (NIVEL)
 //            dd($this->repositoryOS->whereHas('user', function($query){
 //                $query->where('user_id', '=', 1);
@@ -46,10 +50,6 @@ class DashBoardController extends Controller
 
             $users = $this->repositoryUser->all();
             $status = $this->repositoryStatus->all();
-
-
-
-
 
             return view('admin.pages.dashboard', [           // Retorna uma página especial da admiinstração do sistema, com todas as OS e outras informações
                 'service_demands' => $service_demands,
