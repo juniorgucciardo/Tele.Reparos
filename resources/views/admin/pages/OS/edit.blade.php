@@ -81,7 +81,7 @@ function showCheckboxes() {
                   {{-- Informações do cliente --}}
                   <div class="card">
                     <div class="card-header">
-                      <i class="fas fa-user-friends mx-3"></i>
+                      <i class="fas fa-user-friends mx-1"></i>
                       Informações o cliente
                     </div>
                     <div class="card-body">
@@ -102,7 +102,7 @@ function showCheckboxes() {
                   {{-- Endereço da demanda --}}
                   <div class="card">
                     <div class="card-header">
-                      <i class="fas fa-map-marked-alt mx-2"></i>
+                      <i class="fas fa-map-marked-alt mx-1"></i>
                       Endereço da demanda
                     </div>
                     <div class="card-body">
@@ -134,7 +134,7 @@ function showCheckboxes() {
                   {{-- Informações sobre o serviço --}}
                   <div class="card">
                     <div class="card-header">
-                      <i class="fas fa-tools mx-3"></i>
+                      <i class="fas fa-tools mx-1"></i>
                       Serviço
                     </div>
                     <div class="card-body">
@@ -160,7 +160,7 @@ function showCheckboxes() {
                       <div class="row">
                         <div class="col-md-7 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
-                      <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" value="{{ $service_order->descricao_servico }}"></textarea>
+                      <textarea name="descricao_servico" class="form-control" id="exempleImputServiceTitle" value="{{ $service_order->descricao_servico }}"></textarea>
                         </div>
                       </div>
                     </div>
@@ -172,7 +172,7 @@ function showCheckboxes() {
 
                   <div class="card">
                     <div class="card-header">
-                      <i class="fas fa-info-circle mx-3"></i>
+                      <i class="fas fa-info-circle mx-1"></i>
                       Informações adicionais
                     </div>
                     <div class="card-body">
@@ -242,7 +242,7 @@ function showCheckboxes() {
 
                   <div class="card">
                     <div class="card-header">
-                      <i class="fas fa-undo mx-3"></i>
+                      <i class="fas fa-undo mx-1"></i>
                       Recorrência
                     </div>
                     <div class="card-body">

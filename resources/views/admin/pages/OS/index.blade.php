@@ -27,13 +27,13 @@
         <div class="card-header">
             Ordens de Serviço
             @can('view_service_demands')
-            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn btn-info btn-outline"  ><i class="fas fa-info-circle"></i>Relatório geral</button></a>
-            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn btn-info btn-outline"  ><i class="fas fa-info-circle"></i>Novo registro</button></a>
+            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn btn-info btn-outline"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
+            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn btn-info btn-outline"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
             @endcan
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="table" class="table table-condensed">
+                <table id="table" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Atividade</th>
