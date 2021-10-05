@@ -51,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
 
     //Atendimentos
     Route::get('/admin/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
+    Route::get('/admin/atendimentos/novo', [App\Http\Controllers\Admin\AttendController::class, 'create'])->name('attend.create');
+    Route::post('/admin/atendimentos/novo', [App\Http\Controllers\Admin\AttendController::class, 'store'])->name('attend.store');
     Route::get('/admin/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');
 
 

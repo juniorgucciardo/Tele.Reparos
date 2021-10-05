@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attend;
+use App\Models\User;
 use App\Models\service_order;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,18 @@ class AttendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $repositoryOrder;
+    private $repositoryUser;
+
+    public function __construct()
+    {
+        $this->repositoryOrder = new service_order(); 
+        $this->repositoryUser = new User();
+    }
+
     public function index()
     {
-
 
         $attends = Attend::whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-10-15 18:00:00'])->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
         return view('admin.pages.attends.index', [
@@ -78,7 +88,12 @@ class AttendController extends Controller
      */
     public function create()
     {
-        //
+        $order = $this->repositoryOrder::with('service')->get();
+        $users = $this->repositoryUser::all();
+        return view('admin.pages.attends.create', [
+            'users' => $users,
+            'contracts' => $order
+        ]);
     }
 
     /**
@@ -89,7 +104,21 @@ class AttendController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->data;
+        $hora = $request->hora;
+
+        $add_hours = '+'.$request->quantidade.' hours';
+        $start = date('Y-m-d H:i:s', strtotime($data.$hora));
+        $end = date('Y-m-d H:i:s', strtotime($start. $add_hours));
+
+        
+        $attend = Attend::create([
+            'order_id' => $request->order_id,
+            'data_inicial' => $start,
+            'data_final' => $end
+        ]);
+
+        $attend->users()->attach($request->user_id);
     }
 
     /**

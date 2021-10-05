@@ -219,7 +219,7 @@ function showCheckboxes() {
                       <div class="row">
                         <div class="col-md-4 col-12">
                           <div class="form-check">
-                            <input name="is_recurrent" type="checkbox" value="1" {{ old('is_recurrent') ? 'checked="checked"' : '' }} class="form-check-input" id="exampleCheck1">
+                            <input name="is_recurrent" type="checkbox" value="1" {{ old('is_featured') ? 'checked="checked"' : '' }}class="form-check-input" id="exampleCheck1">
                             <label class="form-check-label" for="exampleCheck1">É recorrente?</label>
                           </div>
                         </div>
