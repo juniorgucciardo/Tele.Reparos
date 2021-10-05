@@ -118,7 +118,7 @@ class AttendController extends Controller
             'data_final' => $end
         ]);
 
-        $attend->users()->attach($request->user_id);
+        $attend->users()->sync($request->user_id);
     }
 
     /**
@@ -138,9 +138,16 @@ class AttendController extends Controller
      * @param  \App\Models\Attend  $attend
      * @return \Illuminate\Http\Response
      */
-    public function edit(Attend $attend)
+    public function edit(Attend $attend, $id)
     {
-        //
+        $attend = Attend::with('orders.service')->findOrFail($id);
+        $order = $this->repositoryOrder::with('service')->get();
+        $users = $this->repositoryUser::all();
+        return view('admin.pages.attends.edit', [
+            'attend' => $attend,
+            'users' => $users,
+            'contracts' => $order
+        ]);
     }
 
     /**
@@ -150,9 +157,24 @@ class AttendController extends Controller
      * @param  \App\Models\Attend  $attend
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attend $attend)
+    public function update(Request $request, Attend $attend, $id)
     {
-        //
+        $attend = Attend::findOrFail($id);
+
+        $data = $request->data;
+        $hora = $request->hora;
+
+        $add_hours = '+'.$request->quantidade.' hours';
+        $start = date('Y-m-d H:i:s', strtotime($data.$hora));
+        $end = date('Y-m-d H:i:s', strtotime($start. $add_hours));
+
+        $attend->update([
+            'order_id' => $request->order_id,
+            'data_inicial' => $start,
+            'data_final' => $end
+        ]);
+
+        $attend->users()->sync($request->user_id);
     }
 
     /**

@@ -54,7 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/atendimentos/novo', [App\Http\Controllers\Admin\AttendController::class, 'create'])->name('attend.create');
     Route::post('/admin/atendimentos/novo', [App\Http\Controllers\Admin\AttendController::class, 'store'])->name('attend.store');
     Route::get('/admin/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');
-
+    Route::get('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'edit'])->name('attend.edit');
+    Route::put('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
 
 
     //STATUS

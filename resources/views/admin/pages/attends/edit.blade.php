@@ -5,7 +5,7 @@
 @section('content_header')
 <h4>
   <i class="fas fa-truck-moving mx-1"></i>
-  novo Atendimento
+  editar Atendimento {{$attend->id}}
 </h4>
 @stop
 
@@ -66,12 +66,13 @@ function showCheckboxes() {
 
     <div class="card card-primary">
             <div class="card-header">
-              <h5 class="card-title">Cadastre um novo registro</h5>
+              <h5 class="card-title">Edite um registro</h5>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="{{ route('attend.create') }}" method="POST">
+            <form action="{{ route('attend.update', $attend->id) }}" method="POST">
               @csrf
+              @method('PUT')
               <div class="card-body">
                 <div class="form-group">
                   
@@ -86,9 +87,14 @@ function showCheckboxes() {
                         <div class="col-md-6 col-12">
                           <label for="exampleInputEmail1">Selecione o contrato</label>
                           <select name="order_id" class="form-control">
-                            @foreach ($contracts as $contract)
+                              <optgroup label="cadastrado">
+                                    <option value="{{$attend->order_id}}">{{$attend->orders->nome_cliente}} - {{$attend->orders->service->service_title}}</option>
+                              </optgroup>
+                              <optgroup label="todos">
+                                @foreach ($contracts as $contract)
                                 <option value="{{$contract->id}}">{{$contract->nome_cliente}} - {{$contract->service->service_title}}</option>
-                            @endforeach
+                                 @endforeach
+                              </optgroup>
                           </select>
                         </div>
                       </div>
@@ -104,17 +110,22 @@ function showCheckboxes() {
                     </div>
                     <div class="card-body">
                       <div class="row">
+                          @php
+                            $start = new DateTime($attend->data_inicial);
+                            $end = $start->diff(new DateTime($attend->data_final));
+                            $hours = $end->h;
+                          @endphp       
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Data:</label>
-                          <input type="date" name="data" class="form-control" id="exempleImputServiceTitle" placeholder="data">
+                          <input type="date" name="data" class="form-control" id="exempleImputServiceTitle" value="{{explode(' ', $attend->data_inicial)[0]}}">
                         </div>
                         <div class="col-md-4 col-12">
                             <label for="exampleInputEmail1">Hora:</label>
-                            <input type="time" name="hora" class="form-control" id="exempleImputServiceTitle" placeholder="hora">
+                            <input type="time" name="hora" class="form-control" id="exempleImputServiceTitle" value="{{explode(' ', $attend->data_inicial)[1]}}">
                         </div>
                         <div class="col-md-4 col-12">
                             <label for="exampleInputEmail1">Duração em horas:</label>
-                            <input type="number" value="4" name="quantidade" class="form-control" id="exempleImputServiceTitle" placeholder="duração em horas">
+                            <input type="number" value="4" name="quantidade" class="form-control" id="exempleImputServiceTitle" value="{{$hours}}">
                           </div>
                       </div>
                     </div>
@@ -133,15 +144,20 @@ function showCheckboxes() {
                     <div class="card-body">
                       <div class="row">
         
-                        <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker col-12 border" data-live-search="true" title="
-                            selecione
-                            ">
-    
-                              @foreach ($users as $user)
-                                  <option value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
-                              @endforeach
-                              <option value="">remover</option> 
-                            </select>
+                        <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
+                        selecione
+                        ">
+
+                          <optgroup label="Cadastrados">
+                            @foreach ($attend->users as $user)
+                            <option selected value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
+                            @endforeach
+                          </optgroup>
+
+                          @foreach ($users as $user)
+                              <option value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
+                          @endforeach
+                        </select>
                         
                       </div>
                     </div>
