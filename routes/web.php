@@ -36,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/OS/getData', [App\Http\Controllers\Admin\OsController::class, 'getData'])->name('OS.getData');
     Route::get('/admin/OS/generalReport', [App\Http\Controllers\Admin\OsController::class, 'export'])->name('OS.export');
     Route::put('/admin/changeStatus/{id}', [App\Http\Controllers\Admin\OsController::class, 'changeStatus'])->name('OS.changeStatus');
+    Route::get('/admin/detalhes-contrato/{id}', [App\Http\Controllers\Admin\OsController::class, 'attedsByContract'])->name('OS.contract');
+
 
 
     //Usuários
@@ -47,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::DELETE('/admin/cadastros/excluir/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/admin/cadastros/export', [App\Http\Controllers\Admin\UserController::class, 'export'])->name('user.export');
 
+    //Atendimentos
     Route::get('/admin/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
     Route::get('/admin/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');
 

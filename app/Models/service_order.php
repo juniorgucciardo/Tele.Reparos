@@ -25,7 +25,7 @@ class service_order extends Model
         'hora_ordem',
         'status_id',
         'type_id',
-        'is_recurrent',
+        'is_recurrent' => 'boolean',
         'recurrence',
         'amount'
     ];

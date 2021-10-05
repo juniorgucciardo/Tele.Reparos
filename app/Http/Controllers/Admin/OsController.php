@@ -117,10 +117,12 @@ class OsController extends Controller
                 'hora_ordem' => $request->hora_ordem,
                 'type_id' => $type,
                 'status_id' => $status,
-                'is_recurrent' => true,
+                'is_recurrent' => $request->is_recurrent,
                 'recurrence' => $request->recurrence,
                 'amount' => $request->amount
             ]);
+
+            
 
             $data = $request->data_ordem;
             $hora = $request->hora_ordem;
@@ -157,7 +159,7 @@ class OsController extends Controller
      */
     public function show(service_order $service_order)
     {
-        //S
+        //
     }
 
     /**
@@ -271,6 +273,15 @@ class OsController extends Controller
             
         }
 
+    }
+
+    public function attedsByContract($id){
+        $contract = service_order::with('service')->with('user')->findOrFail($id);
+        $attends = Attend::where('order_id', $id)->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+        return view('admin.pages.OS.details', [
+            'attends' => $attends,
+            'contract' => $contract
+        ]);
     }
 
     public function changeStatus(Request $request, service_order $service_order, $id){

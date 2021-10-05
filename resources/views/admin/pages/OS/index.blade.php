@@ -36,16 +36,12 @@
                 <table id="table" class="table table-striped">
                     <thead>
                         <tr>
+                            <th>Cliente</th>
                             <th>Atividade</th>
-                            <th>Cliente</th>
-                            <th>Data</th>
-                            <th>Cliente</th>
+                            <th>Tipo</th>
                             <th>Endereço</th>
                             <th>Cidade</th>
                             <th>Atend...</th>
-                            <th>Tipo</th>
-                            <th>Func...</th>
-                            <th>Status</th>
                              @can('view_service_demands')
                                 <th> Funções </th>
                             @endcan
@@ -56,33 +52,22 @@
                     <tbody>
                        @foreach ($service_orders as $order)
                         <tr>
+                            <td>{{ $order->nome_cliente }}</td>
                             <td>{{ $order->service->service_title}}</td>
-                            <td>{{ $order->nome_cliente }}</td>
-                            <td>{{ $order->data_ordem }}</td>
-                            <td>{{ $order->nome_cliente }}</td>
+                            <td>{{$order->type->type_title}}</td>                           
                             <td>{{ $order->rua_cliente }}, {{ $order->numero_cliente }}</td>
                             <td>{{ $order->cidade_cliente }}</td>
                             <td>{{$order->attends_count}}</td>
-                            <td>{{$order->type->type_title}}</td>
-                            <td>
-                                @foreach ($order->user as $user)
-                                    @php
-                                        $name = explode(' ', $user->name)[0];
-                                    @endphp
-                                <span class="badge badge-primary">{{$name}}</span>
-                                @endforeach
-                            </td>
-                            <td>{{$order->status->status_title}}</td>
                             @can('view_service_demands')
                             <td>
                                 <div class="row d-flex nowrap">
-                                    <a href="{{url("admin/OS/editar/$order->id")}}">
+                                    <a href="{{url("admin/detalhes-contrato/$order->id")}}">
                                         <button class="btn-sm btn-warning">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </a>
                                         <a href="{{url("admin/OS/editar/$order->id")}}">
-                                            <button class=" btn-sm btn-primary">
+                                            <button class="mx-1 btn-sm btn-primary">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                         </a>

@@ -18,10 +18,14 @@ class AttendController extends Controller
     {
 
 
-        $attends = Attend::whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-09-30 18:00:00'])->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
-               dd($attends);
+        $attends = Attend::whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-10-15 18:00:00'])->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+        return view('admin.pages.attends.index', [
+            'attends' => $attends
+        ]);
 
     }
+
+
 
 
     public function calendar()
