@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-4 col-12">
                     <div class="">
-                        <div class="card">
+                        <div class="card shadow card-navy card-outline">
                             <div class="card-header">
                                 Informações do cliente
                             </div>
@@ -57,7 +57,7 @@
                     </div>
         
                     <div class="">
-                        <div class="card">
+                        <div class="card shadow card-navy card-outline">
                             <div class="card-header">
                                 Endereço
                             </div>
@@ -77,6 +77,10 @@
                                         <strong>Cidade :</strong><br>
                                         <span>{{$contract->cidade_cliente}}</span>
                                     </div>
+                                    <div class="my-3">
+                                        <div class="mapouter"><div class="gmap_canvas"><iframe width="369" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q={{$contract->rua_cliente}},{{$contract->numero_cliente}},{{$contract->cidade_cliente}}&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:400px;width:369px;}</style><a href="https://www.embedgooglemap.net">google maps code generator</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:400px;width:369px;}</style></div></div>                            
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +89,7 @@
 
                 <div class="col-md-8 col-12">
 
-                    <div class="card">
+                    <div class="card shadow card-navy card-outline">
                         <div class="card-header">
                             Informações sobre o serviço
                         </div>
@@ -120,11 +124,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="my-2">
+                                    <strong>Imagem:</strong><br>
+                                    <img class="my-2" src="http://lorempixel.com/200/100/technics/" alt="person">
+                                </div>
+        
+                            </div>
                             
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card shadow card-navy card-outline">
                         <div class="card-header">
                             Outras informações
                         </div>
@@ -145,7 +156,7 @@
 
 
 
-            <div class="card">
+            <div class="card shadow card-navy card-outline">
                 <div class="card-header">
                     Atendimentos deste contrato
                 </div>
@@ -194,7 +205,7 @@
                                         <span class="badge badge-primary">{{$name}}</span>
                                         @endforeach
                                     </td>
-                                    <td>{{$attend->orders->status->status_title}}</td>
+                                    <td>{{$attend->status->status_title}}</td>
                                     @can('view_service_demands')
                                     <td>
                                         <div class="row d-flex nowrap">

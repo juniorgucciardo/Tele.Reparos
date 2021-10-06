@@ -39,9 +39,9 @@
                             <th>Cliente</th>
                             <th>Atividade</th>
                             <th>Tipo</th>
-                            <th>Endereço</th>
                             <th>Cidade</th>
-                            <th>Atend...</th>
+                            <th>Recorrencia</th>
+                            <th>Duração do contrato</th>
                              @can('view_service_demands')
                                 <th> Funções </th>
                             @endcan
@@ -55,8 +55,8 @@
                             <td>{{ $order->nome_cliente }}</td>
                             <td>{{ $order->service->service_title}}</td>
                             <td>{{$order->type->type_title}}</td>                           
-                            <td>{{ $order->rua_cliente }}, {{ $order->numero_cliente }}</td>
                             <td>{{ $order->cidade_cliente }}</td>
+                            <td>{{ $order->recurrence}}</td>
                             <td>{{$order->attends_count}}</td>
                             @can('view_service_demands')
                             <td>

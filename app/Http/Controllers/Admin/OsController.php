@@ -276,7 +276,7 @@ class OsController extends Controller
 
     public function attedsByContract($id){
         $contract = service_order::with('service')->with('user')->findOrFail($id);
-        $attends = Attend::where('order_id', $id)->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+        $attends = Attend::where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
         return view('admin.pages.OS.details', [
             'attends' => $attends,
             'contract' => $contract
