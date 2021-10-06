@@ -169,7 +169,7 @@
                 <div class="card-body servicesNow">
                     {{-- laço dos cards --}}
                     @php
-                        $d1 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '08:00:00'));
+                        $d1 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '01:00:00'));
                         $d2 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '18:00:00'));
                     @endphp
 
@@ -276,6 +276,9 @@
                                 break;
                             case '5': //pós obra
                                 $color = 'secundary';
+                                break;
+                            case '6': //pós obra
+                                $color = 'navy';
                                 break;
                             default:
                                 echo 'primary';
