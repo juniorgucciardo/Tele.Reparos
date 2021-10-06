@@ -94,7 +94,7 @@
               <span class="info-box-text">Solicitações de Atendimento</span>
               <span class="info-box-number">
                   @php
-                      $query = $service_demands->where('status_id', 1);
+                      $query = $service_demands;
                     echo count($query);
                   @endphp
               </span>
@@ -144,7 +144,7 @@
               <span class="info-box-text">Serviços em andamento agora</span>
               <span class="info-box-number">
                 @php
-                    $query = $service_demands->where('status_id', 3)->where('data_ordem', $firstdate);
+                    $query = $service_demands->where('data_ordem', $firstdate);
                     echo count($query);
                 @endphp
               </span>
@@ -206,9 +206,9 @@
                                   </div>
                                   <div class="ml-auto flex-column">
                                       
-                                      <span>{{$attend->orders->status->status_title}}</span>
+                                      <span></span>
                                       <button type="button" class="btn-sm btn-outline-info rounded" data-toggle="modal" data-target="#statusModal{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
-                                      @include('admin.pages.modal.status-modal')
+                                    
                                       <button type="button" class="btn-sm btn-outline-info rounded" data-toggle="modal" data-target="#osDetails{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-info-circle"></i></button>
                                       @include('admin.pages.modal.osDetails')
 
@@ -335,7 +335,7 @@
             </div>
             <div class="card-body">
              <div class="row">
-                  @foreach ($service_demands->sortByDesc('data_ordem')->where('status_id', 1) as $order)
+                  @foreach ($service_demands->sortByDesc('data_ordem') as $order)
 
                       <div class="col-md-6 col-sm-6 col-12">
                           

@@ -15,8 +15,8 @@ class Status extends Model
         'status_title'
     ];
 
-    public function service_order(){
-        return $this->hasMany('App\Models\service_order', 'status_id', 'id');
+    public function attends(){
+        return $this->hasMany('App\Models\Attend', 'status_id', 'id');
     }
 
 }

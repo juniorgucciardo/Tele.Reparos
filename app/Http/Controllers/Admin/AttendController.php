@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attend;
 use App\Models\User;
+use App\Models\Status;
 use App\Models\service_order;
 use Illuminate\Http\Request;
 
@@ -19,17 +20,19 @@ class AttendController extends Controller
 
     private $repositoryOrder;
     private $repositoryUser;
+    private $repositoryStatus;
 
     public function __construct()
     {
         $this->repositoryOrder = new service_order(); 
         $this->repositoryUser = new User();
+        $this->repositoryStatus = new Status();
     }
 
     public function index()
     {
 
-        $attends = Attend::whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-10-15 18:00:00'])->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+        $attends = Attend::whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-10-15 18:00:00'])->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
         return view('admin.pages.attends.index', [
             'attends' => $attends
         ]);
@@ -43,7 +46,7 @@ class AttendController extends Controller
     {
 
 
-        $attends = Attend::with('users')->with('orders.service')->with('orders.status')->get();
+        $attends = Attend::with('users')->with('orders.service')->with('status')->get();
                 $collection = collect();
         
 
@@ -91,6 +94,7 @@ class AttendController extends Controller
     {
         $order = $this->repositoryOrder::with('service')->get();
         $users = $this->repositoryUser::all();
+        $status = $this->repositoryStatus::all();
         return view('admin.pages.attends.create', [
             'users' => $users,
             'contracts' => $order
@@ -116,7 +120,8 @@ class AttendController extends Controller
         $attend = Attend::create([
             'order_id' => $request->order_id,
             'data_inicial' => $start,
-            'data_final' => $end
+            'data_final' => $end,
+            'status_id' => $request->status_id
         ]);
 
         $attend->users()->sync($request->user_id);
@@ -141,13 +146,15 @@ class AttendController extends Controller
      */
     public function edit(Attend $attend, $id)
     {
-        $attend = Attend::with('orders.service')->findOrFail($id);
+        $attend = Attend::with('orders.service')->with('status')->findOrFail($id);
         $order = $this->repositoryOrder::with('service')->get();
         $users = $this->repositoryUser::all();
+        $status = $this->repositoryStatus::all();
         return view('admin.pages.attends.edit', [
             'attend' => $attend,
             'users' => $users,
-            'contracts' => $order
+            'contracts' => $order,
+            'status' => $status
         ]);
     }
 
@@ -172,7 +179,8 @@ class AttendController extends Controller
         $attend->update([
             'order_id' => $request->order_id,
             'data_inicial' => $start,
-            'data_final' => $end
+            'data_final' => $end,
+            'status_id' => $request->status_id
         ]);
 
         $attend->users()->sync($request->user_id);

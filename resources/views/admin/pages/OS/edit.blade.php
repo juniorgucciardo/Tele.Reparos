@@ -213,28 +213,6 @@ function showCheckboxes() {
                       @endforeach
                     </select>
                         </div>
-
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Status:</label>
-                    <select name="status" class="form-control">
-                        <option selected value="{{$service_order->status->id}}">
-
-                        @php
-                            if(isset($service_order->status->status_title)){
-                              echo $service_order->status->status_title;
-                            } else {
-                              echo 'Escolha um Status';
-                            }
-                        @endphp
-
-                      </option>
-                       @foreach ($status as $status)
-                        <option value="{{$status->id}}">{{$status->status_title}}</option>
-                      @endforeach
-                    </select>
-                        </div>
-
-                        
                       </div>
                     </div>
                   </div>

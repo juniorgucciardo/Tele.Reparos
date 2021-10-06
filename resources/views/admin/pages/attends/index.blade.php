@@ -79,7 +79,7 @@
                                         <span class="badge badge-primary">{{$name}}</span>
                                         @endforeach
                                     </td>
-                                    <td>{{$attend->orders->status->status_title}}</td>
+                                    <td>{{$attend->status->status_title}}</td>
                                     @can('view_service_demands')
                                     <td>
                                         <div class="row d-flex nowrap">

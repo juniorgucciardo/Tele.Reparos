@@ -41,8 +41,8 @@ class DashBoardController extends Controller
 
         if(auth()->user()->hasPermissionTo('view_service_demands')){ // Verifica a permissão do usuário logado
 
-            $service_demands = $this->repositoryOS->with('user')->with('status')->with('service')->get(); 
-            $orders =  Attend::whereBetween('data_inicial', [$d1, $d2])->with('users')->with('orders.service')->with('orders.status')->with('orders.type')->get();
+            $service_demands = $this->repositoryOS->with('user')->with('service')->get(); 
+            $orders =  Attend::whereBetween('data_inicial', [$d1, $d2])->with('users')->with('orders.service')->with('orders.type')->get();
             // relacionamento avançado (NIVEL)
 //            dd($this->repositoryOS->whereHas('user', function($query){
 //                $query->where('user_id', '=', 1);

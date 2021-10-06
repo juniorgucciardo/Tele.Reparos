@@ -42,9 +42,6 @@ class service_order extends Model
         return $this->hasMany('App\Models\Attend', 'order_id');   
     }
 
-    public function status(){
-        return $this->belongsTo('App\Models\Status', 'status_id', 'id');
-    }
 
     public function user(){
 

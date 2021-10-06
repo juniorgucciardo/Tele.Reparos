@@ -143,8 +143,9 @@ function showCheckboxes() {
                     </div>
                     <div class="card-body">
                       <div class="row">
-        
-                        <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
+
+                        <div class="col-md-8 col-12">
+                          <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
                         selecione
                         ">
 
@@ -158,7 +159,39 @@ function showCheckboxes() {
                               <option value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
                           @endforeach
                         </select>
+                        </div>
                         
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card shadow">
+                    <div class="card-header">
+                      <div class="card-title">
+                        Status
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Status:</label>
+                    <select name="status_id" class="form-control">
+                        <option selected value="{{$attend->status->id}}">
+
+                        @php
+                            if(isset($attend->status->status_title)){
+                              echo $attend->status->status_title;
+                            } else {
+                              echo 'Escolha um Status';
+                            }
+                        @endphp
+
+                      </option>
+                       @foreach ($status as $status)
+                        <option value="{{$status->id}}">{{$status->status_title}}</option>
+                      @endforeach
+                    </select>
+                        </div>
                       </div>
                     </div>
                   </div>

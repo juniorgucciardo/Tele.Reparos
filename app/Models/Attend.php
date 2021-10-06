@@ -15,7 +15,8 @@ class Attend extends Model
         'id',
         'data_inicial',
         'data_final',
-        'order_id'
+        'order_id',
+        'status_id'
     ];
 
     public function orders(){
@@ -26,5 +27,9 @@ class Attend extends Model
     public function users()
     {
         return $this->belongsToMany('App\Models\User', 'attend_user');
+    }
+
+    public function status(){
+        return $this->belongsTo('App\Models\Status', 'status_id', 'id');
     }
 }
