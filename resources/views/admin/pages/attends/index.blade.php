@@ -28,8 +28,8 @@
         <div class="card-header">
             Informações
             @can('view_service_demands')
-            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
-            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn btn-outline-dark"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
+            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn-sm btn-light"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
+            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn-sm btn-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
             @endcan
         </div>
         <div class="card-body">

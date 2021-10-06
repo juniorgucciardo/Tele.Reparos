@@ -64,7 +64,7 @@ function showCheckboxes() {
 }
 </style>
 
-    <div class="card card-primary">
+    <div class="card card-info">
             <div class="card-header">
               <h4 class="card-title">Edite um registro</h4>
             </div>
@@ -79,7 +79,7 @@ function showCheckboxes() {
                 <div class="form-group">
                   
                   {{-- Informações do cliente --}}
-                  <div class="card">
+                  <div class="card card-outline card-navy shadow">
                     <div class="card-header">
                       <i class="fas fa-user-friends mx-1"></i>
                       Informações o cliente
@@ -100,7 +100,7 @@ function showCheckboxes() {
 
 
                   {{-- Endereço da demanda --}}
-                  <div class="card">
+                  <div class="card card-outline card-navy shadow">
                     <div class="card-header">
                       <i class="fas fa-map-marked-alt mx-1"></i>
                       Endereço da demanda
@@ -129,10 +129,8 @@ function showCheckboxes() {
                     </div>
                   </div>
 
-
-
                   {{-- Informações sobre o serviço --}}
-                  <div class="card">
+                  <div class="card card-outline card-navy shadow">
                     <div class="card-header">
                       <i class="fas fa-tools mx-1"></i>
                       Serviço
@@ -160,7 +158,7 @@ function showCheckboxes() {
                       <div class="row">
                         <div class="col-md-7 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
-                      <textarea name="descricao_servico" class="form-control" id="exempleImputServiceTitle" value="{{ $service_order->descricao_servico }}"></textarea>
+                      <textarea name="descricao_servico" class="form-control" id="exempleImputServiceTitle">{{ $service_order->descricao_servico }}</textarea>
                         </div>
                       </div>
                     </div>
@@ -170,7 +168,7 @@ function showCheckboxes() {
             
                   {{-- Informações adicionais --}}
 
-                  <div class="card">
+                  <div class="card card-outline card-navy shadow">
                     <div class="card-header">
                       <i class="fas fa-info-circle mx-1"></i>
                       Informações adicionais
@@ -218,7 +216,7 @@ function showCheckboxes() {
                   </div>
 
 
-                  <div class="card">
+                  <div class="card card-outline card-navy shadow">
                     <div class="card-header">
                       <i class="fas fa-undo mx-1"></i>
                       Recorrência
@@ -233,12 +231,12 @@ function showCheckboxes() {
                         </div>
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Recorrencia:</label>
-                        <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                        <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" value="{{$service_order->recurrence}}">
                         
                         </div>
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Quantidade:</label>
-                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" value="{{$service_order->amount}}">
                         </div>
                       </div>
                     </div>

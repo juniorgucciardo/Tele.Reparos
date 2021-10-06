@@ -14,7 +14,7 @@
 
 <style>
     .table{
-        font-size: 0.86rem;
+        font-size: 0.92rem;
         table-layout: fixed;
  width:100%;
     }
@@ -56,7 +56,7 @@
                             <td>{{ $order->service->service_title}}</td>
                             <td>{{$order->type->type_title}}</td>                           
                             <td>{{ $order->cidade_cliente }}</td>
-                            <td>{{ $order->recurrence}}</td>
+                            <td>{{ $order->recurrence}} dias</td>
                             <td>{{$order->attends_count}}</td>
                             @can('view_service_demands')
                             <td>

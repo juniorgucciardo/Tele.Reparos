@@ -28,7 +28,7 @@ class CreateServiceOrdersTable extends Migration
             $table->string('descricao_servico');
             $table->date('data_ordem');
             $table->time('hora_ordem');
-            $table->boolean('is_recurrent');
+            $table->boolean('is_recurrent')->nullable();
             $table->integer('recurrence');
             $table->integer('amount');
 

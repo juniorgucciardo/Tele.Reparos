@@ -64,9 +64,9 @@ function showCheckboxes() {
 }
 </style>
 
-    <div class="card card-primary">
+    <div class="card card-navy">
             <div class="card-header">
-              <h5 class="card-title">Cadastre um novo registro</h5>
+              <h5 class="card-title">Cadastre um novo atendimento</h5>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -76,7 +76,7 @@ function showCheckboxes() {
                 <div class="form-group">
                   
                   {{-- Informações do cliente --}}
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-file-contract mx-1"></i>
                       Informações do contrato
@@ -97,7 +97,7 @@ function showCheckboxes() {
 
 
                   {{-- Endereço da demanda --}}
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                         <i class="fas fa-clock mx-1"></i>
                       Informações sobre a demanda
@@ -125,7 +125,7 @@ function showCheckboxes() {
                   
 
 
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-undo mx-1"></i>
                       Funcionários

@@ -62,7 +62,7 @@ function showCheckboxes() {
 }
 </style>
 
-    <div class="card card-primary">
+    <div class="card card-navy">
             <div class="card-header">
               <h5 class="card-title">Cadastre um novo registro</h5>
             </div>
@@ -74,7 +74,7 @@ function showCheckboxes() {
                 <div class="form-group">
                   
                   {{-- Informações do cliente --}}
-                  <div class="card shadow">
+                  <div class="card card-outline card-navy shadow">
                     <div class="card-header">
                       <i class="fas fa-user-friends mx-1"></i>
                       Informações o cliente
@@ -95,7 +95,7 @@ function showCheckboxes() {
 
 
                   {{-- Endereço da demanda --}}
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-map-marked-alt mx-1"></i>
                       Endereço da demanda
@@ -127,7 +127,7 @@ function showCheckboxes() {
 
 
                   {{-- Informações sobre o serviço --}}
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-tools mx-1"></i>
                       Serviço
@@ -164,7 +164,7 @@ function showCheckboxes() {
             
                   {{-- Informações adicionais --}}
 
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-info-circle mx-1"></i>
                       Informações adicionais
@@ -210,7 +210,7 @@ function showCheckboxes() {
                   </div>
 
 
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-undo mx-1"></i>
                       Recorrência

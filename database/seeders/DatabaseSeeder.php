@@ -158,7 +158,6 @@ class DatabaseSeeder extends Seeder
             'data_ordem' => '2021-09-30',
             'hora_ordem' => '10:00',
             'type_id' => 1,
-            'is_recurrent' => false,
             'recurrence' => 0,
             'amount' => 1
         ]);

@@ -15,7 +15,7 @@
 
 <style>
     .table{
-        font-size: 0.86rem;
+        font-size: 0.94rem;
         table-layout: fixed;
  width:100%;
     }
@@ -24,12 +24,12 @@
     }
 </style>
 
-    <div class="card card-info">
+    <div class="card card-navy">
         <div class="card-header">
             Informações
             @can('view_service_demands')
-            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
-            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn btn-outline-dark"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
+            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Imprimir informações</button></a>
+            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
             @endcan
         </div>
         <div class="card-body">
@@ -39,6 +39,7 @@
                     <div class="">
                         <div class="card shadow card-navy card-outline">
                             <div class="card-header">
+                                <i class="fas fa-house-user"></i>
                                 Informações do cliente
                             </div>
                             <div class="card-body">
@@ -59,6 +60,7 @@
                     <div class="">
                         <div class="card shadow card-navy card-outline">
                             <div class="card-header">
+                                <i class="fas fa-map-marker-alt"></i>
                                 Endereço
                             </div>
                             <div class="card-body">
@@ -91,6 +93,7 @@
 
                     <div class="card shadow card-navy card-outline">
                         <div class="card-header">
+                            <i class="fas fa-wrench"></i>
                             Informações sobre o serviço
                         </div>
                         <div class="card-body">
@@ -137,6 +140,7 @@
 
                     <div class="card shadow card-navy card-outline">
                         <div class="card-header">
+                            <i class="fas fa-feather"></i>
                             Outras informações
                         </div>
                         <div class="card-body">
@@ -168,9 +172,7 @@
                                     <th>id</th>
                                     <th>Data</th>
                                     <th>Hora</th>
-                                    <th>cliente</th>
                                     <th>Atividade</th>
-                                    <th>Tipo</th>
                                     <th>Funcionário</th>
                                     <th>Status</th>
                                      @can('view_service_demands')
@@ -181,7 +183,7 @@
                             @php
                            @endphp
                             <tbody>
-                               @foreach ($attends as $attend)
+                               @foreach ($attends->sortByDesc('data_inicial') as $attend)
                                 <tr>
                                     <td>{{ $attend->id}}</td>
                                     <td>
@@ -194,9 +196,7 @@
                                             echo explode(' ', $attend->data_inicial)[1]
                                         @endphp
                                     </td>
-                                    <td>{{ $attend->orders->nome_cliente }}</td>
                                     <td>{{ $attend->orders->service->service_title }}</td>
-                                    <td>{{$attend->orders->type->type_title}}</td>
                                     <td>
                                         @foreach ($attend->users as $user)
                                             @php
@@ -240,4 +240,6 @@
 
         </div>
     </div>
+
+    
 @stop

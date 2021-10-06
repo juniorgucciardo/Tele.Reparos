@@ -337,7 +337,7 @@
              <div class="row">
                   @foreach ($service_demands->sortByDesc('data_ordem') as $order)
 
-                      <div class="col-md-6 col-sm-6 col-12">
+                      <div class="col-md-4 col-12">
                           
                           <div class="card card-outline card-info shadow p-3 mb-5 bg-white rounded">
                               <div class="card-header">
@@ -346,25 +346,6 @@
                                         <i class="fas fa-tools mx-2"></i> {{$order->service->service_title}}
                                       </span>
                                     </div>
-                                    <div class="row text-center">
-                                      <span class="mr-auto">Prestador: 
-                                        @foreach ($order->user as $user)
-                                        @php
-                                            $name = explode(' ', $user->name);
-                                        @endphp
-                                        <a href="{{route('user.view', $user->id)}}"><span>{{$name[0]}}
-                                            @php
-                                                if($loop->last){
-                                                    echo ' ';
-
-                                                } else {
-                                                    echo ' - ';
-                                                }
-                                            @endphp
-                                        </span></a>
-                                        @endforeach
-                                      </span>
-                                  </div>
                               </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -388,14 +369,15 @@
                                   </div>
                                   <div class="row my-2">
                                     <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$order->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar ao prestador</button>
-                                    @include('admin.pages.modal.send-modal')
 
                                   </div>
                               </div>
                           </div>
+
+
                       </div>
                   @endforeach
              </div>
-            </div>
+        </div>
     </div>
 @stop

@@ -24,7 +24,7 @@
     }
 </style>
 
-    <div class="card card-orange">
+    <div class="card card-navy">
         <div class="card-header">
             Informações
             @can('view_service_demands')
@@ -37,14 +37,14 @@
             <div class="row">
                 <div class="col-md-3 col-12">
                     <div class="">
-                        <div class="card-orange shadow card card-outline">
+                        <div class="card-navy shadow card card-outline">
                             <div class="card-header d-flex justify-content-between items-center">
                                 <i class="fas fa-user-circle"></i>
                                 <span>Informações do usuário</span>
                             </div>
                             <div class="card-body">
                                 <div class="row flex-column gap-3 justify-content-between">
-                                    <img width="100px" height="100px" class="shadow border-md border-orange rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <img width="100px" height="100px" class="shadow border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
                                     <div class="">
                                         <strong>Nome:</strong><br>
                                         <span>{{$user->name}}</span>
@@ -56,15 +56,15 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-around">
-                            <button class="btn bg-gradient-orange shadow" style="color: white">Ação</button>
-                            <button class="btn bg-gradient-orange shadow" style="color: white">Ação</button>
-                            <button class="btn bg-gradient-orange shadow" style="color: white">Ação</button>
+                            <button class="btn bg-gradient-navy shadow" style="color: white">Imprimir</button>
+                            <button class="btn bg-gradient-navy shadow" style="color: white">Histórico</button>
+                            <button class="btn bg-gradient-navy shadow" style="color: white">Ações</button>
                             </div>
                         </div>
                     </div>
         
                     <div class="">
-                        <div class="card card-orange card-outline shadow">
+                        <div class="card card-navy card-outline shadow">
                             <div class="card-header">
                                 outras informações
                             </div>
@@ -88,7 +88,7 @@
 
                 <div class="col-md-8 col-12">
 
-                    <div class="card card-orange card-outline shadow">
+                    <div class="card card-navy card-outline shadow">
                         <div class="card-header">
                             Alterar informações
                         </div>
@@ -108,9 +108,9 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="flex-column flex justify-center">
-                                        <img width="120px" height="120px" class="border-md overlay border-orange rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
-                                        <button class="btn-sm bg-gradient-orange shadow" style="color: white">Alterar</button>
+                                    <div class="flex-column flex justify-center items-center mr-5">
+                                        <img width="120px" height="120px" class="border-md overlay border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                        <button class="btn-sm bg-gradient-navy shadow" style="color: white">Alterar</button>
                                     </div>
     
     
@@ -119,25 +119,44 @@
                             
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn-sm bg-gradient-orange shadow" style="color: white">Salvar</button>
-                            <button class="btn-sm bg-orange disabled  shadow" style="color: white">Cancelar</button>
+                            <button type="submit" class="btn-sm bg-gradient-navy shadow" style="color: white">Salvar</button>
+                            <button class="btn-sm bg-navy disabled  shadow" style="color: white">Cancelar</button>
 
                         </div>
                     </form>
                     </div>
 
-                    <div class="card card-orange card-outline shadow">
+                    <div class="card card-navy card-outline shadow">
                         <div class="card-header">
-                            Observações
+                            Avaliações
                         </div>
                         <div class="card-body">
                             <div class="post">
                                 <div class="user-block">
-                                    <img width="100px" height="100px" class="shadow border-md border-orange rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <img width="100px" height="100px" class="shadow border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
                                   <span class="username">
                                     <a href="#">{{$user->name}}</a>
                                   </span>
-                                  <span class="description">Shared publicly - 7:45 PM today</span>
+                                  <span class="description">Publicado às - {{explode(' ', $user->attends[0]->data_inicial)[1]}} PM | dia {{explode(' ', $user->attends[0]->data_inicial)[0]}}</span>
+                                </div>
+                                <!-- /.user-block -->
+                                <p>
+                                  Lorem ipsum represents a long-held tradition for designers,
+                                  typographers and the like. Some people hate it and argue for
+                                  its demise, but others ignore.
+                                </p>
+          
+                                <p>
+                                  <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Ver anexos</a>
+                                </p>
+                              </div>
+                              <div class="post">
+                                <div class="user-block">
+                                    <img width="100px" height="100px" class="shadow border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                  <span class="username">
+                                    <a href="#">{{$user->name}}</a>
+                                  </span>
+                                  <span class="description">Publicado às - {{explode(' ', $user->attends[2]->data_inicial)[1]}} PM | dia {{explode(' ', $user->attends[2]->data_inicial)[0]}}</span>
                                 </div>
                                 <!-- /.user-block -->
                                 <p>
@@ -150,6 +169,7 @@
                                   <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
                                 </p>
                               </div>
+                              
                         </div>
                     </div>
 

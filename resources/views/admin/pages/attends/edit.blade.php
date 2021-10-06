@@ -64,7 +64,7 @@ function showCheckboxes() {
 }
 </style>
 
-    <div class="card card-primary">
+    <div class="card card-navy">
             <div class="card-header">
               <h5 class="card-title">Edite um registro</h5>
             </div>
@@ -77,7 +77,7 @@ function showCheckboxes() {
                 <div class="form-group">
                   
                   {{-- Informações do cliente --}}
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-file-contract mx-1"></i>
                       Informações do contrato
@@ -103,7 +103,7 @@ function showCheckboxes() {
 
 
                   {{-- Endereço da demanda --}}
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                         <i class="fas fa-clock mx-1"></i>
                       Informações sobre a demanda
@@ -125,7 +125,7 @@ function showCheckboxes() {
                         </div>
                         <div class="col-md-4 col-12">
                             <label for="exampleInputEmail1">Duração em horas:</label>
-                            <input type="number" value="4" name="quantidade" class="form-control" id="exempleImputServiceTitle" value="{{$hours}}">
+                            <input type="number" value="{{$hours}}" name="quantidade" class="form-control" id="exempleImputServiceTitle" value="{{$hours}}">
                           </div>
                       </div>
                     </div>
@@ -136,7 +136,7 @@ function showCheckboxes() {
                   
 
 
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-undo mx-1"></i>
                       Funcionários
@@ -165,7 +165,7 @@ function showCheckboxes() {
                     </div>
                   </div>
 
-                  <div class="card shadow">
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <div class="card-title">
                         Status
@@ -204,7 +204,7 @@ function showCheckboxes() {
               <!-- /.card-body -->
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary shadow">Cadastrar</button>
+                <button type="submit" class="btn btn-info shadow">Cadastrar</button>
                 <a class="btn btn-secondary shadow" href="{{ route('attend'); }}" role="button">Voltar</a> 
               </div>
             </form>

@@ -171,7 +171,6 @@ class OsController extends Controller
         if(auth()->user()->can('view_service_demands')){
             $users = $this->repositoryUser->all();
             $services = $this->repositoryService->all();
-            $status = $this->repositoryStatus->all();
             $types = $this->repositoryType->all();
             $attends = $this->repositoryType->all();
             $service_order = service_order::find($id);
@@ -180,7 +179,6 @@ class OsController extends Controller
                 'service_order' => $service_order,
                 'users' => $users,
                 'types' => $types,
-                'status' => $status
             ]);
         } else {
             return redirect('admin/OS');
@@ -214,7 +212,8 @@ class OsController extends Controller
                 'data_ordem' => $request->data_ordem,
                 'hora_ordem' => $request->hora_ordem,
                 'type_id' => $request->type,
-                'status_id' => $request->status
+                'recurrence' => $request->recurrence,
+                'mounth' => $request->mounth
             ]);
 
             
