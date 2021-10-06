@@ -88,7 +88,7 @@
                                                     <i class="fas fa-eye"></i>
                                                 </button>
                                             </a>
-                                                <a href="{{url("admin/OS/editar/$attend->id")}}">
+                                                <a href="{{url("admin/atendimentos/editar/$attend->id")}}">
                                                     <button class=" btn-sm btn-primary">
                                                         <i class="fas fa-edit"></i>
                                                     </button>

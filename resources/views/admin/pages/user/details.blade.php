@@ -6,7 +6,7 @@
 @section('content_header')
 <h4>
     <i class="fas fa-file-contract mx-1"></i>
-    Informações do contrato nº {{$contract->id}} 
+    Informações do {{$user->name}} 
   </h4>
 @stop
 
@@ -24,58 +24,61 @@
     }
 </style>
 
-    <div class="card card-info">
+    <div class="card card-orange">
         <div class="card-header">
             Informações
             @can('view_service_demands')
-            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
-            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn btn-outline-dark"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
+            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
+            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
             @endcan
         </div>
         <div class="card-body">
 
             <div class="row">
-                <div class="col-md-4 col-12">
+                <div class="col-md-3 col-12">
                     <div class="">
-                        <div class="card">
-                            <div class="card-header">
-                                Informações do cliente
+                        <div class="card-orange shadow card card-outline">
+                            <div class="card-header d-flex justify-content-between items-center">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Informações do usuário</span>
                             </div>
                             <div class="card-body">
-                                <div class="row d-flex justify-content-between">
+                                <div class="row flex-column gap-3 justify-content-between">
+                                    <img width="100px" height="100px" class="shadow border-md border-orange rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
                                     <div class="">
                                         <strong>Nome:</strong><br>
-                                        <span>{{$contract->nome_cliente}}</span>
+                                        <span>{{$user->name}}</span>
                                     </div>
-                                    <div class="">
-                                        <strong>Contato:</strong><br>
-                                        <span>{{$contract->contato_cliente}}</span>
+                                    <div class="my-2">
+                                        <strong>Email:</strong><br>
+                                        <span>{{$user->email}}</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-around">
+                            <button class="btn bg-gradient-orange shadow" style="color: white">Ação</button>
+                            <button class="btn bg-gradient-orange shadow" style="color: white">Ação</button>
+                            <button class="btn bg-gradient-orange shadow" style="color: white">Ação</button>
                             </div>
                         </div>
                     </div>
         
                     <div class="">
-                        <div class="card">
+                        <div class="card card-orange card-outline shadow">
                             <div class="card-header">
-                                Endereço
+                                outras informações
                             </div>
                             <div class="card-body">
                                 <div class="row my-1 d-flex justify-content-between">
                                     <div class="">
-                                        <strong>Rua:</strong><br>
-                                        <span>{{$contract->rua_cliente}}, {{$contract->numero_cliente}}</span>
+                                        <strong>cadastrado em:</strong><br>
+                                        <span>{{$user->created_at}}</span>
                                     </div>
                                 </div>
                                 <div class="row my-1 d-flex justify-content-between">
                                     <div class="">
-                                        <strong>Bairro:</strong><br>
-                                        <span>{{$contract->bairro_cliente}}</span>
-                                    </div>
-                                    <div class="">
-                                        <strong>Cidade :</strong><br>
-                                        <span>{{$contract->cidade_cliente}}</span>
+                                        <strong>atualizado em:</strong><br>
+                                        <span>{{$user->updated_at}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -85,52 +88,68 @@
 
                 <div class="col-md-8 col-12">
 
-                    <div class="card">
+                    <div class="card card-orange card-outline shadow">
                         <div class="card-header">
-                            Informações sobre o serviço
+                            Alterar informações
                         </div>
                         <div class="card-body">
-                            <div class="row d-flex justify-content-between">
-                                <div class="col-6">
-                                    <div class="">
-                                        <strong>Serviço:</strong><br>
-                                        <span>{{$contract->service->service_title}}</span>
+                            <form action="{{ route('user.update', $user->id) }}" method="POST">
+                                @csrf
+                                @method('put')
+                                <div class="row d-flex justify-content-between items-center">
+                                    <div class="col-8">
+                                        <div class="">
+                                            <label for="exampleInputEmail1">Nome:</label>
+                                            <input type="text" name="name" class="form-control" id="exempleImputServiceTitle" value="{{$user->name}}">
+                                        </div>
+                                        <div class="my-2">
+                                            <label for="exampleInputEmail1">Email:</label>
+                                            <input type="text" name="email" class="form-control" id="exempleImputServiceTitle" value="{{$user->email}}">
+                                        </div>
+                                        
                                     </div>
-                                    <div class="my-2">
-                                        <strong>Descrição do serviço:</strong><br>
-                                        <span>{{$contract->descricao_servico}}</span>
+                                    <div class="flex-column flex justify-center">
+                                        <img width="120px" height="120px" class="border-md overlay border-orange rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                        <button class="btn-sm bg-gradient-orange shadow" style="color: white">Alterar</button>
                                     </div>
-                                    <div class="">
-                                        <strong>Serviço:</strong><br>
-                                        <span>{{$contract->service->service_title}}</span>
-                                    </div>
+    
+    
                                 </div>
-                                <div class="col-6 text-right">
-                                    <div class="my-2">
-                                        <strong>Tipo de serviço:</strong><br>
-                                        <span>{{$contract->type->type_title}}</span>
-                                    </div>
-                                    <div class="">
-                                        <strong>Recorrência:</strong><br>
-                                        <span>{{$contract->recurrence}} dias</span>
-                                    </div>
-                                    <div class="my-2">
-                                        <strong>Quantidade de atendimentos:</strong><br>
-                                        <span>{{$contract->amount}}</span>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             
                         </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn-sm bg-gradient-orange shadow" style="color: white">Salvar</button>
+                            <button class="btn-sm bg-orange disabled  shadow" style="color: white">Cancelar</button>
+
+                        </div>
+                    </form>
                     </div>
 
-                    <div class="card">
+                    <div class="card card-orange card-outline shadow">
                         <div class="card-header">
-                            Outras informações
+                            Observações
                         </div>
                         <div class="card-body">
-                            <strong>Cadastrado em:</strong><br>
-                            <span>{{$contract->created_at}}</span>
+                            <div class="post">
+                                <div class="user-block">
+                                    <img width="100px" height="100px" class="shadow border-md border-orange rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                  <span class="username">
+                                    <a href="#">{{$user->name}}</a>
+                                  </span>
+                                  <span class="description">Shared publicly - 7:45 PM today</span>
+                                </div>
+                                <!-- /.user-block -->
+                                <p>
+                                  Lorem ipsum represents a long-held tradition for designers,
+                                  typographers and the like. Some people hate it and argue for
+                                  its demise, but others ignore.
+                                </p>
+          
+                                <p>
+                                  <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
+                                </p>
+                              </div>
                         </div>
                     </div>
 
@@ -147,7 +166,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    Atendimentos deste contrato
+                    Atendimentos deste usuário
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -170,7 +189,7 @@
                             @php
                            @endphp
                             <tbody>
-                               @foreach ($attends as $attend)
+                                @foreach ($user->attends as $attend)
                                 <tr>
                                     <td>{{ $attend->id}}</td>
                                     <td>

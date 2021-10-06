@@ -257,15 +257,15 @@ return [
         ],
         ['header' => 'CONFIGURAÇÕES DO SITE', 'can'  => 'view_service_demands'],
         [
-            'text' => 'Contratos',
-            'url'  => 'admin/OS',
-            'icon' => 'fas fa-file-contract',
-
-        ],
-        [
             'text' => 'Atendimentos',
             'url'  => 'admin/atendimentos',
             'icon' => 'fas fa-truck-moving'
+
+        ],
+        [
+            'text' => 'Contratos',
+            'url'  => 'admin/OS',
+            'icon' => 'fas fa-file-contract',
 
         ],
         [

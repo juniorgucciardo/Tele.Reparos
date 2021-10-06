@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\service_order;
 use Illuminate\Http\Request;
 
+
 class AttendController extends Controller
 {
     /**
@@ -175,6 +176,7 @@ class AttendController extends Controller
         ]);
 
         $attend->users()->sync($request->user_id);
+        return redirect('admin/atendimentos');
     }
 
     /**

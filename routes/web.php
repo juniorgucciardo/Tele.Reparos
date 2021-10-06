@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Usuários
+    Route::get('/admin/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');
     Route::get('/admin/cadastros', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
     Route::get('/admin/cadastros/novo', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('user.create');
     Route::Post('/admin/cadastros/novo', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('user.store');

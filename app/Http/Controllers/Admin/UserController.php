@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Attend;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -23,9 +24,11 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     private $userRepository;
+    private $attendRepository;
 
     public function __construct(User $user){
         $this->userRepository = new User();
+        $this->attendRepository = new Attend();
     }
 
 
@@ -73,7 +76,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = $this->userRepository::with('attends')->findOrFail($id);
+
+        return view('admin.pages.user.details', [
+            'user' => $user
+        ]);
     }
 
     /**
