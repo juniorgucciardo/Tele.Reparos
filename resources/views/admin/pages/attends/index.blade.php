@@ -68,7 +68,7 @@
                                             echo explode(' ', $attend->data_inicial)[1]
                                         @endphp
                                     </td>
-                                    <td>{{ $attend->orders->nome_cliente }}</td>
+                                    <td><a href="{{ route('OS.contract', $attend->orders->id) }}">{{ $attend->orders->nome_cliente }}</a></td>
                                     <td>{{ $attend->orders->service->service_title }}</td>
                                     <td>{{$attend->orders->type->type_title}}</td>
                                     <td>
@@ -76,7 +76,7 @@
                                             @php
                                                 $name = explode(' ', $user->name)[0];
                                             @endphp
-                                        <span class="badge badge-primary">{{$name}}</span>
+                                        <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
                                         @endforeach
                                     </td>
                                     <td>{{$attend->status->status_title}}</td>

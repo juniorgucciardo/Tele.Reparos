@@ -44,7 +44,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row flex-column gap-3 justify-content-between">
-                                    <img width="100px" height="100px" class="shadow border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <img width="100px" height="100px" class="border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
                                     <div class="">
                                         <strong>Nome:</strong><br>
                                         <span>{{$user->name}}</span>
@@ -56,9 +56,9 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-around">
-                            <button class="btn bg-gradient-navy shadow" style="color: white">Imprimir</button>
-                            <button class="btn bg-gradient-navy shadow" style="color: white">Histórico</button>
-                            <button class="btn bg-gradient-navy shadow" style="color: white">Ações</button>
+                            <button class="btn bg-gradient-navy " style="color: white">Imprimir</button>
+                            <button class="btn bg-gradient-navy " style="color: white">Histórico</button>
+                            <button class="btn bg-gradient-navy " style="color: white">Ações</button>
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                     </div>
                                     <div class="flex-column flex justify-center items-center mr-5">
                                         <img width="120px" height="120px" class="border-md overlay border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
-                                        <button class="btn-sm bg-gradient-navy shadow" style="color: white">Alterar</button>
+                                        <button class="btn-sm bg-gradient-navy" style="color: white">Alterar</button>
                                     </div>
     
     
@@ -119,8 +119,8 @@
                             
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn-sm bg-gradient-navy shadow" style="color: white">Salvar</button>
-                            <button class="btn-sm bg-navy disabled  shadow" style="color: white">Cancelar</button>
+                            <button type="submit" class="btn-sm bg-gradient-navy " style="color: white">Salvar</button>
+                            <button class="btn-sm bg-navy disabled " style="color: white">Cancelar</button>
 
                         </div>
                     </form>
@@ -133,7 +133,7 @@
                         <div class="card-body">
                             <div class="post">
                                 <div class="user-block">
-                                    <img width="100px" height="100px" class="shadow border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <img width="100px" height="100px" class=" border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
                                   <span class="username">
                                     <a href="#">{{$user->name}}</a>
                                   </span>
@@ -152,7 +152,7 @@
                               </div>
                               <div class="post">
                                 <div class="user-block">
-                                    <img width="100px" height="100px" class="shadow border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <img width="100px" height="100px" class=" border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
                                   <span class="username">
                                     <a href="#">{{$user->name}}</a>
                                   </span>
@@ -230,7 +230,7 @@
                                             @php
                                                 $name = explode(' ', $user->name)[0];
                                             @endphp
-                                        <span class="badge badge-primary">{{$name}}</span>
+                                        <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
                                         @endforeach
                                     </td>
                                     <td>{{$attend->status->status_title}}</td>

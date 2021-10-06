@@ -52,7 +52,7 @@
                     <tbody>
                        @foreach ($service_orders as $order)
                         <tr>
-                            <td>{{ $order->nome_cliente }}</td>
+                            <td><a href="{{ route('OS.contract', $order->id) }}">{{ $order->nome_cliente }}</a></td>
                             <td>{{ $order->service->service_title}}</td>
                             <td>{{$order->type->type_title}}</td>                           
                             <td>{{ $order->cidade_cliente }}</td>

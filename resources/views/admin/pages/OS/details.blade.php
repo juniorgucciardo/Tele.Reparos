@@ -202,7 +202,7 @@
                                             @php
                                                 $name = explode(' ', $user->name)[0];
                                             @endphp
-                                        <span class="badge badge-primary">{{$name}}</span>
+                                        <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
                                         @endforeach
                                     </td>
                                     <td>{{$attend->status->status_title}}</td>

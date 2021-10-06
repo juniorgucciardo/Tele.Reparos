@@ -6,7 +6,7 @@
 @section('content_header')
 <h4>
   <i class="fas fa-file-contract mx-1"></i>
-  Contratos e serviços
+  editar contrato {{$service_order->id}}
 </h4>
 @stop
 
@@ -64,9 +64,9 @@ function showCheckboxes() {
 }
 </style>
 
-    <div class="card card-info">
+    <div class="card card-navy">
             <div class="card-header">
-              <h4 class="card-title">Edite um registro</h4>
+              <h5 class="card-title">Edite um registro</h5>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
