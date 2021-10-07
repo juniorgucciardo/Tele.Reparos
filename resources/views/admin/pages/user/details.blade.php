@@ -17,7 +17,7 @@
     .table{
         font-size: 0.86rem;
         table-layout: fixed;
- width:100%;
+        width:100%;
     }
     th{
         font-weight: 400;

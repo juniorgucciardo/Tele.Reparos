@@ -41,13 +41,16 @@ class DashBoardController extends Controller
 
         if(auth()->user()->hasPermissionTo('view_service_demands')){ // Verifica a permissão do usuário logado
 
-            $service_demands = $this->repositoryOS->with('user')->with('service')->get(); 
             $ordersNow =  Attend::whereHas('orders', function($q){
                 $q->where('situation_id', 3);
             })->whereBetween('data_inicial', [$d1, $d2])->with('users', 'orders.service', 'orders.type')->get();
             $ordersSolicited = Attend::whereHas('orders', function($q){
                 $q->where('situation_id', 1);
             })->with('users', 'orders.service', 'orders.type')->get();
+            $ordersCanceled = Attend::whereHas('orders', function($q){
+                $q->where('situation_id', 1);
+            })->with('users', 'orders.service', 'orders.type')->get();
+            dd($ordersNow->raw(), $ordersSolicited, $ordersCanceled);
 
             // relacionamento avançado (NIVEL)
 //            dd($this->repositoryOS->whereHas('user', function($query){
@@ -58,7 +61,6 @@ class DashBoardController extends Controller
             $status = $this->repositoryStatus->all();
 
             return view('admin.pages.dashboard', [           // Retorna uma página especial da admiinstração do sistema, com todas as OS e outras informações
-                'service_demands' => $service_demands,
                 'username' => $username[0],
                 'users' => $users,
                 'status' => $status,

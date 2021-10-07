@@ -1,6 +1,6 @@
 <div class="modal fade bd-example-modal-lg" id="statusModal{{$attend->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content card">
+      <div class="modal-content">
 
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Ordem de Serviço: {{$attend->id}}</h5>
@@ -32,9 +32,24 @@
                         <option value="{{$status->id}}">{{$status->status_title}}</option>
                       @endforeach
                     </optgroup>
-                  
                 </select>
                 </div>
+
+
+
+                
+                  <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="selecione">
+
+                  <optgroup label="Cadastrados">
+                    @foreach ($attend->users as $user)
+                    <option selected value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
+                    @endforeach
+                  </optgroup>
+
+                  @foreach ($users as $user)
+                      <option value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
+                  @endforeach
+                </select>
         
 
         <div class="modal-footer">

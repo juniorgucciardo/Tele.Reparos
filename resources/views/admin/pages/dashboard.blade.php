@@ -93,10 +93,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Solicitações de Atendimento</span>
               <span class="info-box-number">
-                  @php
-                      $query = $service_demands;
-                    echo count($query);
-                  @endphp
+                  
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -144,8 +141,7 @@
               <span class="info-box-text">Serviços em andamento agora</span>
               <span class="info-box-number">
                 @php
-                    $query = $service_demands->where('data_ordem', $firstdate);
-                    echo count($query);
+                   
                 @endphp
               </span>
             </div>
@@ -404,6 +400,36 @@
                       </div>
                   @endforeach
              </div>
+        </div>
+    </div>
+
+    <div class="card card-warning">
+        <div class="card-header">
+            <span>
+                <h5>Demandas pendentes</h5>
+            </span>
+        </div>
+        <div class="card-body">
+            <table>
+                <thead>
+                    <th>123</th>
+                    <th>123</th>
+                    <th>123</th>
+                    <th>123</th>
+                    <th>123</th>
+                    <th>123</th>
+                    <th>123</th>
+                </thead>
+                <tbody>
+                    <td>djlksaçlkjfa</td>
+                    <td>djlksaçlkjfa</td>
+                    <td>djlksaçlkjfa</td>
+                    <td>djlksaçlkjfa</td>
+                    <td>djlksaçlkjfa</td>
+                    <td>djlksaçlkjfa</td>
+                    <td>djlksaçlkjfa</td>
+                </tbody>
+            </table>
         </div>
     </div>
 @stop

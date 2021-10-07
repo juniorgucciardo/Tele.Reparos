@@ -204,6 +204,8 @@ class AttendController extends Controller
             'status_id' => $request->status_id
         ]);
 
+        $attend->users()->sync($request->user_id);
+
         return redirect('admin/');
     }
 }

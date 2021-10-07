@@ -48,7 +48,7 @@
                                     <th>Funcionário</th>
                                     <th>Status</th>
                                      @can('view_service_demands')
-                                        <th> Funções </th>
+                                        <th>Funções</th>
                                     @endcan
                                 </tr>
                             </thead>
@@ -68,7 +68,7 @@
                                     <td>
                                         @php
                                             $hora = explode(' ', $attend->data_inicial)[1];
-                                            $hora = date('h:m', strtotime($hora));
+                                            $hora = date('h:i', strtotime($hora));
                                         @endphp
                                         {{$hora}}
                                     </td>
