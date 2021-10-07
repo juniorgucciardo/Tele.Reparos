@@ -16,11 +16,13 @@ class ServiceOrderRelacionships extends Migration
 
         Schema::table('orders', function (Blueprint $table) {
             $table->foreignId('id_service'); //jardinagem, limpeza...
+            $table->foreignId('situation_id')->default(1); //jardinagem, limpeza...
             $table->foreignId('type_id')->nullable()->unsigned()->default(1); //contrato, avulso...
             
 
             //atribuição das referencias 
             $table->foreign('id_service')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('situation_id')->references('id')->on('situations')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('type')->onDelete('cascade');
         });
 

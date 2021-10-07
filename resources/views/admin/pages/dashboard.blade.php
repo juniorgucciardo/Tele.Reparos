@@ -173,16 +173,45 @@
                         $d2 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '18:00:00'));
                     @endphp
 
-                  @foreach ($attends->whereBetween('data_inicial', [$d1, $d2]) as $attend)
+                  @foreach ($attendsNow->whereBetween('data_inicial', [$d1, $d2]) as $attend)
                   
                     {{-- CARD DAS DEMANDAS DE HOJE --}}
-                      <div class="card card-outline card-info shadow rounded">
+
+                    @php
+                        switch ($attend->status->id) {
+                            case '1': //solicitado
+                                $statusColor = 'secondary';
+                                break;
+                            case '2': //agendado
+                                $statusColor = 'info';
+                                break;
+                            case '3': //execução
+                                $statusColor = 'primary';
+                                break;
+                            case '4': //concluido
+                                $statusColor = 'success';
+                                break;
+                            case '5': //atrasado
+                                $statusColor = 'warning';
+                                break;
+                            case '6': //cancelado
+                                $statusColor = 'danger';
+                                break;
+                            default:
+                                $statusColor = 'primary';
+                                break;
+                            }
+                    @endphp
+                      <div class="card card-outline card-{{$statusColor}} shadow rounded">
                           <div class="card-header">
                               <div class="d-flex d-flex-row justify-content-between">
                                   <span>{{$attend->orders->service->service_title}}</span>
                                   <div>
-                                      <span class="mx-3">{{explode(' ', $attend->data_inicial)[1]}}</span>
-                                      <span><i class=" fas fa-eye"></i></span>
+                                      @php
+                                          $hora = explode(' ', $attend->data_inicial)[1];
+                                      @endphp
+                                      <span class="mx-3">{{date('h:i', strtotime($hora))}}</span>
+                                      <a href="{{ route('OS.contract', $attend->orders->id) }}"><span><i class=" fas fa-eye"></i></span></a>
                                   </div>
                               </div>
                           </div>
@@ -198,7 +227,7 @@
                                                 @php
                                                     $name = explode(' ', $user->name);
                                                 @endphp
-                                                <a href="{{route('user.view', $user->id)}}"><span class="badge badge-info">{{$name[0]}}</span></a>
+                                                <a href="{{route('user.view', $user->id)}}"><span class="badge badge-{{$statusColor}}">{{$name[0]}}</span></a>
                                               @endforeach
                                               
                                           </div>
@@ -206,10 +235,10 @@
                                   </div>
                                   <div class="ml-auto flex-column">
                                       
-                                      <span></span>
-                                      <button type="button" class="btn-sm btn-outline-info rounded" data-toggle="modal" data-target="#statusModal{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
-                                    
-                                      <button type="button" class="btn-sm btn-outline-info rounded" data-toggle="modal" data-target="#osDetails{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-info-circle"></i></button>
+                                      <span class="bg-gradient-{{$statusColor}} rounded px-1">{{mb_strimwidth($attend->status->status_title, 0, 16, "...")}}</span>
+                                      <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
+                                      @include('admin.pages.modal.status-modal')
+                                      <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#osDetails{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-info-circle"></i></button>
                                       @include('admin.pages.modal.osDetails')
 
 
@@ -232,10 +261,7 @@
             <div class="card-info shadow-sm bg-light">
                 <div class="card-header">
                     Calendário 
-
-                    <a href="/admin/atendimentos/novo"><button type="button" class="mx-1 btn-sm btn-outline-light shadow-md"><i class="fas fa-truck-moving mx-1"></i>Novo atendimento</button></a>
-                    <a href="/admin/OS/novo"><button type="button" class="mx-1 btn-sm btn-outline-light shadow-md"><i class="fas fa-file-contract mx-1"></i>Novo contrato</button></a>
-
+                    <a href="{{route('OS.create')}}"><button type="button" class="mx-1 btn-sm btn-outline-light shadow-md"><i class="fas fa-truck-moving mx-1"></i>Novo Atendimento</button></a>
                 </div>
                 <div class="card-body">
                     <div id="calendar"></div>
@@ -257,7 +283,7 @@
         </div>
         <div class="card-body">
          <div class="row servicosAgendados">
-              @foreach ($attends->sortBy('data_inicial')->whereBetween('data_inicial', [$d1, $d2]) as $attend)
+              @foreach ($attendsNow->sortBy('data_inicial')->whereBetween('data_inicial', [$d1, $d2]) as $attend)
                   <div class="col-md-3 col-sm-6 col-6">
                       {{-- card start --}}
                       @php
@@ -300,8 +326,8 @@
                             <div class="row"> 
                                 @php
                                     $data = date('d/m', strtotime($attend->data_inicial));
-                                    $hora = date('h:m:s', strtotime($attend->orders->hora_ordem));
-                                    @endphp
+                                    $hora = date('h:i', strtotime($attend->orders->hora_ordem));
+                                @endphp
                                     <span>Data: {{$data}}</span>
                                     <span>Hora: {{$hora}}</span>
 
@@ -335,7 +361,7 @@
             </div>
             <div class="card-body">
              <div class="row">
-                  @foreach ($service_demands->sortByDesc('data_ordem') as $order)
+                  @foreach ($ordersSolicited->sortByDesc('data_ordem') as $solicited)
 
                       <div class="col-md-4 col-12">
                           
@@ -343,7 +369,7 @@
                               <div class="card-header">
                                   <div class="row text-center">
                                       <span>
-                                        <i class="fas fa-tools mx-2"></i> {{$order->service->service_title}}
+                                        <i class="fas fa-tools mx-2"></i> {{$solicited->orders->service->service_title}}
                                       </span>
                                     </div>
                               </div>
@@ -351,13 +377,13 @@
                                     <div class="row">
                                         <span>
                                             <i class="far fa-user-circle"></i> 
-                                            {{$order->nome_cliente}}
+                                            {{$solicited->orders->nome_cliente}}
                                         </span>
                                     </div>
                                 <div class="row">
                                     @php
-                                        $data = date('d/m', strtotime($order->data_ordem));
-                                        $hora = date('h:m:s', strtotime($order->hora_ordem));
+                                        $data = date('d/m', strtotime($solicited->orders->data_ordem));
+                                        $hora = date('h:i', strtotime($solicited->orders->hora_ordem));
                                     @endphp
                                     <span>Data:  {{$data}} - </span><br/>
                                     <span> Hora:  {{$hora}} </span>
@@ -368,7 +394,7 @@
                                     <button type="button" class="btn btn-info">Mais detalhes</button>
                                   </div>
                                   <div class="row my-2">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$order->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar ao prestador</button>
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$solicited->orders->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar ao prestador</button>
 
                                   </div>
                               </div>

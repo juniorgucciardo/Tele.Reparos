@@ -83,11 +83,11 @@ function showCheckboxes() {
                       <div class="row">
                         <div class="col-md-6 col-12">
                           <label for="exampleInputEmail1">Nome do cliente</label>
-                          <input type="text" name="nome_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Nome do cliente">
+                          <input required type="text" name="nome_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Nome do cliente">
                         </div>
                         <div class="col-md-6 col-12">
                           <label for="exampleInputEmail1">Contato:</label>
-                          <input type="text" name="contato_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Contato do cliente">
+                          <input required type="text" name="contato_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Contato do cliente">
                         </div>
                       </div>
                     </div>
@@ -104,21 +104,21 @@ function showCheckboxes() {
                       <div class="row">
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Rua:</label>
-                          <input type="text" name="rua_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <input required type="text" name="rua_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                         <div class="col-md-3 col-12">
                           <label for="exampleInputEmail1">Numero:</label>
-                          <input type="text" name="numero_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <input required type="text" name="numero_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Bairro:</label>
-                          <input type="text" name="bairro_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <input required type="text" name="bairro_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-8 col-12">
                           <label for="exampleInputEmail1">Cidade:</label>
-                          <input type="text" name="cidade_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <input required type="text" name="cidade_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                       </div>
                     </div>
@@ -136,7 +136,7 @@ function showCheckboxes() {
                       <div class="row">
                         <div class="col-md-5 col-12">
                           <label for="exampleInputEmail1">Serviço:</label>
-                          <select name="id_service" class="form-control">
+                          <select required name="id_service" class="form-control">
                             @foreach ($services as $service)
                                 <option value="{{$service->id}}">{{$service->service_title}}</option>
                             @endforeach
@@ -144,17 +144,17 @@ function showCheckboxes() {
                         </div>
                         <div class="col-md-3 col-12">
                           <label for="exampleInputEmail1">DATA:</label>
-                          <input type="date" name="data_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <input required type="date" name="data_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">HORA:</label>
-                          <input type="time" name="hora_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <input required type="time" name="hora_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-7 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
-                          <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
+                          <textarea required type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
                         </div>
                       </div>
                     </div>
@@ -173,7 +173,7 @@ function showCheckboxes() {
                       <div class="row">
                         <div class="col-md-3 col-12">
                           <label for="exampleInputEmail1">FUNCIONÁRIO:</label>
-                            <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
+                            <select required multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
                             selecione
                             ">
     
@@ -186,7 +186,7 @@ function showCheckboxes() {
 
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Tipo de serviço:</label>
-                          <select name="type" class="form-control">
+                          <select required name="type" class="form-control">
                             <option selected disable value="">Escolha um tipo</option>
                             @foreach ($types as $type)
                                 <option value="{{$type->id}}">{{$type->type_title}}</option>
@@ -196,7 +196,7 @@ function showCheckboxes() {
 
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Status:</label>
-                          <select name="status" class="form-control">
+                          <select required name="status" class="form-control">
                             <option selected disable value="">Escolha um status</option>
                              @foreach ($status as $status)
                               <option value="{{$status->id}}">{{$status->status_title}}</option>
@@ -211,26 +211,28 @@ function showCheckboxes() {
 
 
                   <div class="card card-outline card-gray shadow">
-                    <div class="card-header">
+                    <div class="card-header shadow-sm">
                       <i class="fas fa-undo mx-1"></i>
                       Recorrência
                     </div>
                     <div class="card-body">
-                      <div class="row">
+                      <div class="row d-flex items-center">
                         <div class="col-md-4 col-12">
                           <div class="form-check">
-                            <input name="is_recurrent" type="checkbox" value="1" {{ old('is_featured') ? 'checked="checked"' : '' }}class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">É recorrente?</label>
+                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                              <input name="is_recurrent" value="1" type="checkbox" class="custom-control-input" id="customSwitch3">
+                              <label class="custom-control-label" for="customSwitch3">Este serviço é recorrente??</label>
+                            </div>
                           </div>
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Recorrencia:</label>
-                        <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <label for="exampleInputEmail1">Recorrência:</label>
+                        <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" placeholder="4 dias">
                         
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Quantidade:</label>
-                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          <label for="exampleInputEmail1">Atendimentos deste contrato:</label>
+                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
                         </div>
                       </div>
                     </div>

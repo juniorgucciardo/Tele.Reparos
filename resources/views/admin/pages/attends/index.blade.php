@@ -29,7 +29,7 @@
             Informações
             @can('view_service_demands')
             <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn-sm btn-light"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
-            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn-sm btn-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
+            <a href="{{ route('attend.create') }}"><button type="button" class="mx-1 btn-sm btn-light"><i class="far fa-plus-square mx-1"></i>Novo atendimento de um contrato</button></a>
             @endcan
         </div>
         <div class="card-body">
@@ -60,13 +60,17 @@
                                     <td>{{ $attend->id}}</td>
                                     <td>
                                         @php
-                                            echo explode(' ', $attend->data_inicial)[0]
+                                            $data = explode(' ', $attend->data_inicial)[0];
+                                            $data = date('d/m/Y', strtotime($data));
                                         @endphp
+                                        {{$data}}
                                     </td>
                                     <td>
                                         @php
-                                            echo explode(' ', $attend->data_inicial)[1]
+                                            $hora = explode(' ', $attend->data_inicial)[1];
+                                            $hora = date('h:m', strtotime($hora));
                                         @endphp
+                                        {{$hora}}
                                     </td>
                                     <td><a href="{{ route('OS.contract', $attend->orders->id) }}">{{ $attend->orders->nome_cliente }}</a></td>
                                     <td>{{ $attend->orders->service->service_title }}</td>

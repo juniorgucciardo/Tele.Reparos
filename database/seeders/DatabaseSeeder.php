@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Type;
+use App\Models\Situation;
 use App\Models\Status;
 use App\Models\Service;
 use App\Models\service_order;
@@ -52,7 +53,7 @@ class DatabaseSeeder extends Seeder
 
         Status::create([
             'id' => 1,
-            'status_title' => 'Solicitacao realizada'
+            'status_title' => 'Solicitado'
         ]);
 
         Status::create([
@@ -68,6 +69,16 @@ class DatabaseSeeder extends Seeder
         Status::create([
             'id' => 4,
             'status_title' => 'Concluido'
+        ]);
+
+        Status::create([
+            'id' => 5,
+            'status_title' => 'atrasado'
+        ]);
+
+        Status::create([
+            'id' => 6,
+            'status_title' => 'cancelado'
         ]);
 
         Type::create([
@@ -133,6 +144,30 @@ class DatabaseSeeder extends Seeder
             'service_description' => 'lorem ipsun dolor si amet'
         ]);
 
+        Situation::create([
+            'id' => 1,
+            'title' => 'Solicitado',
+            'description' => 'Serviço solicitado pelo cliente'
+        ]);
+
+        Situation::create([
+            'id' => 2,
+            'title' => 'Visita tecnica',
+            'description' => 'a demanda vai ser analizada por um dos nossos supervisores'
+        ]);
+
+        Situation::create([
+            'id' => 3,
+            'title' => 'Em execução',
+            'description' => 'Serviço solicitado pelo cliente'
+        ]);
+
+        Situation::create([
+            'id' => 4,
+            'title' => 'Cancelado',
+            'description' => 'Serviço solicitado pelo cliente'
+        ]);
+
 
 
 
@@ -159,7 +194,8 @@ class DatabaseSeeder extends Seeder
             'hora_ordem' => '10:00',
             'type_id' => 1,
             'recurrence' => 0,
-            'amount' => 1
+            'amount' => 1,
+            'situation_id' => 3
         ]);
         
         

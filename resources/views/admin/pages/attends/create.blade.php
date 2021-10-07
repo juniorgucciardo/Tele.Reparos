@@ -66,7 +66,7 @@ function showCheckboxes() {
 
     <div class="card card-navy">
             <div class="card-header">
-              <h5 class="card-title">Cadastre um novo atendimento</h5>
+              <h5 class="card-title">Novo atendimento de um contrato</h5>
             </div>
             <!-- /.card-header -->
             <!-- form start -->

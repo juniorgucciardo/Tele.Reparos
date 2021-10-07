@@ -35,10 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::DELETE('/admin/OS/excluir/{id}', [App\Http\Controllers\Admin\OsController::class, 'destroy'])->name('OS.destroy');
     Route::get('/admin/OS/getData', [App\Http\Controllers\Admin\OsController::class, 'getData'])->name('OS.getData');
     Route::get('/admin/OS/generalReport', [App\Http\Controllers\Admin\OsController::class, 'export'])->name('OS.export');
-    Route::put('/admin/changeStatus/{id}', [App\Http\Controllers\Admin\OsController::class, 'changeStatus'])->name('OS.changeStatus');
     Route::get('/admin/detalhes-contrato/{id}', [App\Http\Controllers\Admin\OsController::class, 'attedsByContract'])->name('OS.contract');
-
-
 
     //Usuários
     Route::get('/admin/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');
@@ -57,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');
     Route::get('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'edit'])->name('attend.edit');
     Route::put('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
+    Route::put('/admin/changeStatus/{id}', [App\Http\Controllers\Admin\AttendController::class, 'changeStatus'])->name('attend.changeStatus');
 
 
     //STATUS
@@ -74,6 +72,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/tipos/editar/{id}', [App\Http\Controllers\Admin\TypeController::class, 'edit'])->name('type.edit');
     Route::put('/admin/tipos/editar/{id}', [App\Http\Controllers\Admin\TypeController::class, 'update'])->name('type.update');
     Route::DELETE('/admin/tipos/excluir/{id}', [App\Http\Controllers\Admin\TypeController::class, 'destroy'])->name('type.destroy');
+
+    //SITUAÇÃO DE OS
+    Route::get('/admin/situation', [App\Http\Controllers\Admin\SituationController::class, 'index'])->name('situation');
+
 });
 
 Route::get('/', function () {

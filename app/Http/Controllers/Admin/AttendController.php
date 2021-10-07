@@ -197,4 +197,13 @@ class AttendController extends Controller
     {
         //
     }
+
+    public function changeStatus(Request $request, Attend $attend, $id){
+        $attend = Attend::findOrFail($id);
+        $attend->update([
+            'status_id' => $request->status_id
+        ]);
+
+        return redirect('admin/');
+    }
 }

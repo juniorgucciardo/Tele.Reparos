@@ -26,13 +26,18 @@ class service_order extends Model
         'status_id',
         'type_id',
         'recurrence',
-        'amount'
+        'amount',
+        'situation_id'
     ];
 
     public function service(){
 
         //ordem de serviço pertence a uma categoria de serviço
         return $this->belongsTo('App\Models\Service', 'id_service', 'id');
+    }
+
+    public function situation(){
+        return $this->belongsTo('App\Moldes\Situations', 'situation_id', 'id');
     }
 
     public function attends(){

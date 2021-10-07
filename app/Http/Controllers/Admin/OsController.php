@@ -116,6 +116,7 @@ class OsController extends Controller
                 'data_ordem' => $request->data_ordem,
                 'hora_ordem' => $request->hora_ordem,
                 'type_id' => $type,
+                'situation_id' => 3,
                 'recurrence' => $request->recurrence,
                 'amount' => $request->amount
             ]);
