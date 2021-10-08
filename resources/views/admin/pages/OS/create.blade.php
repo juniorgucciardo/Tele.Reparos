@@ -195,11 +195,11 @@ function showCheckboxes() {
                         </div>
 
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Status:</label>
-                          <select required name="status" class="form-control">
-                            <option selected disable value="">Escolha um status</option>
-                             @foreach ($status as $status)
-                              <option value="{{$status->id}}">{{$status->status_title}}</option>
+                          <label for="exampleInputEmail1">Situação:</label>
+                          <select required name="situation" class="form-control">
+                            <option selected disable value="">Escolha uma situação</option>
+                             @foreach ($situations as $situation)
+                              <option value="{{$situation->id}}">{{$situation->title}}</option>
                             @endforeach
                           </select>
                         </div>

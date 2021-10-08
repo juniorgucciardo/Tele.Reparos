@@ -37,7 +37,7 @@ class service_order extends Model
     }
 
     public function situation(){
-        return $this->belongsTo('App\Moldes\Situations', 'situation_id', 'id');
+        return $this->belongsTo('App\Models\Situation', 'situation_id', 'id');
     }
 
     public function attends(){

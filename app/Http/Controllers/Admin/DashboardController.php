@@ -35,22 +35,23 @@ class DashBoardController extends Controller
         $user = auth()->user();
         $username = $user->name; //username que vai ser usado durante a exibição do dashboard
         $username = explode(' ', $username);
-        $d1 = Carbon::now()->format('Y-m-d H:i:s');
-        $d1 = date('Y-m-d H:i:s', strtotime($d1. ' - 5 days'));
+        $d12 = Carbon::now()->format('Y-m-d H:i:s');
+        $d1 = date('Y-m-d H:i:s', strtotime($d12. ' - 2 days'));
         $d2 = date('Y-m-d H:i:s', strtotime($d1. ' + 12 days'));
 
         if(auth()->user()->hasPermissionTo('view_service_demands')){ // Verifica a permissão do usuário logado
 
-            $ordersNow =  Attend::whereHas('orders', function($q){
+            $ordersNow =  Attend::whereHas('orders', function($q){ //ordens em execução
                 $q->where('situation_id', 3);
             })->whereBetween('data_inicial', [$d1, $d2])->with('users', 'orders.service', 'orders.type')->get();
-            $ordersSolicited = Attend::whereHas('orders', function($q){
+            
+            $ordersSolicited = Attend::whereHas('orders', function($q){ //ordens solicitadas
                 $q->where('situation_id', 1);
-            })->with('users', 'orders.service', 'orders.type')->get();
-            $ordersCanceled = Attend::whereHas('orders', function($q){
-                $q->where('situation_id', 1);
-            })->with('users', 'orders.service', 'orders.type')->get();
-            dd($ordersNow->raw(), $ordersSolicited, $ordersCanceled);
+            })->whereBetween('data_inicial', [$d1, $d2])->with('orders.service', 'orders.type')->get();
+            
+            $ordersCanceled = Attend::whereHas('orders', function($q){ //ordens canceladas
+                $q->where('situation_id', 4);
+            })->whereBetween('data_inicial', [$d1, $d2])->with('users', 'orders.service', 'orders.type')->get();
 
             // relacionamento avançado (NIVEL)
 //            dd($this->repositoryOS->whereHas('user', function($query){

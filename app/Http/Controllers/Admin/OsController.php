@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Attend;
 use App\Models\Type;
+use App\Models\Situation;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,6 +33,7 @@ class OsController extends Controller
     private $repositoryType;
     private $repositoryStatus;
     private $repositoryOS;
+    private $repositorySituation;
 
     public function __construct(Service $service, service_order $service_order){
         $this->repositoryService = new Service();
@@ -39,6 +41,7 @@ class OsController extends Controller
         $this->repositoryUser = new User();
         $this->repositoryStatus = new Status();
         $this->repositoryType = new Type();
+        $this->repositorySituation = new Situation();
     }
 
 
@@ -67,13 +70,13 @@ class OsController extends Controller
         if(auth()->user()->can('view_service_demands')){
             $users = $this->repositoryUser->all();
             $services = $this->repositoryService->all();
-            $status = $this->repositoryStatus->all();
+            $situation = $this->repositorySituation->all();
             $types = $this->repositoryType->all();
             return view('admin.pages.OS.create', [
                 'users' => $users,
                 'services' => $services,
                 'types' => $types,
-                'status' => $status
+                'situations' => $situation
             ]);
         } else {
             return redirect('admin/OS');
@@ -97,10 +100,10 @@ class OsController extends Controller
                 $type = 1;
             }
 
-            if($request->status){
-                $status = $request->status;
+            if($request->situation){
+                $situation = $request->situation;
             } else {
-                $status = 1;
+                $situation = 1;
             }
 
 
@@ -116,7 +119,7 @@ class OsController extends Controller
                 'data_ordem' => $request->data_ordem,
                 'hora_ordem' => $request->hora_ordem,
                 'type_id' => $type,
-                'situation_id' => 3,
+                'situation_id' => $situation,
                 'recurrence' => $request->recurrence,
                 'amount' => $request->amount
             ]);
@@ -173,13 +176,15 @@ class OsController extends Controller
             $users = $this->repositoryUser->all();
             $services = $this->repositoryService->all();
             $types = $this->repositoryType->all();
+            $situation = $this->repositorySituation->all();
             $attends = $this->repositoryType->all();
-            $service_order = service_order::find($id);
+            $service_order = service_order::with('situation')->find($id);
             return view('admin.pages.OS.edit', [
                 'services' => $services,
                 'service_order' => $service_order,
                 'users' => $users,
                 'types' => $types,
+                'situations' => $situation
             ]);
         } else {
             return redirect('admin/OS');
@@ -214,7 +219,8 @@ class OsController extends Controller
                 'hora_ordem' => $request->hora_ordem,
                 'type_id' => $request->type,
                 'recurrence' => $request->recurrence,
-                'mounth' => $request->mounth
+                'mounth' => $request->mounth,
+                'situation_id' => $request->situation
             ]);
 
             

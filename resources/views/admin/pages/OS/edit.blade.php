@@ -12,7 +12,6 @@
 
 @section('content')
 
-
 <script>
   var expanded = false;
 
@@ -211,6 +210,23 @@ function showCheckboxes() {
                       @endforeach
                     </select>
                         </div>
+
+
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Situação:</label>
+                          <select required name="situation" class="form-control">
+                            <optgroup>
+                              <span>
+                                {{$service_order->situation->title}}
+                              </span>
+                            </optgroup>
+                             @foreach ($situations as $situation)
+                              <option value="{{$situation->id}}">{{$situation->title}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+
+
                       </div>
                     </div>
                   </div>
