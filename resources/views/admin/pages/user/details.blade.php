@@ -13,6 +13,8 @@
 @section('content')
 
 
+
+
 <style>
     .table{
         font-size: 0.86rem;
@@ -199,64 +201,34 @@
                                     <th>cliente</th>
                                     <th>Atividade</th>
                                     <th>Tipo</th>
-                                    <th>Funcionário</th>
                                     <th>Status</th>
-                                     @can('view_service_demands')
-                                        <th> Funções </th>
-                                    @endcan
                                 </tr>
                             </thead>
                             @php
                            @endphp
                             <tbody>
-                                @foreach ($user->attends as $attend)
+                                @foreach ($attends as $attend)
                                 <tr>
                                     <td>{{ $attend->id}}</td>
                                     <td>
                                         @php
-                                            echo explode(' ', $attend->data_inicial)[0]
+                                            $data = explode(' ', $attend->data_inicial)[0];
+                                            $data = date('d/m', strtotime($data));
                                         @endphp
+                                        {{$data}}
                                     </td>
                                     <td>
                                         @php
-                                            echo explode(' ', $attend->data_inicial)[1]
+                                            $hora = explode(' ', $attend->data_inicial)[1];
+                                            $hora = date('H:i', strtotime($hora));
                                         @endphp
+                                        {{$hora}}
                                     </td>
                                     <td>{{ $attend->orders->nome_cliente }}</td>
                                     <td>{{ $attend->orders->service->service_title }}</td>
                                     <td>{{$attend->orders->type->type_title}}</td>
-                                    <td>
-                                        @foreach ($attend->users as $user)
-                                            @php
-                                                $name = explode(' ', $user->name)[0];
-                                            @endphp
-                                        <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
-                                        @endforeach
-                                    </td>
+                                    
                                     <td>{{$attend->status->status_title}}</td>
-                                    @can('view_service_demands')
-                                    <td>
-                                        <div class="row d-flex nowrap">
-                                            <a href="{{route('OS.contract', $attend->orders->id)}}">
-                                                <button class="btn-sm btn-warning">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                            </a>
-                                                <a href="{{route('OS.edit', $attend->orders->id)}}">
-                                                    <button class=" btn-sm btn-primary">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                                <form action="{{ route('OS.destroy', $attend->id)}}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn-sm btn-danger" type="submit">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                        </div>
-                                        </td>
-                                    @endcan
                                 </tr>
                                @endforeach
                             </tbody>

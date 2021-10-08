@@ -37,7 +37,7 @@ class DashBoardController extends Controller
         $username = explode(' ', $username);
         $d12 = Carbon::now()->format('Y-m-d H:i:s');
         $d1 = date('Y-m-d H:i:s', strtotime($d12. ' - 2 days'));
-        $d2 = date('Y-m-d H:i:s', strtotime($d1. ' + 12 days'));
+        $d2 = date('Y-m-d H:i:s', strtotime($d1. ' + 7 days'));
 
         if(auth()->user()->hasPermissionTo('view_service_demands')){ // Verifica a permissão do usuário logado
 

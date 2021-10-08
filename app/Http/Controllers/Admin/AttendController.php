@@ -32,7 +32,10 @@ class AttendController extends Controller
     public function index()
     {
 
-        $attends = Attend::whereBetween('data_inicial', ['2021-09-30 08:00:00', '2021-10-15 18:00:00'])->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
+        //$attends = Attend::where()->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
+        $attends = Attend::whereHas('orders', function($q){
+            $q->where('situation_id', 3);
+        })->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
         return view('admin.pages.attends.index', [
             'attends' => $attends
         ]);
@@ -46,26 +49,38 @@ class AttendController extends Controller
     {
 
 
-        $attends = Attend::with('users')->with('orders.service')->with('status')->get();
+        $attends = Attend::with('users', 'orders.service')->get();
                 $collection = collect();
         
 
                 foreach($attends as $a){
                     switch ($a->orders->service->id) {
-                        case 1:
-                            $color = '#0062cc';
+                        case 1: //jardinagem
+                            $color = '#09b000';
                             break;
-                        case 2:
-                            $color = '#dc3545';
+                        case 2: //eletrico - hidraulico
+                            $color = '#b09900';
                             break;
-                        case 3:
-                            $color = '#28a745';
+                        case 3: //residencial
+                            $color = '#ff0101';
                             break;
-                        case 4:
-                            $color = '#17a2b8';
+                        case 4: //empresarial
+                            $color = '#fde100';
+                            break;
+                        case 5: //pós obra
+                            $color = '#627b80';
+                            break;
+                        case 6: //placa solar
+                            $color = '#fe9999';
+                            break;
+                        case 7: //pintura
+                            $color = '#003e47';
+                            break;    
+                        case 8: //Roçada de terreno
+                            $color = '#8fff82';
                             break;
                         default:
-                            $color = '#ffc107';
+                            $color = '#0062cc';
                             break;
                     }
                     $start_date = date($a->data_inicial);
@@ -74,9 +89,9 @@ class AttendController extends Controller
                     
                     $collection->push([
                     'title' => $a->orders->nome_cliente,
-                    'color' => $color,
                     'start' => $start_date,
-                    'end' => $end_date
+                    'end' => $end_date,
+                    'backgroundColor' => $color
                     ]);
                 }
 

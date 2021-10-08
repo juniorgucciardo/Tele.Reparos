@@ -76,10 +76,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userRepository::with('attends')->findOrFail($id);
+        $user = $this->userRepository->findOrFail($id);
+        $attends = $this->attendRepository::where('status_id', 4)
+                                          ->whereHas('users', function($q) use ($id){ $q->where('user_id', [$id]); })
+                                          ->with('orders')->with('orders.service')->get();
 
         return view('admin.pages.user.details', [
-            'user' => $user
+            'user' => $user,
+            'attends' => $attends
         ]);
     }
 

@@ -351,12 +351,12 @@
         </div>
     </div>
     <div class="card-info">
-        <div class="card card-info servicosAgendados">
+        <div class="card card-info">
             <div class="card-header">
                 <span style="text-color: #fff; font-weight:600">Serviços solicitados</span>
             </div>
             <div class="card-body">
-             <div class="row">
+             <div class="row servicosAgendados">
                   @foreach ($ordersSolicited->sortByDesc('data_ordem') as $solicited)
 
                       <div class="col-md-4 col-12">
