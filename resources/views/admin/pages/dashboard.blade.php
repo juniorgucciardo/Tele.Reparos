@@ -49,7 +49,7 @@
         }
         
         .servicesNow{
-            height: 600px;
+            height: 700px;
             overflow: scroll;
         }
 
@@ -206,7 +206,7 @@
                                       @php
                                           $hora = explode(' ', $attend->data_inicial)[1];
                                       @endphp
-                                      <span class="mx-3">{{date('h:i', strtotime($hora))}}</span>
+                                      <span class="mx-3">{{date('H:i', strtotime($hora))}}</span>
                                       <a href="{{ route('OS.contract', $attend->orders->id) }}"><span><i class=" fas fa-eye"></i></span></a>
                                   </div>
                               </div>
@@ -285,19 +285,19 @@
                       @php
                         switch ($attend->orders->service->id) {
                             case '1': //jardinagem
-                                $color = 'success';
+                                $color = 'teal';
                                 break;
                             case '2': //eletrica hidraulica
                                 $color = 'info';
                                 break;
                             case '3': //residencial
-                                $color = 'danger';
+                                $color = 'orange';
                                 break;
                             case '4': //empresarial
-                                $color = 'danger';
+                                $color = 'indigo';
                                 break;
                             case '5': //pós obra
-                                $color = 'secundary';
+                                $color = 'lightblue';
                                 break;
                             case '6': //pós obra
                                 $color = 'navy';
@@ -339,8 +339,8 @@
                              
                           </div>
                           <div class="card-footer text-left">
-                                <a href="{{url("admin/atendimentos/$attend->id")}}"><button type="button" class="btn-sm btn-outline-{{$color}}">Ver</button></a>
-                                <button type="button" class="btn-sm btn-outline-{{$color}} my-2">Alterar</button>
+                                <a href="{{route('OS.contract', $attend->orders->id)}}"><button type="button" class="btn-sm btn-outline-{{$color}}">Ver</button></a>
+                                <a href="{{route('attend.edit', $attend->id)}}"><button type="button" class="btn-sm btn-outline-{{$color}} my-2">Alterar</button></a>
                                 <button type="button" class="btn-sm btn-outline-{{$color}}">Excluir</button>
                           </div>
                           
@@ -365,7 +365,7 @@
                               <div class="card-header">
                                   <div class="row text-center">
                                       <span>
-                                        <i class="fas fa-tools mx-2"></i> {{$solicited->orders->service->service_title}}
+                                        <i class="fas fa-tools mx-2"></i> {{$solicited->service->service_title}}
                                       </span>
                                     </div>
                               </div>
@@ -373,13 +373,13 @@
                                     <div class="row">
                                         <span>
                                             <i class="far fa-user-circle"></i> 
-                                            {{$solicited->orders->nome_cliente}}
+                                            {{$solicited->nome_cliente}}
                                         </span>
                                     </div>
                                 <div class="row">
                                     @php
-                                        $data = date('d/m', strtotime($solicited->orders->data_ordem));
-                                        $hora = date('h:i', strtotime($solicited->orders->hora_ordem));
+                                        $data = date('d/m', strtotime($solicited->data_ordem));
+                                        $hora = date('h:i', strtotime($solicited->hora_ordem));
                                     @endphp
                                     <span>Data:  {{$data}} - </span><br/>
                                     <span> Hora:  {{$hora}} </span>
@@ -390,7 +390,7 @@
                                     <button type="button" class="btn btn-info">Mais detalhes</button>
                                   </div>
                                   <div class="row my-2">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$solicited->orders->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar ao prestador</button>
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$solicited->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar ao prestador</button>
 
                                   </div>
                               </div>
@@ -402,34 +402,6 @@
              </div>
         </div>
     </div>
-
-    <div class="card card-warning">
-        <div class="card-header">
-            <span>
-                <h5>Demandas pendentes</h5>
-            </span>
-        </div>
-        <div class="card-body">
-            <table>
-                <thead>
-                    <th>123</th>
-                    <th>123</th>
-                    <th>123</th>
-                    <th>123</th>
-                    <th>123</th>
-                    <th>123</th>
-                    <th>123</th>
-                </thead>
-                <tbody>
-                    <td>djlksaçlkjfa</td>
-                    <td>djlksaçlkjfa</td>
-                    <td>djlksaçlkjfa</td>
-                    <td>djlksaçlkjfa</td>
-                    <td>djlksaçlkjfa</td>
-                    <td>djlksaçlkjfa</td>
-                    <td>djlksaçlkjfa</td>
-                </tbody>
-            </table>
-        </div>
     </div>
+
 @stop

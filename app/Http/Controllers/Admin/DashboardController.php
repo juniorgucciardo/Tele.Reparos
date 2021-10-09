@@ -45,9 +45,7 @@ class DashBoardController extends Controller
                 $q->where('situation_id', 3);
             })->whereBetween('data_inicial', [$d1, $d2])->with('users', 'orders.service', 'orders.type')->get();
             
-            $ordersSolicited = Attend::whereHas('orders', function($q){ //ordens solicitadas
-                $q->where('situation_id', 1);
-            })->whereBetween('data_inicial', [$d1, $d2])->with('orders.service', 'orders.type')->get();
+            $ordersSolicited = service_order::where('situation_id', 1)->with('service', 'type')->get();
             
             $ordersCanceled = Attend::whereHas('orders', function($q){ //ordens canceladas
                 $q->where('situation_id', 4);
@@ -71,7 +69,7 @@ class DashBoardController extends Controller
         };
 
         //$service_demands = $this->repositoryOS->where('user_id', auth()->user()->id)->whereDate('data_ordem', Carbon::now()->format('y-m-d'))->with('user')->get();
-        $service_demands = $user->service_order;
+        $service_demands = $user->attends;
         
         return view('admin.pages.planos.index', [
             'username' => $username[0],

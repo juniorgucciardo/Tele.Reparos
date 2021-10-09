@@ -95,7 +95,7 @@
                             Alterar informações
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('user.update', $user->id) }}" method="POST">
+                            <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="row d-flex justify-content-between items-center">
@@ -110,10 +110,14 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="flex-column flex justify-center items-center mr-5">
-                                        <img width="120px" height="120px" class="border-md overlay border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
-                                        <button class="btn-sm bg-gradient-navy" style="color: white">Alterar</button>
+                                    <div class="flex-column flex justify-center items-center mr-5 col-md-3 col-12">
+                                        <img width="120px" height="120px" class="border-md overlay border-navy rounded-circle mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                        <div class="custom-file text-center flex-column justify-content-center items-center">
+                                            <input type="file" class="custom-file-input" name="img_itens" id="input_img_itens">
+                                            <label class="btn-sm btn-primary" for="input_img_itens">Alterar perfil</label>
+                                        </div>
                                     </div>
+                                    
     
     
                                 </div>

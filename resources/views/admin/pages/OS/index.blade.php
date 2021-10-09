@@ -40,6 +40,7 @@
                             <th>Atividade</th>
                             <th>Tipo</th>
                             <th>Cidade</th>
+                            <th>Situação</th>
                             <th>Recorrencia</th>
                             <th>Duração do contrato</th>
                              @can('view_service_demands')
@@ -56,6 +57,7 @@
                             <td>{{ $order->service->service_title}}</td>
                             <td>{{$order->type->type_title}}</td>                           
                             <td>{{ $order->cidade_cliente }}</td>
+                            <td>{{ $order->situation->title }}</td>
                             <td>{{ $order->recurrence}} dias</td>
                             <td>{{$order->attends_count}}</td>
                             @can('view_service_demands')

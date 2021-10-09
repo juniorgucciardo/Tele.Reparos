@@ -3,7 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    events: "https://telereparos.com.br/admin/getCalendario",
+    events: {
+      url: "telereparos.com.br/admin/getCalendario",
+      dataType : 'jsonp',
+      failure: function() {
+          console.log('eroo ao buscar dados');
+      }
+    },
     lang: 'pt-br',
     locale: 'pt-br',
     themeSystem: 'bootstrap',
@@ -52,3 +58,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     calendar.render();
 });
+
+
