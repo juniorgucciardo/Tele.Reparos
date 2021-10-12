@@ -9,7 +9,6 @@ use App\Models\Status;
 use App\Models\service_order;
 use Illuminate\Http\Request;
 
-
 class AttendController extends Controller
 {
     /**
@@ -94,6 +93,7 @@ class AttendController extends Controller
                     'backgroundColor' => $color
                     ]);
                 }
+                
 
                 return response()->json($collection);
 

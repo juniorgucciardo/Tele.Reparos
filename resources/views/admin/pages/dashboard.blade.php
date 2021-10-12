@@ -31,8 +31,6 @@
 
 
 
-
-
     {{-- PRELOADER --}}
     <style>
         .preloader{
