@@ -14,12 +14,9 @@
 
 <style>
     .prof_pic{
-        max-height: 100px;
-        max-width: 100px;
-         width: auto;
-        height: auto;
-        display: block;
-        overflow: hidden;
+        height: 160px;
+        width: 160px;
+        object-fit: cover
     }
 
     input[type='file'] {
@@ -57,7 +54,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row flex-column gap-3 justify-content-between">
-                                    <img alt="80x80" class="profile border-md border-navy rounded-circle my-2 mx-auto" src="/storage/{{$user->user_img}}">
+                                    <img alt="80x80" class="prof_pic border-md border-navy rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$user->user_img}}">
                                     <div class="">
                                         <strong>Nome:</strong><br>
                                         <span>{{$user->name}}</span>
@@ -122,7 +119,7 @@
                                         
                                     </div>
                                     <div class="flex-column my-1 flex justify-center items-center mr-5 col-md-3 col-12">
-                                        <img width="120px" height="120px" src="/storage/{{$user->user_img}}" class="my-3 prof_pic border-md overlay border-navy rounded-circle mx-auto" onchange="loadFile(event)" id="output" alt="user_profile">
+                                        <img width="120px" height="120px" src="/storage/usr_img/{{$user->user_img}}" class="my-3 prof_pic border-md overlay border-navy rounded-circle mx-auto" onchange="loadFile(event)" id="output" alt="user_profile">
                                         <div class="custom-file text-center flex-column justify-content-center items-center">
                                             <label for="user_img" class="btn btn-sm btn-info">Selecione</label>
                                             <input type="file" name="user_img" id="user_img" accept="image/*" onchange="loadFile(event)">
