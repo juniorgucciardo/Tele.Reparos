@@ -1,11 +1,11 @@
-
+var url_atual = window.location.href;
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     eventSources: [
       {
-        url: 'admin/getCalendario',
+        url: url_atual+'/getCalendario',
         method: 'GET',
         success: function(data) {
           return data.eventArray;
@@ -65,3 +65,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     calendar.render();
 });
+

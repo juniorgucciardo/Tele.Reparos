@@ -103,11 +103,25 @@ class UserController extends Controller
 
     public function update(Request $request, User $user, $id)
     {
-        dd($request);
+        if($request->hasFile('user_img')){
+            // Get filename with the extension
+            $filenameWithExt = $request->file('user_img')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('user_img')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('user_img')->storeAs('public/', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'default_user.png';
+        }
         $user = User::findOrFail($id);
         $user->update([
             'name' => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
+            'user_img' => $fileNameToStore
         ]);
 
         return redirect('admin/cadastros');

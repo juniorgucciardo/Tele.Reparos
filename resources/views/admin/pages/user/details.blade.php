@@ -12,10 +12,21 @@
 
 @section('content')
 
-
-
-
 <style>
+    .prof_pic{
+        max-height: 100px;
+        max-width: 100px;
+         width: auto;
+        height: auto;
+        display: block;
+        overflow: hidden;
+    }
+
+    input[type='file'] {
+  display: none
+}
+
+
     .table{
         font-size: 0.86rem;
         table-layout: fixed;
@@ -46,7 +57,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row flex-column gap-3 justify-content-between">
-                                    <img width="100px" height="100px" class="border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <img alt="80x80" class="profile border-md border-navy rounded-circle my-2 mx-auto" src="/storage/{{$user->user_img}}">
                                     <div class="">
                                         <strong>Nome:</strong><br>
                                         <span>{{$user->name}}</span>
@@ -110,16 +121,13 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="flex-column flex justify-center items-center mr-5 col-md-3 col-12">
-                                        <img width="120px" height="120px" class="border-md overlay border-navy rounded-circle mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <div class="flex-column my-1 flex justify-center items-center mr-5 col-md-3 col-12">
+                                        <img width="120px" height="120px" src="/storage/{{$user->user_img}}" class="my-3 prof_pic border-md overlay border-navy rounded-circle mx-auto" onchange="loadFile(event)" id="output" alt="user_profile">
                                         <div class="custom-file text-center flex-column justify-content-center items-center">
-                                            <input type="file" class="custom-file-input" name="img_itens" id="input_img_itens">
-                                            <label class="btn-sm btn-primary" for="input_img_itens">Alterar perfil</label>
+                                            <label for="user_img" class="btn btn-sm btn-info">Selecione</label>
+                                            <input type="file" name="user_img" id="user_img" accept="image/*" onchange="loadFile(event)">
                                         </div>
                                     </div>
-                                    
-    
-    
                                 </div>
                             
                             
@@ -244,4 +252,15 @@
 
         </div>
     </div>
+
+    <script>
+        var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+          URL.revokeObjectURL(output.src) // free memory
+        }
+      };
+    
+      </script>
 @stop
