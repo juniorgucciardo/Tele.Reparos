@@ -76,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
     //SITUAÇÃO DE OS
     Route::get('/admin/situation', [App\Http\Controllers\Admin\SituationController::class, 'index'])->name('situation');
 
+    //cadastrar imagem na OS
+    Route::post('/admin/addimage', [App\Http\Controllers\Admin\ImgContractController::class, 'store'])->name('imageContract.store');
+    Route::DELETE('/admin/excluirimagem/{id}', [App\Http\Controllers\Admin\ImgContractController::class, 'destroy'])->name('imageContract.destroy');
+
 });
 
 Route::get('/', function () {

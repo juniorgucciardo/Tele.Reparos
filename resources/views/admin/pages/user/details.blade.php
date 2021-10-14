@@ -131,7 +131,7 @@
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn-sm bg-gradient-navy " style="color: white">Salvar</button>
-                            <button class="btn-sm bg-navy disabled " style="color: white">Cancelar</button>
+                            <button type="cancel" disabled data-target="{{route('user.view', $user->id)}}" class="btn-sm bg-navy disabled " style="color: white">Cancelar</button>
 
                         </div>
                     </form>

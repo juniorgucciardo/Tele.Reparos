@@ -46,6 +46,10 @@ class service_order extends Model
         return $this->hasMany('App\Models\Attend', 'order_id');   
     }
 
+    public function img_contract(){
+        return $this->hasMany('App\Models\img_contract', 'contract_id', 'id');
+    }
+
 
     public function user(){
 

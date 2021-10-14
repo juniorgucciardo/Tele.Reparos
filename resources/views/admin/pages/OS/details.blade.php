@@ -12,7 +12,6 @@
 
 @section('content')
 
-
 <style>
     .table{
         font-size: 0.94rem;
@@ -22,6 +21,34 @@
     th{
         font-weight: 400;
     }
+
+    .os_card{
+        max-width: 200px;
+    }
+
+    .image_area{
+        flex-wrap: wrap;
+    }
+
+    .os_img{
+        width: 100%;
+        object-fit: cover
+    }
+
+    input[type='file'] {
+  display: none
+}
+
+
+    .table{
+        font-size: 0.86rem;
+        table-layout: fixed;
+        width:100%;
+    }
+    th{
+        font-weight: 400;
+    }
+
 </style>
 
     <div class="card card-navy">
@@ -127,10 +154,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="my-2">
-                                    <strong>Imagem:</strong><br>
-                                    <img class="my-2" src="http://lorempixel.com/200/100/technics/" alt="person">
+                            <strong>Imagem:</strong><br>
+                            <div class="row items-center justify-content-between">
+                                <div class="my-2 row d-flex images_area">
+                                    @foreach ($contract->img_contract as $img)
+                                    <div class="card os_card mx-1 relative col-sm-5" style="width: 18rem;">
+                                        <form action="{{ route('imageContract.destroy', $img->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-primary btn-sm absolute ml-auto">X</button>
+                                        </form>
+                                        <img class="os_pic" src="/storage/contract_img/{{$img->img_contract}}" width="200px" height="100px" alt="person">
+                                        <div class="card-body">
+                                            <details>
+                                                <summary> <p class="card-text">{{mb_strimwidth($img->description, 0, 16, "...")}}</p></summary>
+                                                <p>{{$img->description}}</p>
+                                              </details>
+                                          
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <div class="add-more my-2">
+                                    <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar imagem</button>
+                                      @include('admin.pages.modal.include_img')
+
                                 </div>
         
                             </div>

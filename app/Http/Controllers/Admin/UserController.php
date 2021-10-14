@@ -115,7 +115,7 @@ class UserController extends Controller
             // Upload Image
             $path = $request->file('user_img')->storeAs('public/usr_img', $fileNameToStore);
         } else {
-            $fileNameToStore = 'default_user.png';
+            $fileNameToStore = User::findOrFail($id)->user_img;
         }
         $user = User::findOrFail($id);
         $user->update([
@@ -123,8 +123,10 @@ class UserController extends Controller
             'email' => $request->email,
             'user_img' => $fileNameToStore
         ]);
+        
+        Alert::success('Success', 'Atualizado com sucesso');
 
-        return redirect('admin/cadastros');
+        return redirect('admin/detalhes-cadastro/'.$user->id);
     }
 
     /**

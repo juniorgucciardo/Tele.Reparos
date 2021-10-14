@@ -66,3 +66,5 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 
+
+console.log(url_atual+'/getCalendario')
