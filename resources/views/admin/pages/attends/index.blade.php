@@ -97,7 +97,7 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 </a>
-                                                <form action="{{ route('OS.destroy', $attend->id)}}" method="post">
+                                                <form action="{{ route('attend.destroy', $attend->id)}}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn-sm btn-danger" type="submit">

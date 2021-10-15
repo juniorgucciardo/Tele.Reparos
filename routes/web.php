@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'edit'])->name('attend.edit');
     Route::put('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
     Route::put('/admin/changeStatus/{id}', [App\Http\Controllers\Admin\AttendController::class, 'changeStatus'])->name('attend.changeStatus');
+    Route::DELETE('/admin/deletar/atendimento/{id}', [App\Http\Controllers\Admin\AttendController::class, 'destroy'])->name('attend.destroy');
+
 
 
     //STATUS

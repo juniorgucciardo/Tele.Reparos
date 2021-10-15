@@ -121,7 +121,8 @@ class OsController extends Controller
                 'type_id' => $type,
                 'situation_id' => $situation,
                 'recurrence' => $request->recurrence,
-                'amount' => $request->amount
+                'amount' => $request->amount,
+                'insurance' => $request->seguradora
             ]);
 
             
@@ -257,14 +258,18 @@ class OsController extends Controller
     {
 
         if(auth()->user()->can('view_service_demands')){
-            $service_order = service_order::findOrFail($id);
+
+
+             $service_order = service_order::findOrFail($id);
+
             $service_order->user()->sync($request->user_id);
-            $service_order->update([
-            'data_ordem' => $request->data_ordem,
-            'hora_ordem' => $request->hora_ordem,
-            'status_id' => $request->status_id
-        ]);
-            return redirect('admin');
+             $service_order->update([
+            'situation_id' => 1,
+             'data_ordem' => $request->data_ordem,
+             'hora_ordem' => $request->hora_ordem,
+        //     'status_id' => $request->status_id
+         ]);
+             return redirect('admin');
         } else {
             return redirect('admin');
         }
@@ -302,41 +307,4 @@ class OsController extends Controller
 
     }
 
-
-        public function getData(){
-            if(auth()->user()->can('view_service_demands')){
-                
-                $service_orders = $this->repositoryOS->all();
-                $collection = collect();
-
-                foreach($service_orders as $order){
-                    switch ($order->type_id) {
-                        case 1:
-                            $color = '#407294';
-                            break;
-                        case 2:
-                            $color = 'red';
-                            break;
-                        case 3:
-                            $color = 'yellow';
-                            break;
-                        case 4:
-                            $color = '#ffa500';
-                            break;
-                        default:
-                            $color = '#7fe5f0';
-                            break;
-                    }
-                    $start_date = $order->data_ordem;   
-                    $collection->push([
-                    'title' => $order->nome_cliente,
-                    'color' => $color,
-                    'start' => $start_date
-                
-                    ]);
-                }
-
-                return response()->json($collection);
-            }
-        }
 }

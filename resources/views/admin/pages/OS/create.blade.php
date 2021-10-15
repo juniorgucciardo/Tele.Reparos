@@ -80,7 +80,7 @@ function showCheckboxes() {
                       Informações o cliente
                     </div>
                     <div class="card-body">
-                      <div class="row">
+                      <div class="row  my-1">
                         <div class="col-md-6 col-12">
                           <label for="exampleInputEmail1">Nome do cliente</label>
                           <input required type="text" name="nome_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Nome do cliente">
@@ -101,7 +101,7 @@ function showCheckboxes() {
                       Endereço da demanda
                     </div>
                     <div class="card-body">
-                      <div class="row">
+                      <div class="row  my-1">
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Rua:</label>
                           <input required type="text" name="rua_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
@@ -115,7 +115,7 @@ function showCheckboxes() {
                           <input required type="text" name="bairro_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row  my-1">
                         <div class="col-md-8 col-12">
                           <label for="exampleInputEmail1">Cidade:</label>
                           <input required type="text" name="cidade_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
@@ -133,7 +133,7 @@ function showCheckboxes() {
                       Serviço
                     </div>
                     <div class="card-body">
-                      <div class="row">
+                      <div class="row  my-1">
                         <div class="col-md-5 col-12">
                           <label for="exampleInputEmail1">Serviço:</label>
                           <select required name="id_service" class="form-control">
@@ -151,7 +151,7 @@ function showCheckboxes() {
                           <input required type="time" name="hora_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row  my-1">
                         <div class="col-md-7 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
                           <textarea required type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
@@ -170,7 +170,7 @@ function showCheckboxes() {
                       Informações adicionais
                     </div>
                     <div class="card-body">
-                      <div class="row">
+                      <div class="row  my-1">
                         <div class="col-md-3 col-12">
                           <label for="exampleInputEmail1">FUNCIONÁRIO:</label>
                             <select required multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
@@ -180,13 +180,12 @@ function showCheckboxes() {
                               @foreach ($users as $user)
                                   <option value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
                               @endforeach
-                              <option value="">remover</option> 
                             </select>
                         </div>
 
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Tipo de serviço:</label>
-                          <select required name="type" class="form-control">
+                          <select required name="type" id="campo" class="form-control" onchange="funcao(this.value)">
                             <option selected disable value="">Escolha um tipo</option>
                             @foreach ($types as $type)
                                 <option value="{{$type->id}}">{{$type->type_title}}</option>
@@ -210,13 +209,17 @@ function showCheckboxes() {
                   </div>
 
 
-                  <div class="card card-outline card-gray shadow">
+                  
+
+                  {{-- Contrato --}}
+
+                  <div class="card card-outline card-gray shadow" id="recorrencia" type="hidden">
                     <div class="card-header shadow-sm">
                       <i class="fas fa-undo mx-1"></i>
                       Recorrência
                     </div>
                     <div class="card-body">
-                      <div class="row d-flex items-center">
+                      <div class="row my-1 d-flex items-center">
                         <div class="col-md-4 col-12">
                           <div class="form-check">
                             <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -226,12 +229,38 @@ function showCheckboxes() {
                           </div>
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Recorrência:</label>
+                          <label for="exampleInputEmail1">Recorrência :</label>
                         <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" placeholder="4 dias">
                         
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Atendimentos deste contrato:</label>
+                          <label for="exampleInputEmail1">Atendimentos deste contrato: </label>
+                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  {{-- Seguradora --}}
+
+                  <div class="card card-outline card-gray shadow" id="seguradora" type="hidden">
+                    <div class="card-header shadow-sm">
+                      <i class="fas fa-shield-alt"></i>
+                      
+                      Segurdora
+                    </div>
+                    <div class="card-body">
+                      <div class="row  my-1 d-flex items-center">
+                        
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Nome da seguradora:</label>
+                        <input type="text" name="seguradora" class="form-control" id="exempleImputServiceTitle" placeholder="Seguradora">
+                        
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Quantidade de KM's para atendimento</label>
                         <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
                         </div>
                       </div>
@@ -251,5 +280,24 @@ function showCheckboxes() {
               </div>
             </form>
     </div>
+
+    <script>
+      var recorrencia = document.getElementById("recorrencia");
+      recorrencia.hidden = true;
+      var seguradora = document.getElementById("seguradora");
+      seguradora.hidden = true;
+      
+      function funcao(value){
+        if(value == 2){
+          recorrencia.hidden = false;
+        }else if(value == 4){
+          recorrencia.hidden = true;
+          seguradora.hidden = false;
+        }else if(value == 1){
+          recorrencia.hidden = true;
+          seguradora.hidden = true;
+        }
+      }
+    </script>
 
 @stop

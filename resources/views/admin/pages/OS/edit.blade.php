@@ -25,6 +25,7 @@ function showCheckboxes() {
     expanded = false;
   }
 }
+
 </script>
 
 <style>
@@ -146,11 +147,11 @@ function showCheckboxes() {
                       </select>
                         </div>
                         <div class="col-md-3 col-12">
-                          <label for="exampleInputEmail1">DATA:</label>
+                          <label for="exampleInputEmail1">Data:</label>
                       <input type="datetime" name="data_ordem" class="form-control" id="exempleImputServiceTitle" value="{{ $service_order->data_ordem }}">
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">HORA:</label>
+                          <label for="exampleInputEmail1">Hora:</label>
                       <input type="datetime" name="hora_ordem" class="form-control" id="exempleImputServiceTitle" value="{{ $service_order->hora_ordem }}">
                         </div>
                       </div>
@@ -195,7 +196,7 @@ function showCheckboxes() {
 
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Tipo de serviço:</label>
-                    <select name="type" class="form-control">
+                    <select name="type" class="form-control" id="valor">
                       <option selected value="{{$service_order->type->id}}">
                         @php
                             if(isset($service_order->type->type_title)){
@@ -273,5 +274,6 @@ function showCheckboxes() {
               </div>
             </form>
     </div>
+
 
 @stop

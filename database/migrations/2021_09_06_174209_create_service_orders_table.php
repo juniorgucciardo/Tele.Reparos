@@ -15,22 +15,23 @@ class CreateServiceOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            // Essa parte sera desacoplada do código
             $table->string('nome_cliente');
             $table->string('rua_cliente');
-            $table->string('numero_cliente');
+            $table->char('numero_cliente', 10);
             $table->string('bairro_cliente');
             $table->string('cidade_cliente');
-            $table->string('contato_cliente');
+            $table->string('contato_cliente')->nullable();
             // ======= //
 
-            //Nessa tabela só ficaram: data inicial, recorrencia, id_cliente, id_serviço, eventos[], e tipo de serviço
-            $table->string('descricao_servico');
+            $table->string('descricao_servico')->nullable();
             $table->date('data_ordem');
             $table->time('hora_ordem');
             $table->boolean('is_recurrent')->nullable();
-            $table->integer('recurrence');
-            $table->integer('amount');
+            $table->integer('recurrence')->nullable();
+            $table->integer('amount')->nullable();
+            $table->char('insurance', 15)->nullable();
+            
+            
 
            
 

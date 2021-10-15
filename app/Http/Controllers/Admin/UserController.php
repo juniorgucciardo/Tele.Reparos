@@ -75,10 +75,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userRepository->findOrFail($id);
+        $user = $this->userRepository->with('reviewsAboutMe.ownerReview')->findOrFail($id);
         $attends = $this->attendRepository::where('status_id', 4)
                                           ->whereHas('users', function($q) use ($id){ $q->where('user_id', [$id]); })
-                                          ->with('reviewsAboutMe.ownerReview')
                                           ->with('orders')
                                           ->with('orders.service')
                                           ->get();

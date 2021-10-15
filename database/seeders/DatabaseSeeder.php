@@ -121,28 +121,52 @@ class DatabaseSeeder extends Seeder
             'service_title' => 'Limpeza Empresarial',
             'service_description' => 'lorem ipsun dolor si amet'
         ]);
+
         Service::create([
             'id' => 5,
+            'service_title' => 'Limpeza de piscina',
+            'service_description' => 'lorem ipsun dolor si amet'
+        ]);
+
+        Service::create([
+            'id' => 6,
             'service_title' => 'Limpeza Pós Obra',
             'service_description' => 'lorem ipsun dolor si amet'
         ]);
+
+
         Service::create([
-            'id' => 6,
+            'id' => 7,
             'service_title' => 'Limpeza de placa solar',
             'service_description' => 'lorem ipsun dolor si amet'
         ]);
 
         Service::create([
-            'id' => 7,
+            'id' => 8,
             'service_title' => 'Pintura',
             'service_description' => 'lorem ipsun dolor si amet'
         ]);
 
         Service::create([
-            'id' => 8,
+            'id' => 9,
             'service_title' => 'Roçada de terreno',
             'service_description' => 'lorem ipsun dolor si amet'
         ]);
+
+        Service::create([
+            'id' => 10,
+            'service_title' => 'Limpeza de vidros e calçadas',
+            'service_description' => 'lorem ipsun dolor si amet'
+        ]);
+
+        Service::create([
+            'id' => 11,
+            'service_title' => 'Limpeza de caixa de água',
+            'service_description' => 'lorem ipsun dolor si amet'
+        ]);
+
+
+        
 
         Situation::create([
             'id' => 1,
@@ -167,6 +191,8 @@ class DatabaseSeeder extends Seeder
             'title' => 'Cancelado',
             'description' => 'Serviço solicitado pelo cliente'
         ]);
+
+        
 
 
 

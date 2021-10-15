@@ -76,6 +76,9 @@
 
 
 
+
+
+
      {{-- RESUMO --}}
 
      <div class="absolute">
@@ -205,7 +208,7 @@
                                           $hora = explode(' ', $attend->data_inicial)[1];
                                       @endphp
                                       <span class="mx-3">{{date('H:i', strtotime($hora))}}</span>
-                                      <a href="{{ route('OS.contract', $attend->orders->id) }}"><span><i class=" fas fa-eye"></i></span></a>
+                                      <a href="{{ route('OS.contract', $attend->orders->id) }}"><span title="Visualizar informações deste serviço"><i class=" fas fa-eye"></i></span></a>
                                   </div>
                               </div>
                           </div>
@@ -221,7 +224,7 @@
                                                 @php
                                                     $name = explode(' ', $user->name);
                                                 @endphp
-                                                <a href="{{route('user.view', $user->id)}}"><span class="badge badge-{{$statusColor}}">{{$name[0]}}</span></a>
+                                                <a href="{{route('user.view', $user->id)}}"><span class="badge badge-{{$statusColor}}" title="Visualizar prestador">{{$name[0]}}</span></a>
                                               @endforeach
                                               
                                           </div>
@@ -230,10 +233,10 @@
                                   <div class="ml-auto flex-column">
                                       
                                       <span class="bg-gradient-{{$statusColor}} rounded px-1">{{mb_strimwidth($attend->status->status_title, 0, 16, "...")}}</span>
-                                      <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
+                                      <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" title="Alterar prestador e status" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
                                       @include('admin.pages.modal.status-modal')
-                                      <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#osDetails{{$attend->orders->id}}" data-whatever="@getbootstrap"><i class="fas fa-info-circle"></i></button>
-                                      @include('admin.pages.modal.osDetails')
+                                      <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{route('attend.edit', $attend->id)}}" title="Editar Registro"><i class="fas fa-edit"></i></a>
+                                      
 
 
                                   </div>
@@ -385,11 +388,11 @@
                               </div>
                               <div class="card-footer">
                                   <div class="row">
-                                    <button type="button" class="btn btn-info">Mais detalhes</button>
+                                    <a href="{{route('OS.edit', $solicited->id)}}"><button type="button" class="btn btn-info">Mais detalhes</button></a>
                                   </div>
                                   <div class="row my-2">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$solicited->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar ao prestador</button>
-
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$solicited->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar a nossa agenda</button>
+                                    @include('admin.pages.modal.send-modal')
                                   </div>
                               </div>
                           </div>

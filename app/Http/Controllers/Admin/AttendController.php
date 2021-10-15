@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Status;
 use App\Models\service_order;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AttendController extends Controller
 {
@@ -48,7 +49,9 @@ class AttendController extends Controller
     {
 
 
-        $attends = Attend::with('users', 'orders.service')->get();
+        $attends = Attend::whereHas('orders', function($q){
+            $q->where('situation_id', 3);
+        })->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
                 $collection = collect();
         
 
@@ -140,6 +143,7 @@ class AttendController extends Controller
         ]);
 
         $attend->users()->sync($request->user_id);
+
     }
 
     /**
@@ -199,7 +203,8 @@ class AttendController extends Controller
         ]);
 
         $attend->users()->sync($request->user_id);
-        return redirect('admin/atendimentos');
+        Alert::success('Successo', 'Atualizado com sucesso');
+        return redirect('admin/');
     }
 
     /**
@@ -208,9 +213,13 @@ class AttendController extends Controller
      * @param  \App\Models\Attend  $attend
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attend $attend)
+    public function destroy(Attend $attend, $id)
     {
-        //
+        $attend = Attend::findOrFail($id);
+        $attend->destroy($id);
+
+        Alert::success('Successo', 'Deletado com sucesso');
+        return redirect()->back();
     }
 
     public function changeStatus(Request $request, Attend $attend, $id){
@@ -221,6 +230,7 @@ class AttendController extends Controller
 
         $attend->users()->sync($request->user_id);
 
-        return redirect('admin/');
+        Alert::success('Successo', 'Atualizado com sucesso');
+        return redirect()->back();
     }
 }

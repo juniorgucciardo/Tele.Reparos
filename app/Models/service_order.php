@@ -27,7 +27,8 @@ class service_order extends Model
         'type_id',
         'recurrence',
         'amount',
-        'situation_id'
+        'situation_id',
+        'insurance'
     ];
 
     public function service(){
