@@ -158,11 +158,11 @@
                             <div class="row items-center justify-content-between">
                                 <div class="my-2 row d-flex images_area">
                                     @foreach ($contract->img_contract as $img)
-                                    <div class="card os_card mx-1 relative col-sm-5" style="width: 18rem;">
+                                    <div class="card os_card mx-1 relative col-sm-12" style="width: 18rem;">
                                         <form action="{{ route('imageContract.destroy', $img->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-primary btn-sm absolute ml-auto">X</button>
+                                            <button type="submit" class="btn btn-danger btn-sm absolute ml-auto"><i class="fas fa-trash"></i></button>
                                         </form>
                                         <img class="os_pic" src="/storage/contract_img/{{$img->img_contract}}" width="200px" height="100px" alt="person">
                                         <div class="card-body">

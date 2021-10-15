@@ -12,6 +12,7 @@
 
 @section('content')
 
+
 <style>
     .prof_pic{
         height: 160px;
@@ -142,46 +143,34 @@
                             Avaliações
                         </div>
                         <div class="card-body">
+                            @foreach ($user->reviewsAboutMe as $review)
                             <div class="post">
                                 <div class="user-block">
-                                    <img width="100px" height="100px" class=" border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
+                                    <img width="100px" height="100px" class=" border-md border-navy rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$review->ownerReview->user_img}}" alt="person">
                                   <span class="username">
-                                    <a href="#">{{$user->name}}</a>
+                                    <a href="#">{{$review->ownerReview->name}}</a>
                                   </span>
-                                  <span class="description">Publicado às - {{explode(' ', $user->attends[0]->data_inicial)[1]}} PM | dia {{explode(' ', $user->attends[0]->data_inicial)[0]}}</span>
+                                  <span class="description">Publicado às - {{explode(' ', $review->created_at)[1]}} PM | dia {{explode(' ', $review->created_at)[0]}}</span>
                                 </div>
                                 <!-- /.user-block -->
                                 <p>
-                                  Lorem ipsum represents a long-held tradition for designers,
-                                  typographers and the like. Some people hate it and argue for
-                                  its demise, but others ignore.
+                                  {{$review->content}}
                                 </p>
           
                                 <p>
                                   <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Ver anexos</a>
+                                  <form action="{{ route('reviews.destroy', $review->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm ml-auto"><i class="fas fa-trash"> Excluir</i></button>
+                                </form>
                                 </p>
                               </div>
-                              <div class="post">
-                                <div class="user-block">
-                                    <img width="100px" height="100px" class=" border-md border-navy rounded-circle my-2 mx-auto" src="https://thispersondoesnotexist.com/image" alt="person">
-                                  <span class="username">
-                                    <a href="#">{{$user->name}}</a>
-                                  </span>
-                                  <span class="description">Publicado às - {{explode(' ', $user->attends[2]->data_inicial)[1]}} PM | dia {{explode(' ', $user->attends[2]->data_inicial)[0]}}</span>
-                                </div>
-                                <!-- /.user-block -->
-                                <p>
-                                  Lorem ipsum represents a long-held tradition for designers,
-                                  typographers and the like. Some people hate it and argue for
-                                  its demise, but others ignore.
-                                </p>
-          
-                                <p>
-                                  <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                                </p>
-                              </div>
-                              
+                            @endforeach                              
+                            <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar avaliação</button>
+                            @include('admin.pages.modal.include_review')
                         </div>
+                        
                     </div>
 
                     

@@ -90,7 +90,7 @@ class AttendController extends Controller
                     'title' => $a->orders->nome_cliente,
                     'start' => $start_date,
                     'end' => $end_date,
-                    'backgroundColor' => $color
+                    'color' => $color
                     ]);
                 }
                 

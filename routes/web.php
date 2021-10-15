@@ -80,6 +80,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/addimage', [App\Http\Controllers\Admin\ImgContractController::class, 'store'])->name('imageContract.store');
     Route::DELETE('/admin/excluirimagem/{id}', [App\Http\Controllers\Admin\ImgContractController::class, 'destroy'])->name('imageContract.destroy');
 
+
+    //reviews
+    Route::get('/admin/reviews', [App\Http\Controllers\Admin\ReviewController::class, 'index'])->name('reviews');
+    Route::post('/admin/reviews/add', [App\Http\Controllers\Admin\ReviewController::class, 'store'])->name('reviews.store');
+    Route::DELETE('/admin/reviews/delete/{id}', [App\Http\Controllers\Admin\ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+
 });
 
 Route::get('/', function () {

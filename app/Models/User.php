@@ -41,6 +41,14 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Attend', 'attend_user');
     }
 
+    public function myReviews(){
+        return $this->hasMany('App\Models\Review', 'author_id', 'id');
+    }
+
+    public function reviewsAboutMe(){
+        return $this->hasMany('App\Models\Review', 'rated_id', 'id');
+    }
+
 
 
     /**

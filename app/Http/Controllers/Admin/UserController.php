@@ -34,7 +34,6 @@ class UserController extends Controller
 
     public function index()
     {
-
         $users = $this->userRepository->all();
         return view('admin.pages.user.index', [
             'users' => $users
@@ -79,7 +78,10 @@ class UserController extends Controller
         $user = $this->userRepository->findOrFail($id);
         $attends = $this->attendRepository::where('status_id', 4)
                                           ->whereHas('users', function($q) use ($id){ $q->where('user_id', [$id]); })
-                                          ->with('orders')->with('orders.service')->get();
+                                          ->with('reviewsAboutMe.ownerReview')
+                                          ->with('orders')
+                                          ->with('orders.service')
+                                          ->get();
 
         return view('admin.pages.user.details', [
             'user' => $user,
