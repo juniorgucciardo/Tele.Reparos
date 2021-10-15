@@ -94,6 +94,7 @@ class OsController extends Controller
     {
 
         if(auth()->user()->can('view_service_demands')){
+
             if($request->type){
                 $type = $request->type;
             } else {
@@ -103,7 +104,7 @@ class OsController extends Controller
             if($request->situation){
                 $situation = $request->situation;
             } else {
-                $situation = 1;
+                $situation = 3;
             }
 
 
@@ -125,16 +126,28 @@ class OsController extends Controller
                 'insurance' => $request->seguradora
             ]);
 
+
+            if($request->recurrence){
+                $recurrence = $request->recurrence;
+            } else {
+                $recurrence = 1;
+            }
+
+            if($request->amount){
+                $amount = $request->amount;
+            } else {
+                $amount = 1;
+            }
             
 
             $data = $request->data_ordem;
             $hora = $request->hora_ordem;
 
-            $add_days = '+'.$request->recurrence.' days';
+            $add_days = '+'.$recurrence.' days';
             $hora_start = date('Y-m-d H:i:s', strtotime($data.$hora));
             $hora_end = date('Y-m-d H:i:s', strtotime($hora_start. '+4 hours'));
             
-            for ($i=0; $i < $request->amount; $i++){
+            for ($i=0; $i < $amount; $i++){
                 $a = Attend::create([
                     'order_id' => $service_order->id,
                     'data_inicial' => $hora_start,
