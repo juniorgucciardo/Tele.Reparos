@@ -55,8 +55,7 @@
         <div class="card-header">
             Informações
             @can('view_service_demands')
-            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Imprimir informações</button></a>
-            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
+            <a href="{{ route('user.create') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
             @endcan
         </div>
         <div class="card-body">
@@ -257,17 +256,12 @@
                                     @can('view_service_demands')
                                     <td>
                                         <div class="row d-flex nowrap">
-                                            <a href="{{url("admin/OS/editar/$attend->id")}}">
-                                                <button class="btn-sm btn-warning">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                            </a>
                                                 <a href="{{ route('attend.edit' ,$attend->id) }}">
                                                     <button class=" btn-sm btn-primary">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 </a>
-                                                <form action="{{ route('OS.destroy', $attend->id)}}" method="post">
+                                                <form action="{{ route('attend.destroy', $attend->id)}}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn-sm btn-danger" type="submit">

@@ -68,6 +68,9 @@ function showCheckboxes() {
             </div>
             <!-- /.card-header -->
             <!-- form start -->
+            <div class="card">
+              <a href="{{ route('attend.create') }}" class="btn">Este atendimento pertence a um contrato ja cadastrado?</a>
+            </div>
             <form action="{{ route('OS.create') }}" method="POST">
               @csrf
               <div class="card-body">
@@ -87,7 +90,7 @@ function showCheckboxes() {
                         </div>
                         <div class="col-md-6 col-12">
                           <label for="exampleInputEmail1">Contato:</label>
-                          <input required type="text" name="contato_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Contato do cliente">
+                          <input type="text" name="contato_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Contato do cliente">
                         </div>
                       </div>
                     </div>
@@ -154,7 +157,7 @@ function showCheckboxes() {
                       <div class="row  my-1">
                         <div class="col-md-7 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
-                          <textarea required type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
+                          <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
                         </div>
                       </div>
                     </div>
@@ -173,7 +176,7 @@ function showCheckboxes() {
                       <div class="row  my-1">
                         <div class="col-md-3 col-12">
                           <label for="exampleInputEmail1">FUNCIONÁRIO:</label>
-                            <select required multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
+                            <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
                             selecione
                             ">
     

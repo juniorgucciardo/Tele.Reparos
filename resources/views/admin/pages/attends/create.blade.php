@@ -25,6 +25,12 @@ function showCheckboxes() {
   }
 }
 
+$(document).ready(function () {
+      $('#select_order').selectize({
+          sortField: 'text'
+      });
+  });
+
 
 </script>
 
@@ -140,7 +146,6 @@ function showCheckboxes() {
                               @foreach ($users as $user)
                                   <option value="{{$user->id}}">{{explode(' ', $user->name)[0]}}</option> 
                               @endforeach
-                              <option value="">remover</option> 
                             </select>
                         
                       </div>
