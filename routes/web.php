@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
     Route::put('/admin/changeStatus/{id}', [App\Http\Controllers\Admin\AttendController::class, 'changeStatus'])->name('attend.changeStatus');
     Route::DELETE('/admin/deletar/atendimento/{id}', [App\Http\Controllers\Admin\AttendController::class, 'destroy'])->name('attend.destroy');
+    Route::get('/admin/atendimentos/detalhes/{id}', [App\Http\Controllers\Admin\AttendController::class, 'show'])->name('attend.show');
 
 
 
@@ -87,6 +88,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/reviews', [App\Http\Controllers\Admin\ReviewController::class, 'index'])->name('reviews');
     Route::post('/admin/reviews/add', [App\Http\Controllers\Admin\ReviewController::class, 'store'])->name('reviews.store');
     Route::DELETE('/admin/reviews/delete/{id}', [App\Http\Controllers\Admin\ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+
+    //status_log
+    Route::get('/admin/atendimentos/novolog/', [App\Http\Controllers\Admin\StatusLogController::class, 'create'])->name('log.create');
+    Route::post('/admin/atendimentos/novolog/', [App\Http\Controllers\Admin\StatusLogController::class, 'store'])->name('log.store');
+    Route::get('/admin/atendimentos/editlog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'edit'])->name('log.edit');
+    Route::put('/admin/atendimentos/editlog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'update'])->name('log.update');
+    Route::DELETE('/admin/atendimentos/deletelog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'destroy'])->name('log.destroy');
 
 
 });

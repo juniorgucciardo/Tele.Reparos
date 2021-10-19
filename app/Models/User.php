@@ -49,6 +49,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Review', 'rated_id', 'id');
     }
 
+    public function statusLogs(){
+        return $this->hasMany('App\Models\StatusLog', 'user_id');
+    }
+
 
 
     /**

@@ -34,8 +34,8 @@
         </div>
         <div class="card-body">
 
-
-                        <table id="table" class="table table-striped">
+                
+                        <table id="table" width="100%" class="table display nowrap table-striped">
                             <thead>
                                 <tr>
                                     <th>id</th>

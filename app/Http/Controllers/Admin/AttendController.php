@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Attend;
 use App\Models\User;
 use App\Models\Status;
+use App\Models\StatusLog;
 use App\Models\service_order;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
 
 class AttendController extends Controller
 {
@@ -21,12 +23,14 @@ class AttendController extends Controller
     private $repositoryOrder;
     private $repositoryUser;
     private $repositoryStatus;
+    private $repositoryStatusLog;
 
     public function __construct()
     {
         $this->repositoryOrder = new service_order(); 
         $this->repositoryUser = new User();
         $this->repositoryStatus = new Status();
+        $this->repositoryStatusLog = new StatusLog();
     }
 
     public function index()
@@ -152,9 +156,14 @@ class AttendController extends Controller
      * @param  \App\Models\Attend  $attend
      * @return \Illuminate\Http\Response
      */
-    public function show(Attend $attend)
+    public function show(Attend $attend, $id)
     {
-        //
+        $attend = Attend::with('statusLogs.user')->find($id);
+        
+
+        return view('admin.pages.attends.show', [
+            'attend' => $attend
+        ]);
     }
 
     /**
@@ -224,9 +233,37 @@ class AttendController extends Controller
 
     public function changeStatus(Request $request, Attend $attend, $id){
         $attend = Attend::findOrFail($id);
+
         $attend->update([
             'status_id' => $request->status_id
         ]);
+
+        if($request->status_id == 3){
+            $color = 'warning';
+        } else if($request->status_id == 4){
+            $color = 'success';
+        } else if($request->status_id == 5){
+            $color = 'danger';
+        }else if($request->status_id == 6){
+            $color = 'danger';
+        } else {
+            $color = 'info';
+        }
+
+        $status = Status::findOrFail($request->status_id);
+        
+        $string = 'status alterado para '.$status->status_title;
+
+        $statusLog = $this->repositoryStatusLog->create([
+            'content' => $string,
+            'color' => $color,
+            'title' => 'alteração de status',
+            'type' => 1, //alteração de status
+            'user_id' => Auth::user()->id,
+            'attend_id' => $attend->id
+        ]);
+
+
 
         $attend->users()->sync($request->user_id);
 

@@ -138,6 +138,8 @@
                     </form>
                     </div>
 
+                    {{-- POSTS, AVALIAÇÕES --}}
+
                     <div class="card card-navy card-outline shadow">
                         <div class="card-header">
                             Avaliações
@@ -146,7 +148,7 @@
                             @foreach ($user->reviewsAboutMe as $review)
                             <div class="post">
                                 <div class="user-block">
-                                    <img width="100px" height="100px" class=" border-md border-navy rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$review->ownerReview->user_img}}" alt="person">
+                                    <img width="100px" height="100px" class="prof_pic border-md border-navy rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$review->ownerReview->user_img}}" alt="person">
                                   <span class="username">
                                     <a href="#">{{$review->ownerReview->name}}</a>
                                   </span>

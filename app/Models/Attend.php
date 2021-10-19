@@ -32,4 +32,8 @@ class Attend extends Model
     public function status(){
         return $this->belongsTo('App\Models\Status', 'status_id', 'id');
     }
+
+    public function statusLogs(){
+        return $this->hasMany('App\Models\StatusLog', 'attend_id');
+    }
 }
