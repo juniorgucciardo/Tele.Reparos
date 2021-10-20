@@ -98,6 +98,10 @@ Route::middleware(['auth'])->group(function () {
     Route::DELETE('/admin/atendimentos/deletelog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'destroy'])->name('log.destroy');
 
 
+    Route::DELETE('/admin/atendimentos/deleteimg/{id}', [App\Http\Controllers\Admin\ImgLogController::class, 'destroy'])->name('imglog.destroy');
+    Route::post('/admin/atendimentos/detalhes', [App\Http\Controllers\Admin\ImgLogController::class, 'store'])->name('imglog.store');
+
+
 });
 
 Route::get('/', function () {

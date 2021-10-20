@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\ImgLog;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class ImgLogController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,7 +36,36 @@ class ImgLogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->hasFile('img_log')){
+            try {
+                $filenameWithExt = $request->file('img_log')->getClientOriginalName();
+                // Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('img_log')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore= $filename.'_'.time().'.'.$extension;
+                // Upload Image
+                $path = $request->file('img_log')->storeAs('public/log_img', $fileNameToStore);
+
+                
+                
+                $img_log = ImgLog::create([
+                    'img_log' => $fileNameToStore,
+                    'statuslog_id' => $request->id
+                ]);
+
+                return redirect()->back();
+                
+
+            } catch (\Throwable $th) {
+                Session::flash('problema no upload da imagem');
+                return redirect()->back();
+            }
+        } else {
+            Session::flash('nenhuma imagem encontrada');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -78,8 +108,10 @@ class ImgLogController extends Controller
      * @param  \App\Models\ImgLog  $imgLog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ImgLog $imgLog)
+    public function destroy(ImgLog $imgLog, $id)
     {
-        //
+        $img = $imgLog::findOrFail($id);
+        $img->destroy($id);
+        return redirect()->back();
     }
 }

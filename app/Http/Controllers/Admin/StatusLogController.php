@@ -44,7 +44,7 @@ class StatusLogController extends Controller
         //cadastrar apenas comentario
 
         try {
-            StatusLog::create([
+            $log = StatusLog::create([
                 'title' => $request->title,
                 'content' => $request->content,
                 'color' => $request->color,
@@ -68,11 +68,12 @@ class StatusLogController extends Controller
                 $fileNameToStore= $filename.'_'.time().'.'.$extension;
                 // Upload Image
                 $path = $request->file('img_log')->storeAs('public/log_img', $fileNameToStore);
+
                 
                 try {
                     $img_log = ImgLog::create([
                         'img_log' => $fileNameToStore,
-                        'statuslog_id' => $request->attend_id
+                        'statuslog_id' => $log->id
                     ]);
                 } catch (\Throwable $th) {
                     dd($th);
@@ -134,10 +135,14 @@ class StatusLogController extends Controller
      */
     public function destroy(StatusLog $statusLog, $id)
     {
-        $log = StatusLog::findOrFail($id);
-        $log->destroy($id);
+       try {
+            $log = StatusLog::findOrFail($id);
+            $log->destroy($id);
 
-        return redirect()->back();
+            return redirect()->back();
+       } catch (\Throwable $th) {
+           //throw $th;
+       }
 
     }
 

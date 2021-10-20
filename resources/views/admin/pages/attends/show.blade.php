@@ -58,8 +58,8 @@
             <p class="block">{{$log->content}}</p>
             <div class="row flex-row d-flex">
                 @foreach ($log->img as $img)
-                    <div class="card shadow-md os_card mx-1 relative col-sm-3 col-12">
-                        <form action="" method="post">
+                    <div class="card shadow-md os_card mx-1 relative col-sm-3 col-12" height="200px">
+                        <form action="{{route('imglog.destroy', $img->id)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm absolute ml-auto"><i class="fas fa-trash"></i></button>
@@ -68,13 +68,14 @@
                     </div>
                 @endforeach
             </div>
-
             <div class="row d-flex items-center">
                 <a href="{{route('user.view', $log->user->id)}}"><img width="35" height="35" class="mx-2 prof_pic border-md rounded-circle my-2" src="/storage/usr_img/{{$log->user->user_img}}" alt="person"></a>
                 <div>
                     <span class="description block text-sm"><a href="{{route('user.view', $log->user->id)}}">{{$log->user->name}}</a></span>
                     <span class="description block text-sm">Atualizado em - {{ date('H:i A', strtotime(explode(' ', $log->created_at)[1])) }} dia {{ date('d/m', strtotime(explode(' ', $log->created_at)[0])) }}</span>
                 </div>
+                <button class="mx-3 btn btn-info m-10" data-toggle="modal" data-target="#addimage{{$log->id}}"><i class="fas fa-camera"></i></button>
+                @include('admin.pages.modal.addimage')
             </div>
             <div class="btn-group block" style="position: absolute; top: 0; right: 0;">
                 <form action="{{route('log.destroy', $log->id)}}" method="post">

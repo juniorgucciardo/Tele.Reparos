@@ -234,13 +234,17 @@
                                     <td>{{ $attend->id}}</td>
                                     <td>
                                         @php
-                                            echo explode(' ', $attend->data_inicial)[0]
-                                        @endphp
+                                        $data = explode(' ', $attend->data_inicial)[0];
+                                        $data = date('d/m/Y', strtotime($data));
+                                    @endphp
+                                    {{$data}}
                                     </td>
                                     <td>
                                         @php
-                                            echo explode(' ', $attend->data_inicial)[1]
-                                        @endphp
+                                        $hora = explode(' ', $attend->data_inicial)[1];
+                                        $hora = date('h:i', strtotime($hora));
+                                    @endphp
+                                    {{$hora}}
                                     </td>
                                     <td>{{ $attend->orders->service->service_title }}</td>
                                     <td>
@@ -255,6 +259,11 @@
                                     @can('view_service_demands')
                                     <td>
                                         <div class="row d-flex nowrap">
+                                                <a href="{{ route('attend.show' ,$attend->id) }}">
+                                                    <button class=" btn-sm btn-warning">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </a>
                                                 <a href="{{ route('attend.edit' ,$attend->id) }}">
                                                     <button class=" btn-sm btn-primary">
                                                         <i class="fas fa-edit"></i>
