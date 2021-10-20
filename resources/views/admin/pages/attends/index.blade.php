@@ -85,8 +85,8 @@
                                     <td>{{$attend->status->status_title}}</td>
                                     @can('view_service_demands')
                                     <td>
-                                        <div class="row d-flex nowrap">
-                                            <a href="{{ route('OS.contract',$attend->orders->id) }}">
+                                        <div class="btn-group">
+                                            <a href="{{ route('attend.show',$attend->id) }}">
                                                 <button class="btn-sm btn-warning">
                                                     <i class="fas fa-eye"></i>
                                                 </button>

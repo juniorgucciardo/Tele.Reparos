@@ -47,7 +47,7 @@
         }
         
         .servicesNow{
-            height: 700px;
+            height: 760px;
             overflow: scroll;
         }
 
@@ -161,7 +161,6 @@
             <div class="card card-info shadow-sm">
                 <div class="card-header">
                   <span style="text-color: #fff; font-weight:600">Atividades em andamento hoje, {{date('d/m', strtotime($firstdate));}} 
-                    <a href="/admin/atendimentos"><button type="button" class="mx-1 btn-sm btn-outline-light shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><span><i class=" fas fa-eye mx-1"></i></span>Ver tudo</button></span></a>
                 </div>
                 <div class="card-body servicesNow">
                     {{-- laço dos cards --}}
@@ -169,6 +168,9 @@
                         $d1 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '01:00:00'));
                         $d2 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '18:00:00'));
                     @endphp
+
+                    <a href="/admin/atendimentos"><button type="button" class="mb-3 btn btn-info shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><span><i class=" fas fa-eye mx-1"></i></span>Ver tudo</button></span></a>
+
 
                   @foreach ($attendsNow->whereBetween('data_inicial', [$d1, $d2]) as $attend)
                   
@@ -208,7 +210,7 @@
                                           $hora = explode(' ', $attend->data_inicial)[1];
                                       @endphp
                                       <span class="mx-3">{{date('H:i', strtotime($hora))}}</span>
-                                      <a href="{{ route('OS.contract', $attend->orders->id) }}"><span title="Visualizar informações deste serviço"><i class=" fas fa-eye"></i></span></a>
+                                      <a href="{{ route('attend.show', $attend->id) }}"><span title="Visualizar informações deste serviço"><i class=" fas fa-eye"></i></span></a>
                                   </div>
                               </div>
                           </div>
@@ -233,9 +235,12 @@
                                   <div class="ml-auto flex-column">
                                       
                                       <span class="bg-gradient-{{$statusColor}} rounded px-1">{{mb_strimwidth($attend->status->status_title, 0, 16, "...")}}</span>
-                                      <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" title="Alterar prestador e status" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
-                                      @include('admin.pages.modal.status-modal')
-                                      <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{route('attend.edit', $attend->id)}}" title="Editar Registro"><i class="fas fa-edit"></i></a>
+                                      <div class="btn-group">
+                                        <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" title="Alterar prestador e status" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
+                                        @include('admin.pages.modal.status-modal')
+                                        <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{route('attend.edit', $attend->id)}}" title="Editar Registro"><i class="fas fa-edit"></i></a>
+                                        <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{ route('OS.contract', $attend->orders->id) }}" title="Informações desse atendimento"><i class="fas fa-info"></i></a>
+                                      </div>
                                       
 
 
@@ -258,9 +263,10 @@
             <div class="card-info shadow-sm bg-light">
                 <div class="card-header">
                     Calendário 
-                    <a href="{{route('OS.create')}}"><button type="button" class="mx-1 btn-sm btn-outline-light shadow-md"><i class="fas fa-truck-moving mx-1"></i>Novo Atendimento</button></a>
+                    
                 </div>
                 <div class="card-body">
+                    <a href="{{route('OS.create')}}"><button type="button" class="mb-3 btn btn-info shadow-md"><i class="fas fa-truck-moving mx-1"></i>Novo Atendimento</button></a>
                     <div id="calendar"></div>
                 </div>
             </div>

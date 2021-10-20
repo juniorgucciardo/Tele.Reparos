@@ -7,7 +7,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="{{ route('log.store') }}" method="POST">
+            <form action="{{ route('log.store') }}" method="POST" enctype='multipart/form-data'>
               @csrf
                 <div class="form-group">
                   
@@ -15,19 +15,19 @@
 
                   {{-- Endereço da demanda --}}
 
-                      <div class="card-body p-3">
-                        <div class="row mx-auto">
-                            <div class="col-md-3 col-12">
-                              <label for="exampleInputEmail1">Titulo:</label>
-                              <input type="text" name="title" class="form-control" id="exempleImputServiceTitle" placeholder="Titulo">
+                      <div class="card-body p-3" style="color: #000">
+                        <div class="d-flex flex-column gap-3 mx-auto">
+                            <div class="col-md-5 col-12">
+                              Titulo:
+                              <input type="text" name="title" class="form-control" id="titulo" placeholder="Titulo">
+                            </div>
+                            <div class="col-md-6 col-12 my-2">
+                                Descrição:
+                                <input type="text" name="content" class="form-control" id="descricao" placeholder="Descrição">
                             </div>
                             <div class="col-md-4 col-12">
-                                <label for="exampleInputEmail1">Descrição:</label>
-                                <input type="text" name="description" class="form-control" id="exempleImputServiceTitle" placeholder="Descrição">
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <label for="exampleFormControlSelect1">Color</label>
-                                    <select name="color" class="form-control" id="exampleFormControlSelect1">
+                                Color
+                                    <select name="color" class="form-control" id="color">
                                         <option value="info">
                                             <div class="bg-success">Azul</div>
                                         </option>
@@ -41,18 +41,17 @@
                                             <div class="bg-success">vermelho</div>
                                         </option>
                                     </select>
-                            </div>  
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                              <label for="user_img" class="btn btn-sm btn-info">Adicionar imagem</label>
+                              <input type="file" name="img_log" id="user_img" accept="image/*" onchange="loadFile(event)">
+                              <img width="120px" height="120px" src="https://www.madeireiraestrela.com.br/images/joomlart/demo/default.jpg" class="my-3" onchange="loadFile(event)" id="output" alt="">
+                          </div>
+
+                            <input type="hidden" name="attend_id" value="{{$attend->id}}">
                           </div>
                       </div>
 
-
-
-                
-
-
-                  
-                
-                
               </div>
               <!-- /.card-body -->
 
@@ -65,3 +64,14 @@
       </div>
     </div>
   </div>
+
+  <script>
+    var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+
+  </script>

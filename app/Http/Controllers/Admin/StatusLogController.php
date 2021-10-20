@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\StatusLog;
+use App\Models\ImgLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Session;
 
 class StatusLogController extends Controller
 {
@@ -36,7 +40,56 @@ class StatusLogController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+
+        //cadastrar apenas comentario
+
+        try {
+            StatusLog::create([
+                'title' => $request->title,
+                'content' => $request->content,
+                'color' => $request->color,
+                'type' => 2,
+                'user_id' => Auth::user()->id,
+                'attend_id' => $request->attend_id,
+            ]);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+
+
+        if($request->hasFile('img_log')){
+            try {
+                $filenameWithExt = $request->file('img_log')->getClientOriginalName();
+                // Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('img_log')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore= $filename.'_'.time().'.'.$extension;
+                // Upload Image
+                $path = $request->file('img_log')->storeAs('public/log_img', $fileNameToStore);
+                
+                try {
+                    $img_log = ImgLog::create([
+                        'img_log' => $fileNameToStore,
+                        'statuslog_id' => $request->attend_id
+                    ]);
+                } catch (\Throwable $th) {
+                    dd($th);
+                }
+
+            } catch (\Throwable $th) {
+                Session::flash('problema no upload da imagem');
+                return redirect()->back();
+            }
+        } else {
+            Session::flash('nenhuma imagem encontrada');
+            return redirect()->back();
+        }
+
+
+
+
     }
 
     /**
@@ -79,8 +132,29 @@ class StatusLogController extends Controller
      * @param  \App\Models\StatusLog  $statusLog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StatusLog $statusLog)
+    public function destroy(StatusLog $statusLog, $id)
     {
-        //
+        $log = StatusLog::findOrFail($id);
+        $log->destroy($id);
+
+        return redirect()->back();
+
+    }
+
+    public function addImage(StatusLog $statusLog, $id){
+        try {
+            $log = $statusLog::findOrFail($id);
+            try {
+                $img_log = ImgLog::create([
+                    'img_log' => $fileNameToStore,
+                    'statuslog_id' => $log->id
+                ]);
+            } catch (\Throwable $th) {
+                dd($th);
+            }
+
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }

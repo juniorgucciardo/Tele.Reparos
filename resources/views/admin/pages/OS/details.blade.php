@@ -168,8 +168,7 @@
                                             <details>
                                                 <summary> <p class="card-text">{{mb_strimwidth($img->description, 0, 16, "...")}}</p></summary>
                                                 <p>{{$img->description}}</p>
-                                              </details>
-                                          
+                                            </details>
                                         </div>
                                     </div>
                                     @endforeach

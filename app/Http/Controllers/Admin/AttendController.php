@@ -158,8 +158,7 @@ class AttendController extends Controller
      */
     public function show(Attend $attend, $id)
     {
-        $attend = Attend::with('statusLogs.user')->find($id);
-        
+        $attend = Attend::with('statusLogs.user', 'statusLogs.img')->find($id);
 
         return view('admin.pages.attends.show', [
             'attend' => $attend

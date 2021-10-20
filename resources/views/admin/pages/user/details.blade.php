@@ -152,7 +152,7 @@
                                   <span class="username">
                                     <a href="#">{{$review->ownerReview->name}}</a>
                                   </span>
-                                  <span class="description">Publicado às - {{explode(' ', $review->created_at)[1]}} PM | dia {{explode(' ', $review->created_at)[0]}}</span>
+                                  <span class="description">Publicado às - {{ date('H:i A', strtotime(explode(' ', $review->created_at)[1])) }} dia {{ date('d/m', strtotime(explode(' ', $review->created_at)[0])) }}</span>
                                 </div>
                                 <!-- /.user-block -->
                                 <p>

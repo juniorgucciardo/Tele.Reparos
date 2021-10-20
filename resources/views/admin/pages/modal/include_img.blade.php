@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label for="user_img" class="btn btn-sm btn-info">Selecione</label>
                 <input type="file" name="img_contract" id="user_img" accept="image/*" onchange="loadFile(event)">
-                <img width="120px" height="120px" src="" class="my-3" onchange="loadFile(event)" id="output" alt="">
+                <img width="120px" height="120px" src="https://www.madeireiraestrela.com.br/images/joomlart/demo/default.jpg" class="my-3" onchange="loadFile(event)" id="output" alt="">
             </div>
         </div>
         <input type="hidden" name="id" value="{{$contract->id}}" >

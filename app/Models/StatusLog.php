@@ -26,4 +26,8 @@ class StatusLog extends Model
         return $this->belongsTo('App\Models\Attend', 'attend_id');
     }
 
+    public function img(){
+        return $this->hasMany('App\Models\ImgLog', 'statuslog_id');
+    }
+
 }

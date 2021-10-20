@@ -22,11 +22,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class OsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
 
     private $repositoryService;
     private $repositoryUser;
@@ -60,11 +56,7 @@ class OsController extends Controller
         return view('admin.pages.OS.index', compact('service_orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         if(auth()->user()->can('view_service_demands')){
@@ -84,12 +76,6 @@ class OsController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -167,23 +153,7 @@ class OsController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\service_order  $os
-     * @return \Illuminate\Http\Response
-     */
-    public function show(service_order $service_order)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\service_order  $os
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(service_order $service_order, $id)
     {
         if(auth()->user()->can('view_service_demands')){
@@ -205,13 +175,7 @@ class OsController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\service_order  $os
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, service_order $service_order, $id)
     {
 
@@ -249,12 +213,7 @@ class OsController extends Controller
         
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\service_order  $os
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(service_order $service_order, $id)
     {
         if(auth()->user()->can('view_service_demands')){
