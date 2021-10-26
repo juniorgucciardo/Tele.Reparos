@@ -178,7 +178,7 @@
                         <div class="card-body p-4">
                             <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{$post->category}}</div>
                             <a class="text-decoration-none link-dark stretched-link" href="{{route('post.show', $post->slug)}}"><h5 class="card-title mb-3">Dicas de jardinagem</h5></a>
-                            <p class="card-text mb-0">{{mb_strimwidth($post->content, 0, 145, "...");}}</p>
+                            <p class="card-text mb-0">{{ mb_strimwidth($post->content, 0, 145, "...") }}</p>
                         </div>
                         <div class="card-footer px-2 py-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">

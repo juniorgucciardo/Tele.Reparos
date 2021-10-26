@@ -101,6 +101,11 @@ Route::middleware(['auth'])->group(function () {
     Route::DELETE('/admin/atendimentos/deleteimg/{id}', [App\Http\Controllers\Admin\ImgLogController::class, 'destroy'])->name('imglog.destroy');
     Route::post('/admin/atendimentos/detalhes', [App\Http\Controllers\Admin\ImgLogController::class, 'store'])->name('imglog.store');
 
+    Route::get('/admin/blog', [App\Http\Controllers\PostController::class, 'index'])->name('blog.admin');
+    Route::get('/admin/blog/novo', [App\Http\Controllers\PostController::class, 'create'])->name('blog.create');
+    Route::post('/admin/blog/novo', [App\Http\Controllers\PostController::class, 'store'])->name('blog.store');
+
+
 
 });
 
@@ -126,8 +131,6 @@ Route::get('/blog', function () {
     return view('pages.blog-post');
 })->name('blog');
 
-
-Route::get('/admin/atendimentos/editlog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'edit'])->name('log.edit');
 
 Route::get('/blog/{slug}', [App\Http\Controllers\PostController::class, 'show'])->name('post.show');
 

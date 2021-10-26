@@ -12,9 +12,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
-        //
+        $posts = $post::all();
+        return view('admin.pages.blog.index', [
+            'posts' => $posts
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.blog.create');
     }
 
     /**
@@ -35,7 +38,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
