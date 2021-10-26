@@ -104,9 +104,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::get('/', function () {
-    return view('site');
-})->name('web');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('web');
 
 Route::get('/sobre-nos', function () {
     return view('pages.about');
@@ -124,7 +122,7 @@ Route::get('/contato', function () {
     return view('pages.contact');
 })->name('contact');
 
-Route::get('/blog-post', function () {
+Route::get('/blog', function () {
     return view('pages.blog-post');
 })->name('blog');
 
@@ -133,13 +131,6 @@ Route::get('/admin/atendimentos/editlog/{id}', [App\Http\Controllers\Admin\Statu
 
 Route::get('/blog/{slug}', [App\Http\Controllers\PostController::class, 'show'])->name('post.show');
 
-
-
-
-
-Route::get('/home', function () {
-    return view('site');
-});
 
 Auth::routes(['register' => true]);
 

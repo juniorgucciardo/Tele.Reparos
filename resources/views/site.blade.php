@@ -171,71 +171,29 @@
                 </div>
             </div>
             <div class="row gx-5">
+                @foreach ($posts as $post)
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                        <img class="card-img-top" style="object-fit: cover;" width="600" height="150" src="/storage/blog/{{$post->img_post}}" alt="..." />
                         <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">Jardinagem</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="{{route('blog')}}"><h5 class="card-title mb-3">Dicas de jardinagem</h5></a>
-                            <p class="card-text mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quis natus deserunt eveniet. Veritatis ad, corporis aliquid officia inventore</p>
+                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{$post->category}}</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="{{route('post.show', $post->slug)}}"><h5 class="card-title mb-3">Dicas de jardinagem</h5></a>
+                            <p class="card-text mb-0">{{mb_strimwidth($post->content, 0, 145, "...");}}</p>
                         </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                        <div class="card-footer px-2 py-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                    <img class="rounded-circle mx-2 prof_pic" width="40" height="40"  src="/storage/usr_img/{{$post->user->user_img}}" alt="..." />
                                     <div class="small">
-                                        <div class="fw-bold">Tele Reparos</div>
-                                        <div class="text-muted">Outubro 12, 2021 &middot; 6 min leitura</div>
+                                        <div class="fw-bold">{{$post->user->name}}</div>
+                                        <div class="text-muted">Publicado dia {{ date('d/m', strtotime(explode(' ', $post->created_at)[0])) }} às - {{ date('H:i A', strtotime(explode(' ', $post->created_at)[1])) }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
-                        <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">Pós Obra</div>
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">Calçadas</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="{{route('blog')}}"><h5 class="card-title mb-3">Limpeza de calçada</h5></a>
-                            <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                    <div class="small">
-                                        <div class="fw-bold">Tele Reparos</div>
-                                        <div class="text-muted">Outubro 23, 2021 &middot; 4 min leitura</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
-                        <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">Pintura</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="{{route('blog')}}"><h5 class="card-title mb-3">Dicas e truques para trabalhar com pintura</h5></a>
-                            <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                    <div class="small">
-                                        <div class="fw-bold">Tele Reparos</div>
-                                        <div class="text-muted">Outubro 2, 2021 &middot; 10 min leitura</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                @endforeach
             <!-- Call to action-->
             <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                 <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">

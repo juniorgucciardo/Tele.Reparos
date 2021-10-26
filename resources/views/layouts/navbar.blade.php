@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark-blue fixed-top overflor-hidden">
                 
     <div class="container px-5">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{route('web')}}">
             <div class="brand d-flex flex-row align-items-center">
-                <img width="45px" height="45px" src="assets/brand.png" alt="">
+                <img width="45px" height="45px" src="{{asset('assets/brand.png')}}" alt="">
                 <div class="mx-2">
                     <span class="block">Tele</span>
                     <span class="text-green">Reparos</span>

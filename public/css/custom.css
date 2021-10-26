@@ -19,6 +19,11 @@
   color: #28a745;
 }
 
+.prof_pic{
+  object-fit: cover;
+
+}
+
 
 header .overlay{
     height: 350px;

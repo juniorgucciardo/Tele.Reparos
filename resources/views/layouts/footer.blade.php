@@ -3,7 +3,7 @@
         <div class="row gy-4 gx-5">
             <div class="col-lg-3 col-md-3">
                 <div class="my-2 brand d-flex flex-row align-items-center">
-                    <img width="45px" height="45px" src="assets/brand.png" alt="">
+                    <img width="45px" height="45px" src="{{asset('assets/brand.png')}}" alt="">
                     <div class="mx-2">
                         <span class="block text-light h4" style="font-weight: 600;">Tele</span><br>
                         <span class="text-green h4" style="font-weight: 600;">Reparos</span>
