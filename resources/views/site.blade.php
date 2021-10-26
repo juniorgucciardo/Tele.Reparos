@@ -116,9 +116,9 @@
                         </div>
                         <div class="col-md-4">
                             <div class="card"> <i class="fa fa-quote-left u-color"></i>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
+                                <p>...Quero dar os parabéns a equipe, principalmente ao supervisor. o pessoal não foi embora enquanto não deu fim as folhas e as gramas. trabalho de excelência</p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="user-about"> <span class="font-weight-bold d-block">Mike Vincent</span> <span class="u-color">Designer | Developer</span>
+                                    <div class="user-about"> <span class="font-weight-bold d-block">Rodrigo dos S.</span> <span class="u-color">Cliente</span>
                                         <div class="d-flex flex-row mt-1"> <i class="fa fa-star u-color"></i> <i class="fa fa-star u-color"></i> <i class="fa fa-star u-color"></i> <i class="fa fa-star u-color"></i> <i class="fa fa-star-o u-color"></i> </div>
                                     </div>
                                     <div class="user-image"> <img src="http://lorempixel.com/20/20/people/" class="rounded-circle" width="50"> </div>

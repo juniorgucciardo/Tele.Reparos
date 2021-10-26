@@ -53,6 +53,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\StatusLog', 'user_id');
     }
 
+    public function Posts(){
+        return $this->hasMany('App\Models\Post', 'user_id', 'id');
+    }
+
 
 
     /**

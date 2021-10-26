@@ -129,6 +129,13 @@ Route::get('/blog-post', function () {
 })->name('blog');
 
 
+Route::get('/admin/atendimentos/editlog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'edit'])->name('log.edit');
+
+Route::get('/blog/{slug}', [App\Http\Controllers\PostController::class, 'show'])->name('post.show');
+
+
+
+
 
 Route::get('/home', function () {
     return view('site');
