@@ -74,7 +74,7 @@
                     <span class="description block text-sm"><a href="{{route('user.view', $log->user->id)}}">{{$log->user->name}}</a></span>
                     <span class="description block text-sm">Atualizado em - {{ date('H:i A', strtotime(explode(' ', $log->created_at)[1])) }} dia {{ date('d/m', strtotime(explode(' ', $log->created_at)[0])) }}</span>
                 </div>
-                <button class="mx-3 btn btn-info m-10" data-toggle="modal" data-target="#addimage{{$log->id}}"><i class="fas fa-camera"></i></button>
+                <button class="mx-3 btn btn-outline-info m-10" data-toggle="modal" data-target="#addimage{{$log->id}}"><i class="fas fa-camera"></i></button>
                 @include('admin.pages.modal.addimage')
             </div>
             <div class="btn-group block" style="position: absolute; top: 0; right: 0;">

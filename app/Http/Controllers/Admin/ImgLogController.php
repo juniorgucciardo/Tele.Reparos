@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ImgLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ImgLogController extends Controller
 {

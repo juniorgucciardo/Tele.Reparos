@@ -106,7 +106,30 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/', function () {
     return view('site');
-});
+})->name('web');
+
+Route::get('/sobre-nos', function () {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/planos', function () {
+    return view('pages.plans');
+})->name('plans');
+
+Route::get('/faq', function () {
+    return view('pages.faq');
+})->name('faq');
+
+Route::get('/contato', function () {
+    return view('pages.contact');
+})->name('contact');
+
+Route::get('/blog-post', function () {
+    return view('pages.blog-post');
+})->name('blog');
+
+
+
 Route::get('/home', function () {
     return view('site');
 });

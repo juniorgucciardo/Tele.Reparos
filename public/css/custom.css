@@ -1,0 +1,320 @@
+.bg-dark-blue{
+    background-color: #0a223e;
+}
+
+.text-green{
+    color: #28a745;
+}
+
+.sub-text{
+    opacity: 0.75;
+}
+
+.header-text{
+  font-weight: 600;
+    font-size: 3rem;
+}
+
+.card-darker i{
+  color: #28a745;
+}
+
+
+header .overlay{
+    height: 350px;
+    width: 350px;
+    background: url('../assets/brand.png');
+    background-size: cover;
+    position: absolute;
+    right: 20px;
+    top: 80px;
+    opacity: 1;
+    z-index: 0;
+}
+
+.brand{
+    font-family: 'rockwell';
+    font-weight: 600;
+}
+
+header{
+    position: relative;
+    background: rgb(25,89,164);
+background: linear-gradient(90deg, rgba(25,89,164,1) 0%, rgba(10,34,62,1) 100%);
+    margin-top: 50px;
+}
+
+.container-m {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px
+}
+
+.card {
+    background-color: #fff;
+    padding: 15px;
+    border: none;
+    height: 250px;
+    margin-top: 10px
+}
+
+.u-color {
+    color: #28a745
+}
+
+.user-image img {
+    border: 3px solid #0d6efd;
+    padding: 2px
+}
+
+@font-face {
+font-family: 'rockwell';
+src: url('/dist/assets/fonts/rockwell-std-bold.otf');
+src: url('fontname.eot?#iefix') format('embedded-opentype'), url('fontname.woff') format('woff');
+}
+
+
+
+.BlueGlow-btn{
+    transition: 0.3s all ease-in-out;
+    padding: 14px 25px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: large;
+    background: linear-gradient(60deg, #00b4ff, #61caf6);  
+    border-radius: 20px;
+    box-shadow: rgba(97, 202, 246, 0.4) 0px 8px 30px;
+  }
+  .BlueGlow-btn:hover{
+    color: rgba(255, 255, 255, 1);
+    background: linear-gradient(60deg, #00b3fe, #00b4ff);
+    box-shadow: rgba(97, 202, 246, 0.8) 0px 4px 30px;
+  }
+
+  header{
+      position: relative;
+  }
+
+  .header-content{
+      z-index: 100;
+      position: relative;
+      display: block;
+  }
+
+
+#particles-js{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0px;
+}
+
+#particles-js-bubble{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0px;
+}
+
+
+
+
+  /* cards -  serviços*/
+
+
+  body{margin-top:20px;}
+
+/* Feature Box
+---------------------*/
+.feature-box-1 {
+  padding: 32px;
+  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+  margin: 15px 0;
+  position: relative;
+  z-index: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  -moz-transition: ease all 0.35s;
+  -o-transition: ease all 0.35s;
+  -webkit-transition: ease all 0.35s;
+  transition: ease all 0.35s;
+  top: 0;
+}
+.feature-box-1 * {
+  -moz-transition: ease all 0.35s;
+  -o-transition: ease all 0.35s;
+  -webkit-transition: ease all 0.35s;
+  transition: ease all 0.35s;
+}
+.feature-box-1 .icon {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  background: #28a745;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 50%;
+  margin-bottom: 22px;
+  font-size: 27px;
+}
+.feature-box-1 .icon i {
+  line-height: 70px;
+}
+.feature-box-1 h5 {
+  color: #0a223e;
+  font-weight: 600;
+}
+.feature-box-1 p {
+  margin: 0;
+}
+.feature-box-1:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  border-radius: 10px;
+  width: 0;
+  background: #0a223e;
+  z-index: -1;
+  -moz-transition: ease all 0.35s;
+  -o-transition: ease all 0.35s;
+  -webkit-transition: ease all 0.35s;
+  transition: ease all 0.35s;
+}
+.feature-box-1:hover {
+  top: -5px;
+}
+.feature-box-1:hover h5 {
+  color: #ffffff;
+}
+.feature-box-1:hover p {
+  color: rgba(255, 255, 255, 0.8);
+}
+.feature-box-1:hover:after {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  left: 0;
+  right: auto;
+}
+.section {
+    padding: 100px 0;
+    position: relative;
+}
+.section-title {
+    padding-bottom: 45px;
+}
+.section-title h2 {
+    font-weight: 700;
+    color: #0a223e;
+    font-size: 45px;
+    margin: 0 0 15px;
+    border-left: 5px solid #28a745;
+    padding-left: 15px;
+}
+
+.plan-one {
+  margin: 0 0 20px 0;
+  width: 100%;
+  position: relative;
+}
+
+.plan-card {
+  background: #fff;
+  margin-bottom: 30px;
+  transition: .5s;
+  position: relative;
+  width: 100%;
+}
+
+.plan-one .pricing-- {
+  padding: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.plan-one .pricing-header .plan-title {
+  font-size: 1.2rem;
+  color: #ffffff;
+  padding: 10px 0;
+  font-weight: 600;
+  margin: 0;
+}
+
+.plan-one .pricing-header .plan-cost {
+  color: #ffffff;
+  padding: 15px 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.plan-one .pricing-header .plan-save {
+  color: #ffffff;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+
+
+.plan-one .plan-features {
+  border: 1px solid #e6ecf3;
+  border-top: 0;
+  border-bottom: 0;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.plan-one .plan-features li {
+  padding: 10px 15px 10px 40px;
+  margin: 5px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+  line-height: 100%;
+}
+
+.plan-one .plan-footer {
+  border: 1px solid #e6ecf3;
+  border-top: 0;
+  background: #ffffff;
+  -webkit-border-radius: 0 0 10px 10px;
+  -moz-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+  padding: 10px 0 30px 0;
+}
+
+@media (max-width: 767px) {
+  .plan-one .pricing-header {
+      text-align: center;
+  }
+  .plan-one .pricing-header i {
+      display: block;
+      float: none;
+      margin-bottom: 20px;
+  }
+}
+
+  
+  
+  
+
+
+
+@media screen and (max-width: 990px){
+    header .overlay{
+        display: none;
+    }
+}
