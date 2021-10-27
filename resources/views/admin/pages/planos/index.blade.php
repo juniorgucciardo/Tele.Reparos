@@ -59,55 +59,79 @@
             <div class="col-md-10 col-sm-0 col-12 mx-auto"> 
 
 
-                @foreach ($service_demands->sortByDesc('data_ordem') as $order)
-                <div class="card card-outline card-success">
-                    <div class="card-header">
-                        <div class="row">
-                            <span class="info-box-text">Cliente: {{ $order->nome_cliente }}</span>
-                            <span> </span>
-                            <span class="info-box-text ml-auto">Responsáveis: 
-                                @php
-                                    if(isset($order->user)){
-                                    foreach ($order->user as $user){
-                                        echo $user->name;
-                                        echo '. ';
-                                    }
-                               }
-                                @endphp
-                            </span>
+                @foreach ($service_demands->sortByDesc('data_ordem') as $attend)
+                @php
+                        switch ($attend->status->id) {
+                            case '1': //solicitado
+                                $statusColor = 'secondary';
+                                break;
+                            case '2': //agendado
+                                $statusColor = 'info';
+                                break;
+                            case '3': //execução
+                                $statusColor = 'primary';
+                                break;
+                            case '4': //concluido
+                                $statusColor = 'success';
+                                break;
+                            case '5': //atrasado
+                                $statusColor = 'warning';
+                                break;
+                            case '6': //cancelado
+                                $statusColor = 'danger';
+                                break;
+                            default:
+                                $statusColor = 'primary';
+                                break;
+                            }
+                    @endphp
+                      <div class="card card-outline card-{{$statusColor}} shadow rounded">
+                          <div class="card-header">
+                              <div class="d-flex d-flex-row justify-content-between">
+                                  <span>{{$attend->orders->service->service_title}}</span>
+                                  <div>
+                                      @php
+                                          $hora = explode(' ', $attend->data_inicial)[1];
+                                      @endphp
+                                      <span class="mx-3">{{date('H:i', strtotime($hora))}}</span>
+                                      <a href="{{ route('attend.show', $attend->id) }}"><span title="Visualizar informações deste serviço"><i class=" fas fa-eye"></i></span></a>
+                                  </div>
+                              </div>
                           </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            
-                            <div class="col-md-1 col-sm-1 col-2"> 
-                                <h1><i class="fas fa-seedling"></i></h1>
-                            </div>
-                            <div class="col-md-11 col-sm-11 col-10"> 
-                                <div class="row">
-                                    <span class="info-box-number">
-                                        @php
-                                        $data = date('d/m', strtotime($order->data_ordem));
-                                        $hora = date('h:m', strtotime($order->hora_ordem));
-                                        @endphp
-                                        <span>Data: </span>{{$data}}
-                                        <span> - Hora: </span>{{$hora}}
-                                    </span>
-                                </div>
-                                <div class="row">
-                                    <span>
-                                        Endereço do cliente
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <button type="button" class="btn btn-outline-success">Mais detalhes</button>
-                        </div>
-                    </div>
-                </div>
+                          <div class="card-body">
+                              <div class="d-flex d-flex-row justify-content-between">
+                                  <div class="mr-auto flex-column w-100">
+                                      <div>
+                                          Cliente: <span>{{mb_strimwidth($attend->orders->nome_cliente, 0, 16, "...")}}</span>
+                                      </div>
+                                      <div>
+                                          <div class="flex-row">  
+                                              @foreach ($attend->users as $user)
+                                                @php
+                                                    $name = explode(' ', $user->name);
+                                                @endphp
+                                                <a href="{{route('user.view', $user->id)}}"><span class="badge badge-{{$statusColor}}" title="Visualizar prestador">{{$name[0]}}</span></a>
+                                              @endforeach
+                                              
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="ml-auto flex-column">
+                                      
+                                      <span class="bg-gradient-{{$statusColor}} rounded px-1">{{mb_strimwidth($attend->status->status_title, 0, 16, "...")}}</span>
+                                      <div class="btn-group">
+                                        <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" title="Alterar prestador e status" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
+                                        @include('admin.pages.modal.status-modal')
+                                        <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{route('attend.edit', $attend->id)}}" title="Editar Registro"><i class="fas fa-edit"></i></a>
+                                        <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{ route('OS.contract', $attend->orders->id) }}" title="Informações desse atendimento"><i class="fas fa-info"></i></a>
+                                      </div>
+                                      
+
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                   
             @endforeach
 

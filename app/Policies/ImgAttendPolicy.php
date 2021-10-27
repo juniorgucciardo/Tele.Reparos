@@ -23,7 +23,7 @@ class ImgAttendPolicy
         
     }
 
-    public function isAdmin(Attend $atend, StatusLog $log, $id){
-        return UserAuth::user()->id === Attend::findOrFail($id);
+    public function isAdmin($id){
+        return Auth::user()->id === StatusLog::findOrFail($id)->select('user_id')->get();
     }
 }

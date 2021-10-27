@@ -83,7 +83,7 @@
                                         @endforeach
                                     </td>
                                     <td>{{$attend->status->status_title}}</td>
-                                    @can('view_service_demands')
+                                    
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ route('attend.show',$attend->id) }}">
@@ -91,6 +91,7 @@
                                                     <i class="fas fa-eye"></i>
                                                 </button>
                                             </a>
+                                            @can('view_service_demands')
                                                 <a href="{{url("admin/atendimentos/editar/$attend->id")}}">
                                                     <button class=" btn-sm btn-primary">
                                                         <i class="fas fa-edit"></i>
@@ -103,9 +104,10 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
+                                            @endcan
                                         </div>
                                         </td>
-                                    @endcan
+                                    
                                 </tr>
                                @endforeach
                             </tbody>

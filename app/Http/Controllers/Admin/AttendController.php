@@ -158,7 +158,7 @@ class AttendController extends Controller
      */
     public function show(Attend $attend, $id)
     {
-        $attend = Attend::with('statusLogs.user', 'statusLogs.img')->find($id);
+        $attend = Attend::with('statusLogs.user', 'statusLogs.img')->with('users')->find($id);
 
         return view('admin.pages.attends.show', [
             'attend' => $attend
@@ -269,4 +269,6 @@ class AttendController extends Controller
         Alert::success('Successo', 'Atualizado com sucesso');
         return redirect()->back();
     }
+
+    
 }
