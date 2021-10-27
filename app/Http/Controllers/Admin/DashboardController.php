@@ -12,6 +12,8 @@ use App\Models\service_order;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class DashBoardController extends Controller
@@ -69,11 +71,18 @@ class DashBoardController extends Controller
         };
 
         //$service_demands = $this->repositoryOS->where('user_id', auth()->user()->id)->whereDate('data_ordem', Carbon::now()->format('y-m-d'))->with('user')->get();
-        $service_demands = $user->attends;
+        $attends = Attend::whereHas('users', function($q){
+            $q->where('user_id', '=', auth()->user()->id);
+        })
+        ->with('status')
+        ->get();
+
+        $status = $this->repositoryStatus->all();
         
         return view('admin.pages.planos.index', [
             'username' => $username[0],
-            'service_demands' => $service_demands
+            'service_demands' => $attends,
+            'status' => $status
         ]);
 
     }

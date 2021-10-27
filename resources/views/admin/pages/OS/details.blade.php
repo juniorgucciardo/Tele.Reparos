@@ -174,8 +174,10 @@
                                     @endforeach
                                 </div>
                                 <div class="add-more my-2">
-                                    <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar imagem</button>
-                                      @include('admin.pages.modal.include_img')
+                                   @can('view_service_demands')
+                                        <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar imagem</button>
+                                        @include('admin.pages.modal.include_img')
+                                   @endcan
 
                                 </div>
         

@@ -89,7 +89,8 @@ class StatusLogController extends Controller
         }
 
 
-
+        Session::flash('cadastrado com sucesso');
+        return redirect()->back();
 
     }
 

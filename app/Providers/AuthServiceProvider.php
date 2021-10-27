@@ -16,7 +16,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Models\StatusLog' => 'App\Policies\StatusLogPolicy',
-        'App\Models\ImgLog' => 'App\Policies\ImgLog'
+        'App\Models\ImgLog' => 'App\Policies\ImgLog',
+        'App\Models\Attend' => 'App\Policies\AttendPolicy'
     ];
 
     /**

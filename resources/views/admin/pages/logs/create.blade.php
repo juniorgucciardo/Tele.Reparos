@@ -57,7 +57,7 @@
 
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary shadow">Cadastrar</button>
-                <a class="btn btn-secondary shadow" href="{{ route('attend.show', $attend->id); }}" role="button">Voltar</a> 
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
               </div>
             </form>
         </div>

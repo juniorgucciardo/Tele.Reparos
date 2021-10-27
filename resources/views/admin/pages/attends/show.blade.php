@@ -6,12 +6,11 @@
 @section('content_header')
 <h5>
     <i class="fas fa-truck-moving mx-1"></i>
-    Atendimento n {{$attend->id}}
+    {{$attend->orders->nome_cliente}} - {{$attend->orders->service->service_title}} | {{ date('d/m', strtotime(explode(' ', $attend->data_inicial)[1])) }}
   </h5>
 @stop
 
 @section('content')
-
 
 
 
@@ -38,8 +37,10 @@
         <span color="#fff"><i class="mx-1 fas fa-history"></i>Histórico de atualizações</span>
     </div>
     <div class="card-body">
+        @can('viewAny', $attend)
         <button class="btn btn-info m-10" data-toggle="modal" data-target="#create">Adicionar atualização</button>
         @include('admin.pages.logs.create')
+        @endcan
 
 
         @foreach ($attend->statusLogs->sortByDesc('created_at') as $log)

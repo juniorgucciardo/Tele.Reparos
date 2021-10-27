@@ -110,7 +110,12 @@
                                                 @php
                                                     $name = explode(' ', $user->name);
                                                 @endphp
-                                                <a href="{{route('user.view', $user->id)}}"><span class="badge badge-{{$statusColor}}" title="Visualizar prestador">{{$name[0]}}</span></a>
+                                                <a  @can('view_service_demands')
+                                                        href="{{route('user.view', $user->id)}}"
+                                                    @endcan
+                                                ><span class="badge badge-{{$statusColor}}" @can('view_service_demands')
+                                                title="Visualizar prestador"
+                                                @endcan>{{$name[0]}}</span></a>
                                               @endforeach
                                               
                                           </div>
@@ -122,7 +127,9 @@
                                       <div class="btn-group">
                                         <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" title="Alterar prestador e status" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
                                         @include('admin.pages.modal.status-modal')
-                                        <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{route('attend.edit', $attend->id)}}" title="Editar Registro"><i class="fas fa-edit"></i></a>
+                                        @can('view_service_demands')
+                                            <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{route('attend.edit', $attend->id)}}" title="Editar Registro"><i class="fas fa-edit"></i></a>
+                                        @endcan
                                         <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{ route('OS.contract', $attend->orders->id) }}" title="Informações desse atendimento"><i class="fas fa-info"></i></a>
                                       </div>
                                       
