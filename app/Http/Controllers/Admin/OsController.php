@@ -81,19 +81,6 @@ class OsController extends Controller
 
         if(auth()->user()->can('view_service_demands')){
 
-            if($request->type){
-                $type = $request->type;
-            } else {
-                $type = 1;
-            }
-
-            if($request->situation){
-                $situation = $request->situation;
-            } else {
-                $situation = 3;
-            }
-
-
             $service_order = service_order::create([
                 'nome_cliente' => $request->nome_cliente,
                 'rua_cliente' => $request->rua_cliente,
@@ -105,46 +92,42 @@ class OsController extends Controller
                 'id_service' => $request->id_service,
                 'data_ordem' => $request->data_ordem,
                 'hora_ordem' => $request->hora_ordem,
-                'type_id' => $type,
-                'situation_id' => $situation,
-                'recurrence' => $request->recurrence,
-                'amount' => $request->amount,
-                'insurance' => $request->seguradora
+                'type_id' => $request->type ? $request->type : 1,
+                'situation_id' => $request->situation ? $request->type : 3,
+                'recurrence' => $request->recurrence ? $request->recurrence : 1,
+                'amount' => $request->amount ? $request->amount : 1,
+                'insurance' => $request->seguradora,
+                'duration' => $request->duration
             ]);
 
-
-            if($request->recurrence){
-                $recurrence = $request->recurrence;
-            } else {
-                $recurrence = 1;
-            }
-
-            if($request->amount){
-                $amount = $request->amount;
-            } else {
-                $amount = 1;
-            }
             
 
-            $data = $request->data_ordem;
-            $hora = $request->hora_ordem;
+            $data_inicial = $service_order->data_ordem;
+            $hora_inicial = $service_order->hora_ordem;
 
-            $add_days = '+'.$recurrence.' days';
-            $hora_start = date('Y-m-d H:i:s', strtotime($data.$hora));
-            $hora_end = date('Y-m-d H:i:s', strtotime($hora_start. '+4 hours'));
-            
-            for ($i=0; $i < $amount; $i++){
+            $add_days = '+'.$service_order->recurrence.' days';
+            $add_attend_duration = '+'.$request->duration.' hours';
+            $add_contract_duration = '+'.$request->months .' months';
+            $attend_start = date('Y-m-d H:i:s', strtotime($data_inicial.$hora_inicial));
+            $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
+            $contract_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_contract_duration));
+
+
+            while($attend_start < $contract_end){
                 $a = Attend::create([
                     'order_id' => $service_order->id,
-                    'data_inicial' => $hora_start,
-                    'data_final' => $hora_end
+                    'data_inicial' => $attend_start,
+                    'data_final' => $attend_end,
+                    'status_id' => 2
                 ]);
-                
-                $hora_start = date('Y-m-d H:i:s', strtotime($hora_start. $add_days));
-                $hora_end = date('Y-m-d H:i:s', strtotime($hora_start. '+4 hours'));
 
-                $a->users()->attach($request->user_id);
+                var_dump($a); echo '<hr/>';
+                $attend_start = date('Y-m-d H:i:s', strtotime($attend_start. $add_days));
+                $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
+                
             }
+
+
 
 
             return redirect('admin/OS');

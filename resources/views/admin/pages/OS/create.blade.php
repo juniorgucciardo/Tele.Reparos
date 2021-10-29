@@ -68,12 +68,12 @@ function showCheckboxes() {
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <div class="card">
-              <a href="{{ route('attend.create') }}" class="btn">Este atendimento pertence a um contrato ja cadastrado?</a>
-            </div>
+          
+            
             <form action="{{ route('OS.create') }}" method="POST">
               @csrf
               <div class="card-body">
+                <a href="{{ route('attend.create') }}" class="btn btn-secondary my-2">Este atendimento pertence a um contrato ja cadastrado?</a>
                 <div class="form-group">
                   
                   {{-- Informações do cliente --}}
@@ -155,7 +155,11 @@ function showCheckboxes() {
                         </div>
                       </div>
                       <div class="row  my-1">
-                        <div class="col-md-7 col-12">
+                        <div class="col-md-2 col-12">
+                          <label for="exampleInputEmail1">Duração em horas</label>
+                          <input required type="number" name="duration" class="form-control" id="exempleImputServiceTitle" value="4" placeholder="4 horas">
+                        </div>
+                        <div class="col-md-10 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
                           <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
                         </div>
@@ -175,7 +179,7 @@ function showCheckboxes() {
                     <div class="card-body">
                       <div class="row  my-1">
                         <div class="col-md-3 col-12">
-                          <label for="exampleInputEmail1">FUNCIONÁRIO:</label>
+                          <label for="exampleInputEmail1">Funcionário(s):</label>
                             <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
                             selecione
                             ">
@@ -199,12 +203,13 @@ function showCheckboxes() {
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Situação:</label>
                           <select required name="situation" class="form-control">
-                            <option selected disable value="">Escolha uma situação</option>
+                            <option selected value="3">Apto para execução</option>
                              @foreach ($situations as $situation)
                               <option value="{{$situation->id}}">{{$situation->title}}</option>
                             @endforeach
                           </select>
                         </div>
+
 
                         
                       </div>
@@ -224,21 +229,20 @@ function showCheckboxes() {
                     <div class="card-body">
                       <div class="row my-1 d-flex items-center">
                         <div class="col-md-4 col-12">
-                          <div class="form-check">
-                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                              <input name="is_recurrent" value="1" type="checkbox" class="custom-control-input" id="customSwitch3">
-                              <label class="custom-control-label" for="customSwitch3">Este serviço é recorrente??</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Recorrência :</label>
-                        <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" placeholder="4 dias">
+                          <label for="exampleInputEmail1">Recorrência: (15)</label>
+                          <label for="exampleInputEmail1">Situação:</label>
+                          <select required name="recurrence" class="form-control">
+                            <option value="1">Diário</option>
+                            <option value="7">Semanal</option>
+                            <option value="15">Quinzenal</option>
+                            <option value="30">Mensal</option>
+                            <option value="60">Bimestral</option>
+                          </select>
                         
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Atendimentos deste contrato: </label>
-                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
+                          <label for="exampleInputEmail1">Duração deste contrato (meses):</label>
+                          <input type="text" name="months" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
                         </div>
                       </div>
                     </div>
@@ -252,7 +256,7 @@ function showCheckboxes() {
                     <div class="card-header shadow-sm">
                       <i class="fas fa-shield-alt"></i>
                       
-                      Segurdora
+                      Seguradora
                     </div>
                     <div class="card-body">
                       <div class="row  my-1 d-flex items-center">
@@ -263,7 +267,7 @@ function showCheckboxes() {
                         
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Quantidade de KM's para atendimento</label>
+                          <label for="exampleInputEmail1">Código de atendimento</label>
                         <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
                         </div>
                       </div>

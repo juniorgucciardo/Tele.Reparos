@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('main')
 @include('layouts.navbar')
+
 <main class="flex-shrink-0">
     <!-- Header-->
     <header class="py-5 relative block">
@@ -121,16 +122,16 @@
 
 
 
-    <section class="py-5 bg-primary text-light id="scroll-target">
+    <section class="py-5 bg-success text-dark id="scroll-target">
         <div class="container px-5 my-5">
             <div class="row gx-5 align-items-center">
-                <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                <div class="col-lg-6">
+                <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0 img-about" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
+                <div class="col-lg-6" style="color:white">
                     <h2 class="fw-bolder">Faça-nos uma visita</h2>
-                    <p class="lead fw-normal text-muted mb-0">Localizado na rua Duque de Caxias, 860, nosso escritório conta com toda a estrutura para melhor atende-lo.</p><br>
-                    <p class="lead fw-normal text-muted mb-0"><b>Horário de funcionamento:</b></p>
-                    <p class="lead fw-normal text-muted mb-0">segunda a sábado: 08:00 às 12:00, 13:30 às 18:00</p>
-                    <p class="lead fw-normal text-muted mb-0">sábado: 08:00 às 12:00</p>
+                    <p class="lead fw-normal text-light mb-0">Localizado na rua Duque de Caxias, 860, nosso escritório conta com toda a estrutura para melhor atende-lo.</p><br>
+                    <p class="lead fw-normal text-light mb-0"><b>Horário de funcionamento:</b></p>
+                    <p class="lead fw-normal text-light mb-0">segunda a sábado: 08:00 às 12:00, 13:30 às 18:00</p>
+                    <p class="lead fw-normal text-light mb-0">sábado: 08:00 às 12:00</p>
 
                 </div>
             </div>

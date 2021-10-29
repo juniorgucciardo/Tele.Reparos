@@ -62,9 +62,25 @@ class service_order extends Model
         return $this->belongsTo('App\Models\Type', 'type_id', 'id');
     }
     
-
-    protected static function service_orderFactory()
-    {
-        return service_orderFactory::new();
+    public function scopeOrdersDemandads($query){
+        return $query->where('situation_id', 1);
     }
+
+    public function scopeOrdersCanceled($query){
+        return $query->where('situation_id', 4);
+    }
+
+    public function scopeOrdersContracts($query){
+        return $query->where('type_id', 2);
+    }
+
+    public function scopeOrdersInsurance($query){
+        return $query->where('type_id', 4);
+    }
+
+    public function scopeOrdersByService($query, $service_id){
+        return $query->where('service_id', $service_id)->get();
+    }
+
+
 }

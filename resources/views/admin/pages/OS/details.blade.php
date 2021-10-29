@@ -4,10 +4,10 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h4>
+<h5>
     <i class="fas fa-file-contract mx-1"></i>
-    Informações do contrato nº {{$contract->id}} 
-  </h4>
+    {{$contract->nome_cliente}} - {{$contract->service->service_title}}  
+  </h5>
 @stop
 
 @section('content')

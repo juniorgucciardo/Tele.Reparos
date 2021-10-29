@@ -94,7 +94,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Solicitações de Atendimento</span>
               <span class="info-box-number">
-                  
+                {{$OrdersDemandads}}
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -110,7 +110,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Atendimentos finalizados</span>
-              <span class="info-box-number">95 *ultimos quinze dias</span>
+              <span class="info-box-number">{{$atendimentosConcluidos}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -124,8 +124,8 @@
             <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Novos contratos assinados</span>
-              <span class="info-box-number">12 *ultimos quinze dias</span>
+              <span class="info-box-text">Atendimentos Atrasados</span>
+              <span class="info-box-number">{{$atendimentosAtrasados}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -140,11 +140,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Serviços em andamento agora</span>
-              <span class="info-box-number">
-                @php
-                   
-                @endphp
-              </span>
+              <span class="info-box-number">{{$andamentoAgora}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -172,7 +168,7 @@
                     <a href="/admin/atendimentos"><button type="button" class="mb-3 btn btn-info shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><span><i class=" fas fa-eye mx-1"></i></span>Ver tudo</button></span></a>
 
 
-                  @foreach ($attendsNow->whereBetween('data_inicial', [$d1, $d2]) as $attend)
+                  @foreach ($attendsNow as $attend)
                   
                     {{-- CARD DAS DEMANDAS DE HOJE --}}
 
@@ -276,139 +272,94 @@
     
       </div>
 
-      <div class="card card-info">
+
+      <div class="card card-success my-2">
         <div class="card-header">
             @php
             $d1 = Carbon\Carbon::now()->format('Y-m-d H:i:s');
             $d2 = date('Y-m-d H:i:s', strtotime($firstdate. ' + 8 days')); //gerar data somando 7 dias da data atual
             @endphp
-            <span style="text-color: #fff; font-weight:600">Agendados para esta semana, de {{date('d/m', strtotime($d1))}}, até {{date('d/m', strtotime($d2))}}</span>
+            <span style="text-color: #fff; font-weight:600">Próximos serviços</span>
         </div>
         <div class="card-body">
-         <div class="row servicosAgendados">
-              @foreach ($attendsNow->sortBy('data_inicial')->whereBetween('data_inicial', [$d1, $d2]) as $attend)
-                  <div class="col-md-3 col-sm-6 col-6">
-                      {{-- card start --}}
-                      @php
-                        switch ($attend->orders->service->id) {
-                            case '1': //jardinagem
-                                $color = 'teal';
-                                break;
-                            case '2': //eletrica hidraulica
-                                $color = 'info';
-                                break;
-                            case '3': //residencial
-                                $color = 'orange';
-                                break;
-                            case '4': //empresarial
-                                $color = 'indigo';
-                                break;
-                            case '5': //pós obra
-                                $color = 'lightblue';
-                                break;
-                            case '6': //pós obra
-                                $color = 'navy';
-                                break;
-                            default:
-                                echo 'primary';
-                                break;
-                            }
-
-                        @endphp
-                      <div class="card shadow ">
-                          <div class="card-header text-center bg-{{$color}}">
-                            {{$attend->orders->service->service_title}}         
-                          </div>
-                          <div class="card-body p-4">
-                              
-                            <div class="row">
-                                <span>
-                                    <i class="far fa-user-circle mx-1"></i> {{$attend->orders->nome_cliente}}
-                                </span>
-                            </div>
-                            <div class="row"> 
+            <div class="table-responsive">
+                <table id="table" width="100%" class="table display responsive nowrap compact stripe">
+                    <thead>
+                        <tr>
+                            <th class="none">Data</th>
+                            <th class="none"data-priority="1">cliente</th>
+                            <th class="all"data-priority="2">Atividade</th>
+                            <th class="all">Funcionário</th>
+                             @can('view_service_demands')
+                                <th>Funções</th>
+                            @endcan
+                        </tr>
+                    </thead>
+                    @php
+                   @endphp
+                    <tbody>
+                       @foreach ($attendsNext as $a)
+                        <tr>
+                            <td>
                                 @php
-                                    $data = date('d/m', strtotime($attend->data_inicial));
-                                    $hora = date('h:i', strtotime($attend->orders->hora_ordem));
+                                    $data = explode(' ', $a->data_inicial)[0];
+                                    $data = date('d/m/Y', strtotime($data));
                                 @endphp
-                                    <span>Data: {{$data}}</span>
-                                    <span>Hora: {{$hora}}</span>
-
-                            </div>
-                            <div class="row">
-                                @foreach ($attend->users as $user)
+                                {{$data}}
+                            </td>
+                            <td><a href="{{ route('OS.contract', $a->orders->id) }}">{{ $a->orders->nome_cliente }}</a></td>
+                            <td>{{ $a->orders->service->service_title }}</td>
+                            <td>
+                                @foreach ($a->users as $user)
                                     @php
-                                        $name = explode(' ', $user->name);
+                                        $name = explode(' ', $user->name)[0];
                                     @endphp
-                                    <a href="{{route('user.view', $user->id)}}"><span class="badge badge-{{$color}} mr-1 my-1">{{$name[0]}}</span></a>
+                                <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
                                 @endforeach
-                            </div>
-                             
-                          </div>
-                          <div class="card-footer text-left">
-                                <a href="{{route('OS.contract', $attend->orders->id)}}"><button type="button" class="btn-sm btn-outline-{{$color}}">Ver</button></a>
-                                <a href="{{route('attend.edit', $attend->id)}}"><button type="button" class="btn-sm btn-outline-{{$color}} my-2">Alterar</button></a>
-                                <button type="button" class="btn-sm btn-outline-{{$color}}">Excluir</button>
-                          </div>
-                          
-                      </div>
-                  </div>
-              @endforeach
-         </div>
-        </div>
-    </div>
-    <div class="card-info">
-        <div class="card card-info">
-            <div class="card-header">
-                <span style="text-color: #fff; font-weight:600">Serviços solicitados</span>
-            </div>
-            <div class="card-body">
-             <div class="row servicosAgendados">
-                  @foreach ($ordersSolicited->sortByDesc('data_ordem') as $solicited)
-
-                      <div class="col-md-4 col-12">
-                          
-                          <div class="card card-outline card-info shadow p-3 mb-5 bg-white rounded">
-                              <div class="card-header">
-                                  <div class="row text-center">
-                                      <span>
-                                        <i class="fas fa-tools mx-2"></i> {{$solicited->service->service_title}}
-                                      </span>
-                                    </div>
-                              </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <span>
-                                            <i class="far fa-user-circle"></i> 
-                                            {{$solicited->nome_cliente}}
-                                        </span>
-                                    </div>
-                                <div class="row">
-                                    @php
-                                        $data = date('d/m', strtotime($solicited->data_ordem));
-                                        $hora = date('h:i', strtotime($solicited->hora_ordem));
-                                    @endphp
-                                    <span>Data:  {{$data}} - </span><br/>
-                                    <span> Hora:  {{$hora}} </span>
+                            </td>
+                            
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ route('attend.show',$a->id) }}">
+                                        <button class="btn-sm btn-warning">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </a>
+                                    @can('view_service_demands')
+                                        <a href="{{url("admin/atendimentos/editar/$a->id")}}">
+                                            <button class=" btn-sm btn-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </a>
+                                        <form action="{{ route('attend.destroy', $a->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn-sm btn-danger" type="submit">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    @endcan
                                 </div>
-                              </div>
-                              <div class="card-footer">
-                                  <div class="row">
-                                    <a href="{{route('OS.edit', $solicited->id)}}"><button type="button" class="btn btn-info">Mais detalhes</button></a>
-                                  </div>
-                                  <div class="row my-2">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal{{$solicited->id}}" data-whatever="@getbootstrap"><i class="far fa-paper-plane"></i> Encaminhar a nossa agenda</button>
-                                    @include('admin.pages.modal.send-modal')
-                                  </div>
-                              </div>
-                          </div>
-
-
-                      </div>
-                  @endforeach
-             </div>
+                                </td>
+                            
+                        </tr>
+                       @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <div class="card card-info">
+        <div class="card-header">
+            Solicitações do site
+        </div>
+        <div class="card-body">
+
+        </div>
     </div>
+
+
+    
 
 @stop

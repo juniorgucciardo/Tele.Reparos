@@ -11,6 +11,8 @@ use App\Models\service_order;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Carbon;
+
 
 class AttendController extends Controller
 {
@@ -31,17 +33,18 @@ class AttendController extends Controller
         $this->repositoryUser = new User();
         $this->repositoryStatus = new Status();
         $this->repositoryStatusLog = new StatusLog();
+        $this->repositoryAttend = new Attend();
     }
 
     public function index()
     {
-
-        //$attends = Attend::where()->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
-        $attends = Attend::whereHas('orders', function($q){
-            $q->where('situation_id', 3);
-        })->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
+        
+        $attends = Attend::attendsPast()->attendsForExecute()->get();
+        $attendsNext = $this->repositoryAttend->nextAttends()->get();
+        $attendsLast = $this->repositoryAttend->lateAttends()->get();
         return view('admin.pages.attends.index', [
-            'attends' => $attends
+            'attends' => $attends,
+            'attendsNext' => $attendsNext
         ]);
 
     }
@@ -53,9 +56,7 @@ class AttendController extends Controller
     {
 
 
-        $attends = Attend::whereHas('orders', function($q){
-            $q->where('situation_id', 3);
-        })->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
+        $attends = $this->repositoryAttend->calendar();
                 $collection = collect();
         
 
@@ -158,9 +159,9 @@ class AttendController extends Controller
      */
     public function show(Attend $attend, $id)
     {
-        $attend = Attend::with('statusLogs.user', 'statusLogs.img')->with('users')->with('orders.service')->find($id);
+        $attendShow = Attend::attendShow($id)->first();
         return view('admin.pages.attends.show', [
-            'attend' => $attend
+            'attend' => $attendShow
         ]);
     }
 
