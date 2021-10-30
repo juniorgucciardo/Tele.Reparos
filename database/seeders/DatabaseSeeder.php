@@ -220,7 +220,7 @@ class DatabaseSeeder extends Seeder
             'hora_ordem' => '10:00',
             'type_id' => 1,
             'recurrence' => 0,
-            'amount' => 1,
+            'months' => 1,
             'situation_id' => 3
         ]);
         

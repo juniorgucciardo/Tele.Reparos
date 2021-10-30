@@ -82,12 +82,12 @@ class Attend extends Model
 
     //RETORNAR TODOS OS ATENDIMENTOS PASSADOS
     public function scopeAttendsPast($query){ 
-        return $query->where('data_inicial', '<', Carbon::now()->format('Y-m-d'));
+        return $query->where('data_inicial', '<', Carbon::now()->format('Y-m-d H:i:s'));
     }
 
     //RETORNA TODOS OS ATENDIMENTOS FUTUROS
     public function scopeAttendsFuture($query){
-        return $query->where('data_inicial', '>', Carbon::now()->format('Y-m-d'));
+        return $query->where('data_inicial', '>', Carbon::now()->format('Y-m-d H:i:s'));
     }
 
 

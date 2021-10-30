@@ -42,7 +42,7 @@
                             <th>Cidade</th>
                             <th>Situação</th>
                             <th>Recorrencia</th>
-                            <th>Duração do contrato</th>
+                            <th>Atendimentos do contrato</th>
                              @can('view_service_demands')
                                 <th> Funções </th>
                             @endcan

@@ -26,10 +26,11 @@ class CreateServiceOrdersTable extends Migration
             $table->string('descricao_servico')->nullable();
             $table->date('data_ordem');
             $table->time('hora_ordem');
-            $table->boolean('is_recurrent')->nullable();
             $table->integer('recurrence')->nullable();
-            $table->integer('amount')->nullable();
+            $table->integer('months')->nullable();
             $table->char('insurance', 15)->nullable();
+            $table->integer('duration')->default(4);
+            $table->char('insurance_cod', 30)->nullable();
             
             
 

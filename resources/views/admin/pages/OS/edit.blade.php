@@ -155,10 +155,14 @@ function showCheckboxes() {
                       <input type="datetime" name="hora_ordem" class="form-control" id="exempleImputServiceTitle" value="{{ $service_order->hora_ordem }}">
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-7 col-12">
+                      <div class="row  my-1">
+                        <div class="col-md-2 col-12">
+                          <label for="exampleInputEmail1">Duração em horas</label>
+                          <input required type="number" name="duration" class="form-control" id="exempleImputServiceTitle" value="{{$service_order->duration}}">
+                        </div>
+                        <div class="col-md-10 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
-                      <textarea name="descricao_servico" class="form-control" id="exempleImputServiceTitle">{{ $service_order->descricao_servico }}</textarea>
+                          <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" value="{{$service_order->descricao_servico}}"></textarea>
                         </div>
                       </div>
                     </div>
@@ -166,15 +170,16 @@ function showCheckboxes() {
 
 
             
-                  {{-- Informações adicionais --}}
+                  {{-- INFORMAÇÕES ADICINAIS --}}
 
-                  <div class="card card-outline card-navy shadow">
+
+                  <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-info-circle mx-1"></i>
                       Informações adicionais
                     </div>
                     <div class="card-body">
-                      <div class="row">
+                      <div class="row  my-1">
                         <div class="col-md-3 col-12">
                           <label for="exampleInputEmail1">FUNCIONÁRIO:</label>
                         <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
@@ -196,30 +201,21 @@ function showCheckboxes() {
 
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Tipo de serviço:</label>
-                    <select name="type" class="form-control" id="valor">
-                      <option selected value="{{$service_order->type->id}}">
-                        @php
-                            if(isset($service_order->type->type_title)){
-                              echo $service_order->type->type_title;
-                            } else {
-                              echo 'Escolha um tipo';
-                            }
-                        @endphp
-                      </option>
-                      @foreach ($types as $type)
-                          <option value="{{$type->id}}">{{$type->type_title}}</option>
-                      @endforeach
-                    </select>
+                          <select required name="type" id="campo" class="form-control" onchange="funcao(this.value)">
+                            <option selected disable value="">Escolha um tipo</option>
+                            @foreach ($types as $type)
+                                <option value="{{$type->id}}">{{$type->type_title}}</option>
+                            @endforeach
+                          </select>
                         </div>
-
 
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Situação:</label>
                           <select required name="situation" class="form-control">
-                            <optgroup>
-                              <span>
+                            <optgroup title="selecionado">
+                              <option selected value="{{$service_order->situation->id}}">
                                 {{$service_order->situation->title}}
-                              </span>
+                              </option>
                             </optgroup>
                              @foreach ($situations as $situation)
                               <option value="{{$situation->id}}">{{$situation->title}}</option>
@@ -228,32 +224,66 @@ function showCheckboxes() {
                         </div>
 
 
+                        
                       </div>
                     </div>
                   </div>
 
 
-                  <div class="card card-outline card-navy shadow">
-                    <div class="card-header">
+                  
+
+                  {{-- Contrato --}}
+
+                  <div class="card card-outline card-gray shadow" id="recorrencia" type="hidden">
+                    <div class="card-header shadow-sm">
                       <i class="fas fa-undo mx-1"></i>
                       Recorrência
                     </div>
                     <div class="card-body">
-                      <div class="row">
+                      <div class="row my-1 d-flex items-center">
                         <div class="col-md-4 col-12">
-                          <div class="form-check">
-                            <input name="is_recurrent" type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">É recorrente?</label>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Recorrencia:</label>
-                        <input type="text" name="recurrence" class="form-control" id="exempleImputServiceTitle" value="{{$service_order->recurrence}}">
+                          <label for="exampleInputEmail1">Recorrência:</label>
+                          <select required name="recurrence" class="form-control">
+                            <optgroup>
+                              <option selected value="{{$service_order->recurrence}}">{{$service_order->recurrence}}</option>
+                            </optgroup>
+                            <option value="1">Diário</option>
+                            <option value="7">Semanal</option>
+                            <option value="15">Quinzenal</option>
+                            <option value="30">Mensal</option>
+                            <option value="60">Bimestral</option>
+                          </select>
                         
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Quantidade:</label>
-                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" value="{{$service_order->amount}}">
+                          <label for="exampleInputEmail1">Duração deste contrato (meses):</label>
+                          <input type="text" name="months" class="form-control" id="exempleImputServiceTitle" value="{{$service_order->months}}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  {{-- Seguradora --}}
+
+                  <div class="card card-outline card-gray shadow" id="seguradora" type="hidden">
+                    <div class="card-header shadow-sm">
+                      <i class="fas fa-shield-alt"></i>
+                      
+                      Seguradora
+                    </div>
+                    <div class="card-body">
+                      <div class="row  my-1 d-flex items-center">
+                        
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Nome da seguradora:</label>
+                        <input type="text" name="seguradora" class="form-control" id="exempleImputServiceTitle" placeholder="Seguradora">
+                        
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Código de atendimento</label>
+                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
                         </div>
                       </div>
                     </div>
@@ -274,6 +304,25 @@ function showCheckboxes() {
               </div>
             </form>
     </div>
+
+    <script>
+      var recorrencia = document.getElementById("recorrencia");
+      recorrencia.hidden = true;
+      var seguradora = document.getElementById("seguradora");
+      seguradora.hidden = true;
+      
+      function funcao(value){
+        if(value == 2){
+          recorrencia.hidden = false;
+        }else if(value == 4){
+          recorrencia.hidden = true;
+          seguradora.hidden = false;
+        }else if(value == 1){
+          recorrencia.hidden = true;
+          seguradora.hidden = true;
+        }
+      }
+    </script>
 
 
 @stop

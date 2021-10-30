@@ -17,14 +17,14 @@ class CreateAttendsTable extends Migration
             $table->id();
             $table->dateTime('data_inicial');
             $table->dateTime('data_final');
-            $table->foreignId('order_id');
+            $table->foreignId('order_id')->unsigned()->nullable();
             $table->foreignId('status_id')->nullable()->unsigned()->default(1); //finalizado, andamento...
             $table->mediumText('description')->nullable();
             $table->timestamps();
 
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('SET NULL');
+            $table->foreign('status_id')->references('id')->on('status')->onDelete('SET NULL');
         });
     }
 

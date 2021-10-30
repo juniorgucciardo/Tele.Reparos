@@ -263,12 +263,12 @@ function showCheckboxes() {
                         
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Nome da seguradora:</label>
-                        <input type="text" name="seguradora" class="form-control" id="exempleImputServiceTitle" placeholder="Seguradora">
+                        <input type="text" name="insurance" class="form-control" id="exempleImputServiceTitle" placeholder="Seguradora">
                         
                         </div>
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Código de atendimento</label>
-                        <input type="text" name="amount" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
                         </div>
                       </div>
                     </div>
