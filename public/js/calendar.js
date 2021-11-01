@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
+    chart: { 
+      type: 'column',
+      backgroundColor: 'transparent'
+    },  
     eventSources: [
       {
         url: url_atual+'/getCalendario',
@@ -13,14 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
         failure: function(data){
           console.log(data);
         },
-        color: 'yellow',   // a non-ajax option
-        textColor: 'black' // a non-ajax option
       }
     ],
     lang: 'pt-br',
     locale: 'pt-br',
     themeSystem: 'bootstrap',
-    themeColor: 'yellow',
+    themeColor: 'blue',
     selectable: true,
     dayMaxEventRows: true,
     views:{
@@ -48,8 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     eventClick:  function(event, jsEvent, view) {
       $('#details').modal('show');
 
-    $('#details').find('.modal-title').text(event.event.title)
-    $('#details').find('.modal-data').text(event.event.start)
+    $('#details').find('#nomecliente').text(event.event.id)
   },
   
 

@@ -161,7 +161,7 @@ class OsController extends Controller
 
             $service_order = service_order::findOrFail($id);
 
-            if($service_order->data_ordem === $request->data_ordem){ //data igual
+            if($service_order->data_ordem === $request->data_ordem){ //data inicio igual
 
                 if($service_order->months === intval($request->months)){  //meses iguais
 
@@ -234,7 +234,7 @@ class OsController extends Controller
                             'insurance' => $request->insurance_cod,
                             'duration' => $request->duration
                         ]);
-                        $add_days              =  '+'.$service_order->recurrence.' days';
+                        $add_days              =  '+'.$request->recurrence.' days';
                         $add_attend_duration   =  '+'.$request->duration.' hours';
                         $add_contract_duration =  '+'.$diference.' months';
                         $attend_start          =  date('Y-m-d H:i:s', strtotime($lastAttend));
@@ -279,7 +279,7 @@ class OsController extends Controller
                     }
                 }
                 
-            } else {                                                                                //data inicial diferente
+            } else {   //data inicial diferente
 
                 $service_order->update([
                     'nome_cliente' => $request->nome_cliente,

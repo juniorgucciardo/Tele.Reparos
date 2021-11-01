@@ -73,7 +73,7 @@ class Attend extends Model
     }
 
 
-    ////////////// ESCOPOS ////////////////////////
+    //////////////////// ESCOPOS ////////////////////////
 
     public function scopeAttendsForExecute($query){
         return $query->whereHas('orders', function($q){

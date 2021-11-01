@@ -12,7 +12,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+          <p id="nomecliente"></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary">Salvar informações</button>
