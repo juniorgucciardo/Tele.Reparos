@@ -79,14 +79,21 @@ class User extends Authenticatable
     ];
 
 
-    public function adminlte_profile_url()
-    {
-        return 'admin/perfil/';
-    }
 
     public function service(): HasManyThrough
         {
             return $this->hasManyThrough('App\Models\Service', 'App\Models\service_order', 'users_id', 'id_service' );
+        }
+
+        public function adminlte_image()
+        {
+            return 'https://picsum.photos/300/300';
+        }
+    
+    
+        public function adminlte_profile_url()
+        {
+            return 'admin/detalhes-cadastro/'.auth()->user()->id;
         }
 
 }

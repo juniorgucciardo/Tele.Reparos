@@ -283,69 +283,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="table" width="100%" class="table display responsive nowrap compact stripe">
-                    <thead>
-                        <tr>
-                            <th class="none">Data</th>
-                            <th class="none"data-priority="1">cliente</th>
-                            <th class="all"data-priority="2">Atividade</th>
-                            <th class="all">Funcionário</th>
-                             @can('view_service_demands')
-                                <th>Funções</th>
-                            @endcan
-                        </tr>
-                    </thead>
-                    @php
-                   @endphp
-                    <tbody>
-                       @foreach ($attendsNext as $a)
-                        <tr>
-                            <td>
-                                @php
-                                    $data = explode(' ', $a->data_inicial)[0];
-                                    $data = date('d/m/Y', strtotime($data));
-                                @endphp
-                                {{$data}}
-                            </td>
-                            <td><a href="{{ route('OS.contract', $a->orders->id) }}">{{ $a->orders->nome_cliente }}</a></td>
-                            <td>{{ $a->orders->service->service_title }}</td>
-                            <td>
-                                @foreach ($a->users as $user)
-                                    @php
-                                        $name = explode(' ', $user->name)[0];
-                                    @endphp
-                                <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
-                                @endforeach
-                            </td>
-                            
-                            <td>
-                                <div class="btn-group">
-                                    <a href="{{ route('attend.show',$a->id) }}">
-                                        <button class="btn-sm btn-warning">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </a>
-                                    @can('view_service_demands')
-                                        <a href="{{url("admin/atendimentos/editar/$a->id")}}">
-                                            <button class=" btn-sm btn-primary">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </a>
-                                        <form action="{{ route('attend.destroy', $a->id)}}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn-sm btn-danger" type="submit">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    @endcan
-                                </div>
-                                </td>
-                            
-                        </tr>
-                       @endforeach
-                    </tbody>
-                </table>
+                @include('admin.pages.tables.table-dashboard')
             </div>
         </div>
     </div>

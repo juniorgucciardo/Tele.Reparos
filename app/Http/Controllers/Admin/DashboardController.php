@@ -35,14 +35,14 @@ class DashBoardController extends Controller
 
     public function index(){
         if(auth()->user()->hasPermissionTo('view_service_demands')){
-                        
+
             return view('admin.pages.dashboard', [           // Retorna uma página especial da admiinstração do sistema, com todas as OS e outras informações
                 'username' => explode(' ', auth()->user()->name)[0],
                 'users' => $this->repositoryUser->all(),
                 'status' => $this->repositoryStatus->all(),
                 'attendsNow' => $this->repositoryAttend->attendsByAtualDay()->get(),
                 'ordersSolicited' => service_order::ordersDemandads()->get(),
-                'attendsNext' => $this->repositoryAttend->nextAttends()->get(),
+                'attendsNext' => $this->repositoryAttend->nextAttends()->whereBetween('data_inicial', ['2021-10-30 00:00:00', '2021-11-07 00:00:00'])->get(),
                 'OrdersDemandads' => service_order::ordersDemandads()->count(),
                 'atendimentosConcluidos' => $this->repositoryAttend->doneAttends()->count(),
                 'atendimentosAtrasados' => $this->repositoryAttend->lateAttends()->count(),

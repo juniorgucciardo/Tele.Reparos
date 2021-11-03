@@ -195,7 +195,7 @@
                 </div>
                 @endforeach
             <!-- Call to action-->
-            <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
+            <aside data-tilt class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                 <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
                     <div class="mb-4 mb-xl-0">
                         <div class="fs-3 fw-bold text-white">Entre em contato conosco e solicite um orçamento!</div>
