@@ -88,7 +88,7 @@
                       <div class="card card-outline card-{{$statusColor}} shadow rounded">
                           <div class="card-header">
                               <div class="d-flex d-flex-row justify-content-between">
-                                  <span>{{$attend->orders->service->service_title}}</span>
+                                  <span></span>
                                   <div>
                                       @php
                                           $hora = explode(' ', $attend->data_inicial)[1];
@@ -98,7 +98,7 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="card-body">
+                          {{-- <div class="card-body">
                               <div class="d-flex d-flex-row justify-content-between">
                                   <div class="mr-auto flex-column w-100">
                                       <div>
@@ -137,7 +137,7 @@
 
                                   </div>
                               </div>
-                          </div>
+                          </div> --}}
                       </div>
                   
             @endforeach

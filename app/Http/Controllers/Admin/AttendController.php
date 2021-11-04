@@ -104,6 +104,10 @@ class AttendController extends Controller
 
     }
 
+    public function calendarView(){
+        return view('admin.pages.attends.calendar');
+    }
+
 
     /**
      * Show the form for creating a new resource.

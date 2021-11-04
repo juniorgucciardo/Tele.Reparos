@@ -56,11 +56,18 @@ class DashBoardController extends Controller
                 'andamentoAgora' => $this->repositoryAttend->attendsByAtualDay()->count()
             ]);
         };
+
+        $user = User::findOrFail(auth()->user()->id);
+        $attends = Attend::whereHas('users', function($query){
+            $query->where('user_id', auth()->user()->id);
+        })
+        ->with('orders', 'orders.service', 'status')
+        ->get();
         
         return view('admin.pages.planos.index', [
             'username' => explode(' ', auth()->user()->name)[0],
-            'service_demands' => Attend::attendsByUser(auth()->user()->id)->get(),
-            'status' => this->repositoryStatus->all()
+            'service_demands' => $attends,
+            'status' => $this->repositoryStatus->all()
         ]);
 
     }

@@ -45,15 +45,18 @@ class OsController extends Controller
     {
         $user = auth()->user();
         if(auth()->user()->hasPermissionTo('view_service_demands')){
-            $service_orders = $this->repositoryOS->with('user')->with('attends.status')->withCount('attends')->with('type')->get();
+            $service_orders = $this->repositoryOS->with('user')->withCount('attends')->with('type')->get();
             return view('admin.pages.OS.index', [
-                'service_orders' => $service_orders
+                'service_orders' => $service_orders,
+                'ordersSolicited' => $this->repositoryOS->ordersDemandads()->get()
             ]);
         }
 
         //$service_orders = $this->repositoryOS->where('user_id', auth()->user()->id)->with('user')->get();
         $service_orders = $user->service_order;
-        return view('admin.pages.OS.index', compact('service_orders'));
+        return view('admin.pages.OS.index', [
+            'service_orders' => $service_orders
+        ]);
     }
 
     

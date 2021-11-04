@@ -18,7 +18,8 @@ class AttendPolicy
      */
     public function viewAny(User $user, Attend $attend)
     {
-        return $user->attends->pluck('id')->contains($attend->id);
+        return $user->attends->pluck('id')->contains($attend->id) or
+        $user->hasRole('administrator');
     }
 
     /**

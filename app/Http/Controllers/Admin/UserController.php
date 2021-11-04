@@ -75,7 +75,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->can('view_service_demands')){
+        $u = $this->userRepository->findOrFail($id);
+        if(auth()->user()->can('view', $u)){
             $user = $this->userRepository->with('reviewsAboutMe.ownerReview')->findOrFail($id);
             $attends = $this->attendRepository::where('status_id', 4)
                                           ->whereHas('users', function($q) use ($id){ $q->where('user_id', [$id]); })
@@ -87,7 +88,11 @@ class UserController extends Controller
             'user' => $user,
             'attends' => $attends
         ]);
+
+        } else {
+            return redirect()->route('user.view', auth()->user()->id);
         }
+        
     }
 
     /**

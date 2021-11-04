@@ -137,9 +137,12 @@
                         </div>
                     </form>
                     </div>
-
+                    
                     {{-- POSTS, AVALIAÇÕES --}}
-
+                    @php
+                        $u = $user;
+                    @endphp
+                    @can('view_service_demands')
                     <div class="card card-navy card-outline shadow">
                         <div class="card-header">
                             Avaliações
@@ -169,9 +172,12 @@
                                 </p>
                               </div>
                             @endforeach                              
-                            <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar avaliação</button>
-                            @include('admin.pages.modal.include_review')
-                        </div>
+                            
+                                <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar avaliação</button>
+                                 @include('admin.pages.modal.include_review')
+                                
+                            </div>
+                            @endcan
                         
                     </div>
 

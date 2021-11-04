@@ -1,5 +1,5 @@
-<div class="card card-secondary col-md-3 col-sm-6 col-12">
-    <div class="card-header">
+<div class="card col-md-3 col-sm-6 col-12 mx-2 my-1">
+    <div class="card-header bg-info">
         {{$solicited->nome_cliente}} - {{$solicited->service->service_title}}
     </div>
     <div class="card-body">

@@ -32,6 +32,10 @@ Route::middleware(['auth'])->group(function () {
     
     Route::post('/admin/atendimentos/detalhes', [App\Http\Controllers\Admin\ImgLogController::class, 'store'])->name('imglog.store');
 
+    //view profile
+    Route::get('/admin/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');
+
+    //Admin routes
     Route::group(['middleware'=>'can:view_service_demands'], function(){
         
         //SERVICOS
@@ -54,7 +58,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/OS/generalReport', [App\Http\Controllers\Admin\OsController::class, 'export'])->name('OS.export');
 
         //Usuários
-        Route::get('/admin/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');
         Route::get('/admin/cadastros', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
         Route::get('/admin/cadastros/novo', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('user.create');
         Route::Post('/admin/cadastros/novo', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('user.store');
@@ -70,9 +73,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
         Route::DELETE('/admin/deletar/atendimento/{id}', [App\Http\Controllers\Admin\AttendController::class, 'destroy'])->name('attend.destroy');
         Route::put('/admin/atendimentos/agendar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'scheduling'])->name('attend.scheduling');
-
-
-
+        Route::get('/admin/calendario', [App\Http\Controllers\Admin\AttendController::class, 'calendarView'])->name('attend.calendarView');
 
         //STATUS
         Route::get('/admin/status', [App\Http\Controllers\Admin\StatusController::class, 'index'])->name('status');
@@ -97,20 +98,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/addimage', [App\Http\Controllers\Admin\ImgContractController::class, 'store'])->name('imageContract.store');
         Route::DELETE('/admin/excluirimagem/{id}', [App\Http\Controllers\Admin\ImgContractController::class, 'destroy'])->name('imageContract.destroy');
 
-
         //reviews
         Route::get('/admin/reviews', [App\Http\Controllers\Admin\ReviewController::class, 'index'])->name('reviews');
         Route::post('/admin/reviews/add', [App\Http\Controllers\Admin\ReviewController::class, 'store'])->name('reviews.store');
         Route::DELETE('/admin/reviews/delete/{id}', [App\Http\Controllers\Admin\ReviewController::class, 'destroy'])->name('reviews.destroy');
-
 
         //status_log
         Route::get('/admin/atendimentos/novolog/', [App\Http\Controllers\Admin\StatusLogController::class, 'create'])->name('log.create');
         Route::get('/admin/atendimentos/editlog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'edit'])->name('log.edit');
         Route::put('/admin/atendimentos/editlog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'update'])->name('log.update');
         Route::DELETE('/admin/atendimentos/deletelog/{id}', [App\Http\Controllers\Admin\StatusLogController::class, 'destroy'])->name('log.destroy');
-
-
+        
+      });
+      //configurações do blog
+        Route::group(['middleware'=>'can:view-service-demands'], function(){
+        //blog
         Route::get('/admin/blog', [App\Http\Controllers\PostController::class, 'index'])->name('blog.admin');
         Route::get('/admin/blog/novo', [App\Http\Controllers\PostController::class, 'create'])->name('blog.create');
         Route::post('/admin/blog/novo', [App\Http\Controllers\PostController::class, 'store'])->name('blog.store');

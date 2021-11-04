@@ -255,7 +255,6 @@ return [
             'label'       => 4,
             'label_color' => 'primary',
         ],
-        ['header' => 'CONFIGURAÇÕES DO SITE', 'can'  => 'view_service_demands'],
         [
             'text' => 'Atendimentos',
             'url'  => 'admin/atendimentos',
@@ -266,6 +265,12 @@ return [
             'text' => 'Contratos',
             'url'  => 'admin/OS',
             'icon' => 'fas fa-file-contract',
+
+        ],
+        [
+            'text' => 'Agenda',
+            'url'  => 'admin/calendario',
+            'icon' => 'fas fa-calendar',
 
         ],
         [
@@ -298,7 +303,24 @@ return [
                     'can'  => 'view_service_demands'
                 ],
             ],
-        ]
+        ],
+        [
+            'text'    => 'Blog',
+            'can'  => 'view_service_demands',
+            'submenu' => [
+                [
+                    'text' => 'Ver postagens',
+                    'url'  => 'admin/blog',
+                    'can'  => 'view_service_demands'
+                ],
+                [
+                    'text' => 'Novo post',
+                    'url'  => 'admin/blog/novo',
+                    'can'  => 'view_service_demands'
+                ],
+                
+            ],
+        ],
         
             //AWESOME ICONS
  //       [

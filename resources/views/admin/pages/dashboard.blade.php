@@ -292,9 +292,11 @@
             Solicitações do site
         </div>
         <div class="card-body">
-            @foreach ($ordersSolicited as $solicited)
-                @include('components.solicitation-card', $solicited)
-            @endforeach
+            <div class="row d-flex">
+                @foreach ($ordersSolicited as $solicited)
+                    @include('components.solicitation-card', $solicited)
+                @endforeach
+            </div>
         </div>
     </div>
 
