@@ -12,10 +12,11 @@
         text-align: left;
     }
     }
+
     
-
-
 </style>
+
+
 <table id="table" class="table tableDashboard nowrap stripe">
     <thead>
         <tr>
@@ -33,14 +34,39 @@
    @endphp
     <tbody>
        @foreach ($attendsNext as $a)
+       @php
+                        switch ($a->status->id) {
+                            case '1': //solicitado
+                                $statusColor = 'secondary';
+                                break;
+                            case '2': //agendado
+                                $statusColor = 'info';
+                                break;
+                            case '3': //execução
+                                $statusColor = 'primary';
+                                break;
+                            case '4': //concluido
+                                $statusColor = 'success';
+                                break;
+                            case '5': //atrasado
+                                $statusColor = 'warning';
+                                break;
+                            case '6': //cancelado
+                                $statusColor = 'danger';
+                                break;
+                            default:
+                                $statusColor = 'primary';
+                                break;
+                            }
+                    @endphp
         <tr>
             <td><a href="{{ route('OS.contract', $a->orders->id) }}">{{ $a->orders->nome_cliente }}</a></td>
             <td>
                 @php
-                    $data = explode(' ', $a->data_inicial)[0];
-                    $data = date('d/m/Y', strtotime($data));
+                    $data = date('d/m/Y', strtotime(explode(' ', $a->data_inicial)[0]));
+                    $hora = date('H:i', strtotime(explode(' ', $a->data_inicial)[1]));
                 @endphp
-                {{$data}}
+                {{$data}}  {{$hora}}
             </td>
             <td>{{ $a->orders->service->service_title }}</td>
             <td>
@@ -51,14 +77,16 @@
                 <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
                 @endforeach
             </td>
-            <td class="status-badge"><div class="badge badge-secondary p-2">{{ $a->status->status_title}}</div></td>
+            <td class="status-badge"><div class="badge badge-{{$statusColor}} p-2">{{ $a->status->status_title}}</div></td>
             
             <td>
                 <div class="btn-group">
                     <button class="p-2 rounded shadow btn-sm btn-primary bolder" data-toggle="modal" data-target="#schedulle-modal{{$a->id}}">
                         <i class="fas fa-calendar-week mx-2"></i>Agendamento
                     </button>
-                    @include('admin.pages.modal.schedulle')
+                    @include('admin.pages.modal.schedulle', [$a, $users])
+
+        
                     
                 </div>
                 </td>
@@ -67,4 +95,6 @@
        @endforeach
     </tbody>
 </table>
+
+
 

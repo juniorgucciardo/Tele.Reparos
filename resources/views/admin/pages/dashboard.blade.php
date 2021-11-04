@@ -267,8 +267,6 @@
                 </div>
             </div>
         </div>
-
-        {{--  --}}
     
       </div>
 
@@ -283,6 +281,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
+                {{-- tabela de atendimentos da proxima semana --}}
                 @include('admin.pages.tables.table-dashboard')
             </div>
         </div>
@@ -293,7 +292,9 @@
             Solicitações do site
         </div>
         <div class="card-body">
-
+            @foreach ($ordersSolicited as $solicited)
+                @include('components.solicitation-card', $solicited)
+            @endforeach
         </div>
     </div>
 

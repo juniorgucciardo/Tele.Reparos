@@ -37,7 +37,7 @@
 
 
 
-                @can('view_services_demands')
+                @can('view_service_demands')
                 <div class="col-12 col-md-10 col-lg-8 my-3">
                   <label class="block" for="exampleInputEmail1">Funcionários:</label>
                   <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="selecione">

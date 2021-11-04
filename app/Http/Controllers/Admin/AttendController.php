@@ -39,12 +39,9 @@ class AttendController extends Controller
     public function index()
     {
         
-        $attends = Attend::attendsPast()->attendsForExecute()->get();
-        $attendsNext = $this->repositoryAttend->nextAttends()->get();
-        $attendsLast = $this->repositoryAttend->lateAttends()->get();
+        $attends = $this->repositoryAttend->attendsHistory()->get();
         return view('admin.pages.attends.index', [
-            'attends' => $attends,
-            'attendsNext' => $attendsNext
+            'attends' => $attends
         ]);
 
     }
@@ -265,6 +262,23 @@ class AttendController extends Controller
 
 
         $attend->users()->sync($request->user_id);
+
+        Alert::success('Successo', 'Atualizado com sucesso');
+        return redirect()->back();
+    }
+
+    public function scheduling(Request $request, $id){
+        $data_inicial = date('Y-m-d H:i:s', strtotime($request->data_inicial.$request->hora_inicial));
+        $final = date('Y-m-d H:i:s', strtotime($data_inicial. '+'.$request->duration.' hours'));
+        $attend = Attend::findOrFail($id);
+        $attend->update([
+            'data_inicial' => $data_inicial,
+            'data_final' => $final,
+            'status_id' => $request->status_id ? $request->status_id : 2
+        ]);
+
+        $attend->users()->sync($request->user_id);
+
 
         Alert::success('Successo', 'Atualizado com sucesso');
         return redirect()->back();

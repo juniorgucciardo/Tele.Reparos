@@ -37,12 +37,19 @@ class DashBoardController extends Controller
         if(auth()->user()->hasPermissionTo('view_service_demands')){
 
             return view('admin.pages.dashboard', [           // Retorna uma página especial da admiinstração do sistema, com todas as OS e outras informações
+                //username
                 'username' => explode(' ', auth()->user()->name)[0],
+
+                //for create
                 'users' => $this->repositoryUser->all(),
                 'status' => $this->repositoryStatus->all(),
-                'attendsNow' => $this->repositoryAttend->attendsByAtualDay()->get(),
-                'ordersSolicited' => service_order::ordersDemandads()->get(),
-                'attendsNext' => $this->repositoryAttend->nextAttends()->whereBetween('data_inicial', ['2021-10-30 00:00:00', '2021-11-07 00:00:00'])->get(),
+
+                //dashboard composer
+                'attendsNow' => $this->repositoryAttend->attendsByAtualDay()->get(), //atendimentos de hoje
+                'ordersSolicited' => service_order::ordersDemandads()->get(), //solicitações do site
+                'attendsNext' => $this->repositoryAttend->nextAttends()->get(), //próximos serviços
+
+                //counts
                 'OrdersDemandads' => service_order::ordersDemandads()->count(),
                 'atendimentosConcluidos' => $this->repositoryAttend->doneAttends()->count(),
                 'atendimentosAtrasados' => $this->repositoryAttend->lateAttends()->count(),

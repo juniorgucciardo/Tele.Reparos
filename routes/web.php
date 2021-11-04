@@ -69,6 +69,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'edit'])->name('attend.edit');
         Route::put('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
         Route::DELETE('/admin/deletar/atendimento/{id}', [App\Http\Controllers\Admin\AttendController::class, 'destroy'])->name('attend.destroy');
+        Route::put('/admin/atendimentos/agendar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'scheduling'])->name('attend.scheduling');
+
 
 
 

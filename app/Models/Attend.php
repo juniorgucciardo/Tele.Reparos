@@ -43,21 +43,33 @@ class Attend extends Model
     public function attendsByAtualDay(){
         return $this->attendsForExecute()
                     ->whereDate('data_inicial', Carbon::now()->format('Y-m-d'))
-                    ->with('users', 'orders.service', 'orders.type');
+                    ->with('users', 'orders.service', 'orders.type', 'status');
+    }
+
+    public function attendsConclutedById(){
+        return $this->attendsForExecute()
+                    ->attendsPast();
+    }
+
+    public function attendsHistory(){
+        return $this->attendsForExecute()
+                    ->attendsPast();
     }
 
     public function nextAttends(){
         return $this->attendsForExecute()
                     ->attendsFuture()
-                    ->with('users', 'orders.service', 'orders.type');
+                    ->whereBetween('data_inicial', [Carbon::now()->format('Y-m-d'), date('Y-m-d', strtotime(Carbon::now()->format('Y-m-d'). '+7 days'))])
+                    ->with('users', 'orders.service', 'orders.type', 'status');
     }
+
     
     
     public function doneAttends(){
         return $this->attendsForExecute()
                     ->attendsPast()
                     ->where('status_id', 3)
-                    ->with('users', 'orders.service', 'orders.type');
+                    ->with('users', 'orders.service', 'orders.type', 'status');
     }
 
     public function calendar(){
@@ -82,12 +94,12 @@ class Attend extends Model
 
     //RETORNAR TODOS OS ATENDIMENTOS PASSADOS
     public function scopeAttendsPast($query){ 
-        return $query->where('data_inicial', '<', Carbon::now()->format('Y-m-d H:i:s'));
+        return $query->where('data_inicial', '<', Carbon::now()->format('Y-m-d 00:00:00'));
     }
 
     //RETORNA TODOS OS ATENDIMENTOS FUTUROS
     public function scopeAttendsFuture($query){
-        return $query->where('data_inicial', '>', Carbon::now()->format('Y-m-d H:i:s'));
+        return $query->where('data_inicial', '>', Carbon::now()->format('Y-m-d 23:59:59'));
     }
 
 
