@@ -53,7 +53,8 @@ class Attend extends Model
 
     public function attendsHistory(){
         return $this->attendsForExecute()
-                    ->attendsPast();
+                    ->attendsPast()
+                    ->with('users', 'orders.service', 'orders.type', 'status');
     }
 
     public function nextAttends(){
@@ -78,6 +79,13 @@ class Attend extends Model
                     ->get();
     }
 
+    public function calendarByUser($id){
+        return $this->attendsForExecute()
+                    ->attendsById($id)
+                    ->with('orders.service', 'orders.type')
+                    ->get();
+    }
+
     public function lateAttends(){
         return $this->attendsForExecute()
                     ->attendsPast()
@@ -95,6 +103,12 @@ class Attend extends Model
     //RETORNAR TODOS OS ATENDIMENTOS PASSADOS
     public function scopeAttendsPast($query){ 
         return $query->where('data_inicial', '<', Carbon::now()->format('Y-m-d 00:00:00'));
+    }
+
+    public function scopeAttendsById($query, $id){
+        return $this->whereHas('users', function($q) use($id){
+            $q->where('user_id', $id);
+        });
     }
 
     //RETORNA TODOS OS ATENDIMENTOS FUTUROS

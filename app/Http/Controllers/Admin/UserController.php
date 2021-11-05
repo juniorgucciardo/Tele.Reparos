@@ -75,14 +75,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $u = $this->userRepository->findOrFail($id);
-        if(auth()->user()->can('view', $u)){
+        if(auth()->user()->can('view', $this->userRepository->findOrFail($id))){
             $user = $this->userRepository->with('reviewsAboutMe.ownerReview')->findOrFail($id);
-            $attends = $this->attendRepository::where('status_id', 4)
-                                          ->whereHas('users', function($q) use ($id){ $q->where('user_id', [$id]); })
-                                          ->with('orders')
-                                          ->with('orders.service')
-                                          ->get();
+            $attends = Attend::attendsForExecute()->attendsById($user->id)->whereBetween('status_id', [3, 5])->with('orders', 'orders.service', 'status', 'orders.type')->get();
 
             return view('admin.pages.user.details', [
             'user' => $user,

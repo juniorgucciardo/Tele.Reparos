@@ -25,14 +25,6 @@
 }
 
 
-    .table{
-        font-size: 0.86rem;
-        table-layout: fixed;
-        width:100%;
-    }
-    th{
-        font-weight: 400;
-    }
 </style>
 
     <div class="card card-navy">
@@ -198,47 +190,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="table" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>Data</th>
-                                    <th>Hora</th>
-                                    <th>cliente</th>
-                                    <th>Atividade</th>
-                                    <th>Tipo</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            @php
-                           @endphp
-                            <tbody>
-                                @foreach ($attends as $attend)
-                                <tr>
-                                    <td>{{ $attend->id}}</td>
-                                    <td>
-                                        @php
-                                            $data = explode(' ', $attend->data_inicial)[0];
-                                            $data = date('d/m', strtotime($data));
-                                        @endphp
-                                        {{$data}}
-                                    </td>
-                                    <td>
-                                        @php
-                                            $hora = explode(' ', $attend->data_inicial)[1];
-                                            $hora = date('H:i', strtotime($hora));
-                                        @endphp
-                                        {{$hora}}
-                                    </td>
-                                    <td>{{ $attend->orders->nome_cliente }}</td>
-                                    <td>{{ $attend->orders->service->service_title }}</td>
-                                    <td>{{$attend->orders->type->type_title}}</td>
-                                    
-                                    <td>{{$attend->status->status_title}}</td>
-                                </tr>
-                               @endforeach
-                            </tbody>
-                        </table>
+                        @include('admin.pages.tables.table-user', $attends)
                     </div>
                 </div>
             </div>

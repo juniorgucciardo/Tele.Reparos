@@ -13,14 +13,7 @@
 @section('content')
 
 <style>
-    .table{
-        font-size: 0.94rem;
-        table-layout: fixed;
- width:100%;
-    }
-    th{
-        font-weight: 400;
-    }
+
 
     .os_card{
         max-width: 200px;
@@ -38,16 +31,6 @@
     input[type='file'] {
   display: none
 }
-
-
-    .table{
-        font-size: 0.86rem;
-        table-layout: fixed;
-        width:100%;
-    }
-    th{
-        font-weight: 400;
-    }
 
 </style>
 
@@ -214,77 +197,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="table" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>Data</th>
-                                    <th>Hora</th>
-                                    <th>Atividade</th>
-                                    <th>Funcionário</th>
-                                    <th>Status</th>
-                                     @can('view_service_demands')
-                                        <th> Funções </th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            @php
-                           @endphp
-                            <tbody>
-                               @foreach ($attends->sortByDesc('data_inicial') as $attend)
-                                <tr>
-                                    <td>{{ $attend->id}}</td>
-                                    <td>
-                                        @php
-                                        $data = explode(' ', $attend->data_inicial)[0];
-                                        $data = date('d/m/Y', strtotime($data));
-                                    @endphp
-                                    {{$data}}
-                                    </td>
-                                    <td>
-                                        @php
-                                        $hora = explode(' ', $attend->data_inicial)[1];
-                                        $hora = date('h:i', strtotime($hora));
-                                    @endphp
-                                    {{$hora}}
-                                    </td>
-                                    <td>{{ $attend->orders->service->service_title }}</td>
-                                    <td>
-                                        @foreach ($attend->users as $user)
-                                            @php
-                                                $name = explode(' ', $user->name)[0];
-                                            @endphp
-                                        <a href="{{ route('user.view', $user->id) }}"><span class="badge badge-primary">{{$name}}</span></a>
-                                        @endforeach
-                                    </td>
-                                    <td>{{$attend->status->status_title}}</td>
-                                    @can('view_service_demands')
-                                    <td>
-                                        <div class="row d-flex nowrap">
-                                                <a href="{{ route('attend.show' ,$attend->id) }}">
-                                                    <button class=" btn-sm btn-warning">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                </a>
-                                                <a href="{{ route('attend.edit' ,$attend->id) }}">
-                                                    <button class=" btn-sm btn-primary">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                                <form action="{{ route('attend.destroy', $attend->id)}}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn-sm btn-danger" type="submit">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                        </div>
-                                        </td>
-                                    @endcan
-                                </tr>
-                               @endforeach
-                            </tbody>
-                        </table>
+                       @include('admin.pages.tables.table-OS', $attends)
                     </div>
                 </div>
             </div>

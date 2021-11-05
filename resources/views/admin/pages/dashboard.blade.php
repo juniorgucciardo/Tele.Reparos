@@ -92,7 +92,7 @@
                     {{-- solicitações --}}
         <div class="col-md-3 col-sm-6 col-12">
           <div class="info-box">
-            <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+            <span class="info-box-icon bg-navy"><i class="far fa-envelope"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Solicitações de Atendimento</span>
               <span class="info-box-number">
@@ -108,7 +108,7 @@
 
         <div class="col-md-3 col-sm-6 col-12">
           <div class="info-box">
-            <span class="info-box-icon bg-primary"><i class="far fa-flag"></i></span>
+            <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Atendimentos finalizados</span>
@@ -123,7 +123,7 @@
 
         <div class="col-md-3 col-sm-6 col-12">
           <div class="info-box">
-            <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
+            <span class="info-box-icon bg-danger"><i class="fas fa-clock"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Atendimentos Atrasados</span>
@@ -138,7 +138,7 @@
 
         <div class="col-md-3 col-sm-6 col-12">
           <div class="info-box">
-            <span class="info-box-icon bg-primary"><i class="far fa-star"></i></span>
+            <span class="info-box-icon bg-primary"><i class="fas fa-clipboard-list"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Serviços em andamento agora</span>

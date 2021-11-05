@@ -37,8 +37,7 @@ class AttendController extends Controller
     }
 
     public function index()
-    {
-        
+    {        
         $attends = $this->repositoryAttend->attendsHistory()->get();
         return view('admin.pages.attends.index', [
             'attends' => $attends
@@ -51,11 +50,14 @@ class AttendController extends Controller
 
     public function calendar()
     {
-
-
-        $attends = $this->repositoryAttend->calendar();
-                $collection = collect();
+        if(Auth::user()->can('view_service_demands')){
+            $attends = $this->repositoryAttend->calendar();
+        } else {
+            $attends = Attend::attendsById(Auth::user()->id)->with('users', 'orders', 'orders.service')->whereNotNull('order_id')->get();
+        }
         
+             
+                $collection = collect();
 
                 foreach($attends as $a){
                     switch ($a->orders->service->id) {
@@ -90,7 +92,6 @@ class AttendController extends Controller
                     $start_date = date($a->data_inicial);
                     $end_date = date($a->data_final);
 
-                    
                     $collection->push([
                     'id' => $a->orders->id,
                     'title' => $a->orders->nome_cliente,
@@ -99,14 +100,26 @@ class AttendController extends Controller
                     'color' => $color
                     ]);
                 }
-                
-
                 return response()->json($collection);
-
     }
 
+
     public function calendarView(){
-        return view('admin.pages.attends.calendar');
+        $attends = Attend::attendsById(1)->with('users', 'orders', 'orders.service')->whereNotNull('order_id')->get();
+                $collection = collect();
+                foreach($attends as $a){
+                    $start_date = date($a->data_inicial);
+                    $end_date = date($a->data_final);
+                    $collection->push([
+                    'id' => $a->orders->id,
+                    'title' => $a->orders->nome_cliente,
+                    'start' => $start_date,
+                    'end' => $end_date,
+                    ]);
+                }
+
+
+                return view('admin.pages.attends.calendar');
     }
 
 

@@ -35,6 +35,10 @@ Route::middleware(['auth'])->group(function () {
     //view profile
     Route::get('/admin/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');
 
+
+    Route::get('/admin/calendario', [App\Http\Controllers\Admin\AttendController::class, 'calendarView'])->name('attend.calendarView');
+
+
     //Admin routes
     Route::group(['middleware'=>'can:view_service_demands'], function(){
         
@@ -73,7 +77,6 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/admin/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
         Route::DELETE('/admin/deletar/atendimento/{id}', [App\Http\Controllers\Admin\AttendController::class, 'destroy'])->name('attend.destroy');
         Route::put('/admin/atendimentos/agendar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'scheduling'])->name('attend.scheduling');
-        Route::get('/admin/calendario', [App\Http\Controllers\Admin\AttendController::class, 'calendarView'])->name('attend.calendarView');
 
         //STATUS
         Route::get('/admin/status', [App\Http\Controllers\Admin\StatusController::class, 'index'])->name('status');
