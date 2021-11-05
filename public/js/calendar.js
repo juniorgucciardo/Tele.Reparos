@@ -3,10 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    chart: { 
-      type: 'column',
-      backgroundColor: 'transparent'
-    },  
+    eventDisplay: 'block',
     eventSources: [
       {
         url: url_atual+'/getCalendario',
@@ -34,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     headerToolbar: {
         left: 'prev,next',
         center: 'title',
-        right: 'today dayGridMonth,dayGridWeek,timeGridDay'
+        right: 'today dayGridMonth,dayGridWeek,timeGridDay,timelineDay'
     },
     businessHours: {
       daysOfWeek: [ 1, 2, 3, 4, 5], // Monday, Tuesday, Wednesday
@@ -57,8 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
     eventLimit: true, // for all non-TimeGrid views
   views: {
     dayGridMonth: {
-      eventLimit: 3, // adjust to 6 only for timeGridWeek/timeGridDay
-      dayMaxEventRows: 3
+      eventLimit: 5, // adjust to 6 only for timeGridWeek/timeGridDay
+      dayMaxEventRows: 5
     }
   },
     

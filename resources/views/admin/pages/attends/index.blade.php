@@ -12,16 +12,7 @@
 @section('content')
 
 
-<style>
-    .table{
-        font-size: 0.86rem;
-        table-layout: fixed;
-        width:100%;
-    }
-    th{
-        font-weight: 400;
-    }
-</style>
+
 
     <div class="card card-info">
         <div class="card-header">

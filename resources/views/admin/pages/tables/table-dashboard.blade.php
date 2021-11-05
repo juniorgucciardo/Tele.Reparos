@@ -11,6 +11,10 @@
     .status-badge{
         text-align: left;
     }
+    .cliente{
+        font-weight: 600;
+        font-size: 1.2rem
+    }
     }
 
     
@@ -60,7 +64,7 @@
                             }
                     @endphp
         <tr>
-            <td><a href="{{ route('OS.contract', $a->orders->id) }}">{{ $a->orders->nome_cliente }}</a></td>
+            <td class="cliente"><a href="{{ route('OS.contract', $a->orders->id) }}">{{ $a->orders->nome_cliente }}</a></td>
             <td>
                 @php
                     $data = date('d/m/Y', strtotime(explode(' ', $a->data_inicial)[0]));

@@ -2,13 +2,10 @@ var url_atual = window.location.href;
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    chart: { 
-      type: 'column',
-      backgroundColor: 'transparent'
-    },  
+    eventDisplay: 'block',
     eventSources: [
       {
-        url: 'http://192.168.100.163:8000/admin/getCalendario',
+        url: 'http://192.168.0.6:8000/admin/getCalendario',
         method: 'GET',
         success: function(data) {
           return data.eventArray;

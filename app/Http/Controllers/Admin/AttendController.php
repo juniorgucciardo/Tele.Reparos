@@ -92,10 +92,11 @@ class AttendController extends Controller
 
                     
                     $collection->push([
+                    'id' => $a->orders->id,
                     'title' => $a->orders->nome_cliente,
                     'start' => $start_date,
                     'end' => $end_date,
-                    'color' => $color,
+                    'color' => $color
                     ]);
                 }
                 
@@ -161,9 +162,14 @@ class AttendController extends Controller
     public function show(Attend $attend, $id)
     {
         $attendShow = Attend::attendShow($id)->first();
-        return view('admin.pages.attends.show', [
+           
+        if(Auth::user()->can('viewAny', $attendShow)){
+            return view('admin.pages.attends.show', [
             'attend' => $attendShow
         ]);
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

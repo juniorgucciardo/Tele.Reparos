@@ -111,10 +111,12 @@ class OsController extends Controller
 
             $add_days = '+'.$service_order->recurrence.' days';
             $add_attend_duration = '+'.$request->duration.' hours';
-            $add_contract_duration = '+'.$request->months .' months';
+            $add_contract_duration = $request->months != 0 ? '+'.$request->months .' months' : $add_attend_duration;
+
             $attend_start = date('Y-m-d H:i:s', strtotime($data_inicial.$hora_inicial));
             $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-            $contract_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_contract_duration));
+            $contract_end = date('Y-m-d H:i:s', strtotime($attend_start. ($add_contract_duration === 0 ? $request->duration : $add_contract_duration)));
+            
 
 
             while($attend_start <= $contract_end){
