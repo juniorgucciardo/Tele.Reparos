@@ -34,19 +34,16 @@
 
 </style>
 
-    <div class="card card-navy">
+    <div class="card card-info">
         <div class="card-header">
             Informações
-            @can('view_service_demands')
-            <a href="{{ route('user.create') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
-            @endcan
         </div>
         <div class="card-body">
 
             <div class="row">
                 <div class="col-md-4 col-12">
                     <div class="">
-                        <div class="card shadow card-navy card-outline">
+                        <div class="card shadow card-info card-outline">
                             <div class="card-header">
                                 <i class="fas fa-house-user"></i>
                                 Informações do cliente
@@ -67,7 +64,7 @@
                     </div>
         
                     <div class="">
-                        <div class="card shadow card-navy card-outline">
+                        <div class="card shadow card-info card-outline">
                             <div class="card-header">
                                 <i class="fas fa-map-marker-alt"></i>
                                 Endereço
@@ -100,7 +97,7 @@
 
                 <div class="col-md-8 col-12">
 
-                    <div class="card shadow card-navy card-outline">
+                    <div class="card shadow card-info card-outline">
                         <div class="card-header">
                             <i class="fas fa-wrench"></i>
                             Informações sobre o serviço
@@ -132,7 +129,7 @@
                                     </div>
                                     <div class="my-2">
                                         <strong>Quantidade de atendimentos:</strong><br>
-                                        <span>{{$contract->amount}}</span>
+                                        <span>{{$contract->attends->count()}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +166,7 @@
                         </div>
                     </div>
 
-                    <div class="card shadow card-navy card-outline">
+                    <div class="card shadow card-info card-outline">
                         <div class="card-header">
                             <i class="fas fa-feather"></i>
                             Outras informações
@@ -177,6 +174,9 @@
                         <div class="card-body">
                             <strong>Cadastrado em:</strong><br>
                             <span>{{$contract->created_at}}</span>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{route('attend.create')}}" class="btn btn-info">Adionar novo atendimento</a>
                         </div>
                     </div>
 
@@ -191,7 +191,7 @@
 
 
 
-            <div class="card shadow card-navy card-outline">
+            <div class="card card-info card-outline">
                 <div class="card-header">
                     Atendimentos deste contrato
                 </div>

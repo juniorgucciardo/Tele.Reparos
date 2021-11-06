@@ -27,27 +27,23 @@
 
 </style>
 
-    <div class="card card-navy">
+    <div class="card card-info">
         <div class="card-header">
             Informações
-            @can('view_service_demands')
-            <a href="{{ route('OS.export') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Relatório geral</button></a>
-            <a href="{{ route('OS.create') }}"><button type="button" class="mx-1 btn-sm btn-outline-light"  ><i class="fas fa-info-circle mx-1"></i>Novo registro</button></a>
-            @endcan
         </div>
         <div class="card-body">
 
             <div class="row">
                 <div class="col-md-3 col-12">
                     <div class="">
-                        <div class="card-navy shadow card card-outline">
+                        <div class="card-info shadow card card-outline">
                             <div class="card-header d-flex justify-content-between items-center">
                                 <i class="fas fa-user-circle"></i>
                                 <span>Informações do usuário</span>
                             </div>
                             <div class="card-body">
                                 <div class="row flex-column gap-3 justify-content-between">
-                                    <img alt="80x80" class="prof_pic border-md border-navy rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$user->user_img}}">
+                                    <img alt="80x80" class="prof_pic border-md border-info rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$user->user_img}}">
                                     <div class="">
                                         <strong>Nome:</strong><br>
                                         <span>{{$user->name}}</span>
@@ -59,15 +55,15 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-around">
-                            <button class="btn bg-gradient-navy " style="color: white">Imprimir</button>
-                            <button class="btn bg-gradient-navy " style="color: white">Histórico</button>
-                            <button class="btn bg-gradient-navy " style="color: white">Ações</button>
+                            <button class="btn bg-gradient-info " style="color: white">Imprimir</button>
+                            <button class="btn bg-gradient-info " style="color: white">Histórico</button>
+                            <button class="btn bg-gradient-info " style="color: white">Ações</button>
                             </div>
                         </div>
                     </div>
         
                     <div class="">
-                        <div class="card card-navy card-outline shadow">
+                        <div class="card card-info card-outline shadow">
                             <div class="card-header">
                                 outras informações
                             </div>
@@ -91,7 +87,7 @@
 
                 <div class="col-md-8 col-12">
 
-                    <div class="card card-navy card-outline shadow">
+                    <div class="card card-info card-outline shadow">
                         <div class="card-header">
                             Alterar informações
                         </div>
@@ -112,7 +108,7 @@
                                         
                                     </div>
                                     <div class="flex-column my-1 flex justify-center items-center mr-5 col-md-3 col-12">
-                                        <img width="120px" height="120px" src="/storage/usr_img/{{$user->user_img}}" class="my-3 prof_pic border-md overlay border-navy rounded-circle mx-auto" onchange="loadFile(event)" id="output" alt="user_profile">
+                                        <img width="120px" height="120px" src="/storage/usr_img/{{$user->user_img}}" class="my-3 prof_pic border-md overlay border-info rounded-circle mx-auto" onchange="loadFile(event)" id="output" alt="user_profile">
                                         <div class="custom-file text-center flex-column justify-content-center items-center">
                                             <label for="user_img" class="btn btn-sm btn-info">Selecione</label>
                                             <input type="file" name="user_img" id="user_img" accept="image/*" onchange="loadFile(event)">
@@ -123,8 +119,8 @@
                             
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn-sm bg-gradient-navy " style="color: white">Salvar</button>
-                            <button type="cancel" disabled data-target="{{route('user.view', $user->id)}}" class="btn-sm bg-navy disabled " style="color: white">Cancelar</button>
+                            <button type="submit" class="btn-sm bg-gradient-info " style="color: white">Salvar</button>
+                            <button type="cancel" disabled data-target="{{route('user.view', $user->id)}}" class="btn-sm bg-info disabled " style="color: white">Cancelar</button>
 
                         </div>
                     </form>
@@ -135,7 +131,7 @@
                         $u = $user;
                     @endphp
                     @can('view_service_demands')
-                    <div class="card card-navy card-outline shadow">
+                    <div class="card card-info card-outline shadow">
                         <div class="card-header">
                             Avaliações
                         </div>
@@ -143,7 +139,7 @@
                             @foreach ($user->reviewsAboutMe as $review)
                             <div class="post">
                                 <div class="user-block">
-                                    <img width="100px" height="100px" class="prof_pic border-md border-navy rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$review->ownerReview->user_img}}" alt="person">
+                                    <img width="100px" height="100px" class="prof_pic border-md border-info rounded-circle my-2 mx-auto" src="/storage/usr_img/{{$review->ownerReview->user_img}}" alt="person">
                                   <span class="username">
                                     <a href="#">{{$review->ownerReview->name}}</a>
                                   </span>

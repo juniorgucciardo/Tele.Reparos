@@ -241,8 +241,8 @@ function showCheckboxes() {
                         
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Duração deste contrato (meses):</label>
-                          <input type="text" name="months" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade de atendimentos">
+                          <label for="exampleInputEmail1">Duração deste contrato:</label>
+                          <input type="text" name="months" class="form-control" id="exempleImputServiceTitle" placeholder="Meses">
                         </div>
                       </div>
                     </div>

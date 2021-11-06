@@ -15,7 +15,7 @@ class CreateImgContractsTable extends Migration
     {
         Schema::create('img_contracts', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('img_contract');
             $table->foreignId('contract_id');
             $table->timestamps();

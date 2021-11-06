@@ -101,6 +101,11 @@ class DatabaseSeeder extends Seeder
             'type_title' => 'Seguradora'
         ]);
 
+        Type::create([
+            'id' => 5,
+            'type_title' => 'Condomínio'
+        ]);
+
         Service::create([
             'id' => 1,
             'service_title' => 'Jardinagem',
@@ -182,7 +187,7 @@ class DatabaseSeeder extends Seeder
 
         Situation::create([
             'id' => 3,
-            'title' => 'Em execução',
+            'title' => 'Confirmado',
             'description' => 'Serviço solicitado pelo cliente'
         ]);
 

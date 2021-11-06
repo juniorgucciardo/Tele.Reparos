@@ -91,7 +91,7 @@ $(document).ready(function () {
                       <div class="row">
                         <div class="col-md-6 col-12">
                           <label for="exampleInputEmail1">Selecione o contrato</label>
-                          <select name="order_id" class="form-control">
+                          <select name="order_id" class="selectpicker form-control" data-live-search="true">
                             @foreach ($contracts as $contract)
                                 <option value="{{$contract->id}}">{{$contract->nome_cliente}} - {{$contract->service->service_title}}</option>
                             @endforeach

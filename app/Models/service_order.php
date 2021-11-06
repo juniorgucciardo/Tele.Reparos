@@ -73,11 +73,23 @@ class service_order extends Model
     }
 
     public function scopeOrdersContracts($query){
-        return $query->where('type_id', 2);
+        return $query->where('type_id', 2)
+                     ->where('situation_id', 3);
+    }
+
+    public function scopeOrdersCondominium($query){
+        return $query->where('type_id', 5)
+                     ->where('situation_id', 3);
     }
 
     public function scopeOrdersInsurance($query){
-        return $query->where('type_id', 4);
+        return $query->where('type_id', 4)
+                     ->where('situation_id', 3);
+    }
+
+    public function scopeOrdersLoose($query){
+        return $query->where('type_id', 1)
+                     ->where('situation_id', 3);
     }
 
     public function scopeOrdersByService($query, $service_id){

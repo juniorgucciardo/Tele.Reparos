@@ -48,7 +48,11 @@ class OsController extends Controller
             $service_orders = $this->repositoryOS->with('user')->withCount('attends')->with('type')->get();
             return view('admin.pages.OS.index', [
                 'service_orders' => $service_orders,
-                'ordersSolicited' => $this->repositoryOS->ordersDemandads()->get()
+                'contracts' => $this->repositoryOS->ordersContracts()->count(),
+                'ordersSolicited' => $this->repositoryOS->ordersDemandads()->get(),
+                'insuranceCount' => $this->repositoryOS->ordersInsurance()->count(),
+                'condominiumCount' => $this->repositoryOS->ordersCondominium()->count(),
+                'looseCount' => $this->repositoryOS->ordersLoose()->count()
             ]);
         }
 
@@ -339,8 +343,8 @@ class OsController extends Controller
     {
         if(auth()->user()->can('view_service_demands')){
             $service_order = service_order::findOrFail($id);
+            $service_order->attends()->attendsFuture()->delete();
             $service_order->user()->detach();
-            $service_order->destroy($id);
             $service_order->update([
                 'situation_id' => 4
             ]);

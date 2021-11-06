@@ -256,15 +256,15 @@ return [
             'label_color' => 'primary',
         ],
         [
-            'text' => 'Atendimentos',
-            'url'  => 'admin/atendimentos',
-            'icon' => 'fas fa-truck-moving'
-
-        ],
-        [
             'text' => 'Contratos',
             'url'  => 'admin/OS',
             'icon' => 'fas fa-file-contract',
+
+        ],
+        [
+            'text' => 'Atendimentos',
+            'url'  => 'admin/atendimentos',
+            'icon' => 'fas fa-truck-moving'
 
         ],
         [
@@ -453,8 +453,8 @@ return [
 
     'iframe' => [
         'default_tab' => [
-            'url' => null,
-            'title' => null,
+            'url' => 'telereparos.com.br',
+            'title' => 'Tele Reparos',
         ],
         'buttons' => [
             'close' => true,

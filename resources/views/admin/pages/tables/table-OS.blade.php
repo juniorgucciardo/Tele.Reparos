@@ -26,12 +26,13 @@
     
 </style>
 
-<table id="table" class="table tableResponsive table-striped">
+<table id="table-user" class="table tableResponsive table-striped">
     <thead>
         <tr>
             <th>id</th>
-            <th>Data e hora</th>
-            <th>Atividade</th>
+            <th>Data</th>
+            <th>hora</th>
+            <th>Duração do atendimento</th>
             <th>Funcionário</th>
             <th>Status</th>
              @can('view_service_demands')
@@ -76,14 +77,27 @@
                 $data = date('d/m/Y', strtotime($data));
             @endphp
             {{$data}}
-             - 
+            </td>
+            <td>
                 @php
                 $hora = explode(' ', $attend->data_inicial)[1];
-                $hora = date('H:i', strtotime($hora));
+                echo date('H:i', strtotime($hora));
+                $hora = \Carbon\Carbon::parse($hora);
+                $final = explode(' ', $attend->data_final)[1];
+                $final = \Carbon\Carbon::parse($final);
+                $totalDuration = $final->diffInHours($hora);
             @endphp
-            {{$hora}}
+        
             </td>
-            <td>{{ $attend->orders->service->service_title }}</td>
+            <td>
+                @php
+                if($attend->status_id > 3){
+                    echo 'atendimento durou '.$totalDuration.' hora';
+                } else {
+                    echo 'duração estimada de '.$totalDuration.' horas';
+                }
+                @endphp
+            </td>
             <td>
                 @foreach ($attend->users as $user)
                     @php
@@ -120,3 +134,4 @@
        @endforeach
     </tbody>
 </table>
+

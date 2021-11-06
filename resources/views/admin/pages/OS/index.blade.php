@@ -45,7 +45,7 @@
 <div class="info-box-content">
 <span class="info-box-text">Contratos de serviços</span>
 <span class="info-box-number">
-10
+{{$contracts}}
 </span>
 </div>
 <!-- /.info-box-content -->
@@ -61,7 +61,7 @@
 
 <div class="info-box-content">
 <span class="info-box-text">Serviços de seguradoras</span>
-<span class="info-box-number"></span>
+<span class="info-box-number">{{$insuranceCount}}</span>
 </div>
 <!-- /.info-box-content -->
 </div>
@@ -76,7 +76,7 @@
 
 <div class="info-box-content">
 <span class="info-box-text">Condomínios atendidos</span>
-<span class="info-box-number"></span>
+<span class="info-box-number">{{$condominiumCount}}</span>
 </div>
 <!-- /.info-box-content -->
 </div>
@@ -91,7 +91,7 @@
 
 <div class="info-box-content">
 <span class="info-box-text">Serviços avulsos</span>
-<span class="info-box-number"></span>
+<span class="info-box-number">{{$looseCount}}</span>
 </div>
 <!-- /.info-box-content -->
 </div>
@@ -166,7 +166,7 @@
                             <td>{{$order->attends_count}}</td>
                             @can('view_service_demands')
                             <td>
-                                <div class="row d-flex nowrap">
+                                <div class="btn-group">
                                     <a href="{{url("admin/detalhes-contrato/$order->id")}}">
                                         <button class="btn-sm btn-warning">
                                             <i class="fas fa-eye"></i>
