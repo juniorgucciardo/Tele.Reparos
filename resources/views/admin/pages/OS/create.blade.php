@@ -73,7 +73,6 @@ function showCheckboxes() {
             <form action="{{ route('OS.create') }}" method="POST">
               @csrf
               <div class="card-body">
-                <a href="{{ route('attend.create') }}" class="btn btn-secondary my-2">Este atendimento pertence a um contrato ja cadastrado?</a>
                 <div class="form-group">
                   
                   {{-- Informações do cliente --}}
@@ -139,7 +138,8 @@ function showCheckboxes() {
                       <div class="row  my-1">
                         <div class="col-md-5 col-12">
                           <label for="exampleInputEmail1">Serviço:</label>
-                          <select required name="id_service" class="form-control">
+                          <select required name="id_service" class="form-control" onchange="funcao2(this.value)">
+                              <option selected disable value="">Escolha o serviço</option>
                             @foreach ($services as $service)
                                 <option value="{{$service->id}}">{{$service->service_title}}</option>
                             @endforeach
@@ -203,7 +203,7 @@ function showCheckboxes() {
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Situação:</label>
                           <select required name="situation" class="form-control">
-                            <option selected value="3">Apto para execução</option>
+                            <option selected value="3">Confirmado</option>
                              @foreach ($situations as $situation)
                               <option value="{{$situation->id}}">{{$situation->title}}</option>
                             @endforeach
@@ -229,9 +229,9 @@ function showCheckboxes() {
                     <div class="card-body">
                       <div class="row my-1 d-flex items-center">
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Recorrência: (15)</label>
-                          <label for="exampleInputEmail1">Situação:</label>
+                          <label for="exampleInputEmail1">Recorrência:</label>
                           <select required name="recurrence" class="form-control">
+                            <option selected disabled>Selecione uma recorrência</option>
                             <option value="1">Diário</option>
                             <option value="7">Semanal</option>
                             <option value="15">Quinzenal</option>
@@ -241,7 +241,7 @@ function showCheckboxes() {
                         
                         </div>
                         <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Duração deste contrato:</label>
+                          <label for="exampleInputEmail1">Meses</label>
                           <input type="text" name="months" class="form-control" id="exempleImputServiceTitle" placeholder="Meses">
                         </div>
                       </div>
@@ -276,6 +276,190 @@ function showCheckboxes() {
 
 
                   
+                  {{-- Piscineiro --}}
+
+                  <div class="card card-outline card-gray shadow" id="piscineiro" type="hidden">
+                    <div class="card-header shadow-sm">
+                      <i class="fas fa-swimming-pool"></i>
+                      
+                      Limpeza de piscina
+                    </div>
+                    <div class="card-body">
+                      <div class="row  my-1 d-flex items-center">
+                        
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Tamanho aproximado da piscina</label>
+                        <input type="text" name="insurance" class="form-control" id="exempleImputServiceTitle" placeholder="m²">
+                        
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Produtos</label>
+                          <select required name="recurrence" class="form-control">
+                            <option selected disabled>Este atendimento inclui produtos?</option>
+                            <option value="1">Sim</option>
+                            <option value="2">Não</option>
+                          </select> 
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Manutenção adicinal</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Manutenção">
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  {{-- Jardinagem --}}
+
+                  <div class="card card-outline card-gray shadow" id="jardinagem" type="hidden">
+                    <div class="card-header shadow-sm">
+                      <i class="fas fa-seedling"></i>
+                      
+                      Jardinagem
+                    </div>
+                    <div class="card-body">
+                      <div class="row  my-1 d-flex items-center">
+                        
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Tamanho</label>
+                          <select required name="recurrence" class="form-control">
+                            <option selected disabled>Selecione um tamanho</option>
+                            <option value="1">Pequena monta</option>
+                            <option value="2">Média monta</option>
+                            <option value="3">Grande monta</option>
+                          </select>                        
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Poda de arvores</label>
+                          <select required name="recurrence" class="form-control" onchange="funcaoJardinagem(this.value)">
+                            <option selected disabled>Este serviço inclui poda de arvores?</option>
+                            <option value="1">Sim</option>
+                            <option value="2">Não</option>
+                          </select> 
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Recolhimento de resíduos</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
+                        </div>
+
+                      </div>
+
+                      <div id="poda" class="row my-2 d-flex items-center">
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Arvore</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Altura aproximada</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Observação</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+                  {{-- Pós obra --}}
+
+                  <div class="card card-outline card-gray shadow" id="pos-obra" type="hidden">
+                    <div class="card-header shadow-sm">
+                      <i class="fas fa-hard-hat"></i>
+                      
+                      Pós Obra
+                    </div>
+                    <div class="card-body">
+                      <div class="row  my-1 d-flex items-center">
+                        
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Quan</label>
+                        <input type="text" name="insurance" class="form-control" id="exempleImputServiceTitle" placeholder="m²">
+                        
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Poda</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Alguma poda incluida?">
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Recolhimento de resíduos</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  {{-- Pós obra --}}
+
+                  <div class="card card-outline card-gray shadow" id="limpeza-pesada" type="hidden">
+                    <div class="card-header shadow-sm">
+                      <i class="fas fa-hard-hat"></i>
+                      Limpeza de vidro, calçadas, ou telhado
+                    </div>
+                    <div class="card-body">
+                      <div class="row  my-1 d-flex items-center">
+                        
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Serviço em altura</label>
+                        <input type="text" name="insurance" class="form-control" id="exempleImputServiceTitle" placeholder="m²">
+                        
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Vidros</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade e tamanho dos vidros">
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Limpe</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  {{-- Condomínio --}}
+
+                  <div class="card card-outline card-gray shadow" id="condominio" type="hidden">
+                    <div class="card-header shadow-sm">
+                      <i class="fas fa-building"></i>
+                      Condomínio
+                    </div>
+                    <div class="card-body">
+                      <div class="row  my-1 d-flex items-center">
+                        
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Serviço em altura</label>
+                        <input type="text" name="insurance" class="form-control" id="exempleImputServiceTitle" placeholder="m²">
+                        
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Vidros</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Quantidade e tamanho dos vidros">
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                          <label for="exampleInputEmail1">Limpe</label>
+                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  
                 
                 
               </div>
@@ -293,16 +477,81 @@ function showCheckboxes() {
       recorrencia.hidden = true;
       var seguradora = document.getElementById("seguradora");
       seguradora.hidden = true;
+      var piscineiro = document.getElementById("piscineiro");
+      piscineiro.hidden = true;
+      var jardinagem = document.getElementById("jardinagem");
+      jardinagem.hidden = true;
+      var posobra = document.getElementById("pos-obra");
+      posobra.hidden = true;
+      var limpezapesada = document.getElementById("limpeza-pesada");
+      limpezapesada.hidden = true;
+
+      var condominio = document.getElementById("condominio");
+      condominio.hidden = true;
+
+      var poda = document.getElementById("poda");
+      poda.hidden = true;
+
       
       function funcao(value){
         if(value == 2){
           recorrencia.hidden = false;
+
         }else if(value == 4){
           recorrencia.hidden = true;
           seguradora.hidden = false;
+          condominio.hidden = true;
+          posobra.hidden = true;
         }else if(value == 1){
           recorrencia.hidden = true;
           seguradora.hidden = true;
+          condominio.hidden = true;
+          posobra.hidden = true;
+        }else if(value == 5){
+          recorrencia.hidden = false;
+          seguradora.hidden = true;
+          condominio.hidden = false;
+          posobra.hidden = true;
+        }else if(value == 3){
+          recorrencia.hidden = true;
+          seguradora.hidden = true;
+          condominio.hidden = true;
+          posobra.hidden = false;
+        }
+      }
+
+      function funcao2(value){
+        if(value == 1){
+          piscineiro.hidden = true;
+          jardinagem.hidden = false;
+          limpezapesada.hidden = true;
+          posobra.hidden = true;
+        } else if (value == 5){
+          piscineiro.hidden = false;
+          jardinagem.hidden = true;
+          limpezapesada.hidden = true;
+          posobra.hidden = true;
+        } else if (value == 10){
+          piscineiro.hidden = true;
+          jardinagem.hidden = true;
+          limpezapesada.hidden = false;
+          posobra.hidden = true;
+
+        } else if (value == 6){
+          piscineiro.hidden = true;
+          jardinagem.hidden = true;
+          limpezapesada.hidden = true;
+          posobra.hidden = false;
+
+        }
+      }
+
+      function funcaoJardinagem(value){
+        if(value == 1){
+          console.log('poda');
+          poda.hidden = true;
+        } else if(value == 2){
+          poda.hidden = true;
         }
       }
     </script>

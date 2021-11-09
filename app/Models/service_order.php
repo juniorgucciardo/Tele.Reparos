@@ -63,6 +63,16 @@ class service_order extends Model
 
         return $this->belongsTo('App\Models\Type', 'type_id', 'id');
     }
+
+    public function listOrders(){
+        return $this->where('situation_id', 3)
+                     ->with('user', 'type', 'service');
+    }
+
+    public function solicited(){
+        return $this->ordersDemandads()
+                    ->with('user', 'type', 'service');
+    }
     
     public function scopeOrdersDemandads($query){
         return $query->where('situation_id', 1);

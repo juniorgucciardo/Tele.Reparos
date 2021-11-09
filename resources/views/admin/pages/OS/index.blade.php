@@ -11,7 +11,6 @@
 @stop
 
 @section('content')
-
 <style>
 
 

@@ -34,7 +34,7 @@
                             <figure class="mb-4"><img class="img-fluid rounded" src="/storage/blog/{{$post->img_post}}" alt="..." /></figure>
                             <!-- Post content-->
                             <section class="mb-5">
-                                <p class="fs-5 mb-4">{{!! $post->content !!}}</p>
+                                <p class="fs-5 mb-4">{!! $post->content !!}</p>
                             </section>
                         </article>
                         <!-- Comments section-->

@@ -11,18 +11,27 @@
 @stop
 
 @section('content')
+
+<style>
+  .tableResponsive tr{
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>
   <div class="card">
       <div class="card-header">
         <h5>Todas as postagens</h5>
       </div>
       <div class="card-body">
-          <a class="btn btn-primary" href="{{route('blog.create')}}">Criar nova postagem</a>
-        <table class="table table-bordered">
+          <a class="btn btn-primary my-3" href="{{route('blog.create')}}">Criar nova postagem</a>
+        <table class="table tableResponsive table-bordered">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Titulo</th>
                 <th scope="col">Url</th>
+                <th>Conteudo</th>
                 <th scope="col">Imagem</th>
                 <th scope="col">Ações</th>
               </tr>
@@ -32,7 +41,8 @@
                 <tr>
                     <th scope="row">{{$post->id}}</th>
                     <td>{{$post->title}}</td>
-                    <td>{{!! $post->content !!}}</td>
+                    <td>{{$post->slug}}</td>
+                    <td>{!! $post->content !!}</td>
                     <td>
                         <div class="flex-column">
                             <img width="100px" height="100px" style="object-fit: cover;" src="/storage/blog/{{$post->img_post}}" alt="">
@@ -50,9 +60,6 @@
               @endforeach
             </tbody>
           </table>
-      </div>
-      <div class="card-footer">
-          footer
       </div>
   </div>
 @stop

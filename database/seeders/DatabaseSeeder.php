@@ -46,7 +46,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'view_service_demands'
         ]);
 
+        Permission::create([
+            'name' => 'view_service_demands'
+        ]);
+
         $role->givePermissionTo('view_service_demands');
+        $role->givePermissionTo('manage-blog');
 
         $user = User::find(1);
         $user->assignRole('administrator');

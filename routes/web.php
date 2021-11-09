@@ -17,27 +17,17 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/detalhes-contrato/{id}', [App\Http\Controllers\Admin\OsController::class, 'attedsByContract'])->name('OS.contract');
-
     Route::get('/admin/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
-
     Route::get('/admin/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');
-
     Route::put('/admin/changeStatus/{id}', [App\Http\Controllers\Admin\AttendController::class, 'changeStatus'])->name('attend.changeStatus');
-
     Route::get('/admin/atendimentos/detalhes/{id}', [App\Http\Controllers\Admin\AttendController::class, 'show'])->name('attend.show');
-
     Route::post('/admin/atendimentos/novolog/', [App\Http\Controllers\Admin\StatusLogController::class, 'store'])->name('log.store');
-
     Route::DELETE('/admin/atendimentos/deleteimg/{id}', [App\Http\Controllers\Admin\ImgLogController::class, 'destroy'])->name('imglog.destroy');
-    
     Route::post('/admin/atendimentos/detalhes', [App\Http\Controllers\Admin\ImgLogController::class, 'store'])->name('imglog.store');
-
     //view profile
     Route::get('/admin/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');
 
-
     Route::get('/admin/calendario', [App\Http\Controllers\Admin\AttendController::class, 'calendarView'])->name('attend.calendarView');
-
 
     //Admin routes
     Route::group(['middleware'=>'can:view_service_demands'], function(){
@@ -114,7 +104,7 @@ Route::middleware(['auth'])->group(function () {
         
       });
       //configurações do blog
-        Route::group(['middleware'=>'can:view-service-demands'], function(){
+        Route::group(['middleware'=>'can:view_service_demands'], function(){
         //blog
         Route::get('/admin/blog', [App\Http\Controllers\PostController::class, 'index'])->name('blog.admin');
         Route::get('/admin/blog/novo', [App\Http\Controllers\PostController::class, 'create'])->name('blog.create');

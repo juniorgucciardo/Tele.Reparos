@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     eventDisplay: 'block',
     eventSources: [
       {
-        url: 'http://192.168.100.163:8000/admin/getCalendario',
+        url: 'http://localhost:8000/admin/getCalendario',
         method: 'GET',
         success: function(data) {
           return data.eventArray;
