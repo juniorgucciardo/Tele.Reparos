@@ -4,9 +4,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h4>
-    <i class="fas fa-calendar"></i> Atendimentos
-  </h4>
+<h5><i class="fas fa-calendar"></i> Calendario de atendimentos</h5>
 @stop
 
 @section('content')
@@ -23,46 +21,44 @@
       </div>
     </div>
     <div class="card-body" style="display: block;">
-        <form>
+        <form action="{{ route('attend')}}" method="GET">
+            @csrf
             <div class="row">
                 <div class="col-md-1">
-                    <input type="text" id="id" class="form-control" placeholder="Id">
+                    <input name="id" type="text" id="id" class="form-control" placeholder="Id">
                   </div>
               <div class="col-md-3">
-                <select class="form-control" aria-placeholder="Tipo">
+                <select name="tipo" class="form-control" aria-placeholder="Tipo">
                     <option selected disabled>Tipo de OS:</option>
-                    <option>Avulsos</option>
-                    <option>Contratos</option>
-                    <option>Pós Obra</option>
-                    <option>Condomínio</option>
-                    <option>Seguradora</option>
+                    <option value="1">Avulsos</option>
+                    <option value="2">Contratos</option>
+                    <option value="3">Pós Obra</option>
+                    <option value="4">Condomínio</option>
+                    <option value="5">Seguradora</option>
                   </select>
               </div>
               <div class="col-md-2">
-                <select class="form-control" aria-placeholder="Serviço">
+                <select name="servico" class="form-control" aria-placeholder="Serviço">
                     <option selected disabled>Serviço:</option>
-                    <option>Jardinagem</option>
-                    <option>Piscina</option>
-                    <option>Elétrica/hidraulica</option>
-                    <option>Condomínio</option>
-                    <option>Seguradora</option>
+                    @foreach ($services as $service)
+                        <option value="{{ $service->id }}">{{ $service->service_title }}</option>
+                    @endforeach
                   </select>
               </div>
               <div class="col-md-3">
-                <select multiple class="selectpicker form-control" title="Funcionário:" data-live-search="true">
-                    <option>Jardinagem</option>
-                    <option>Piscina</option>
-                    <option>Elétrica/hidraulica</option>
-                    <option>Condomínio</option>
-                    <option>Seguradora</option>
+                <select name="situacao" class="form-control" aria-placeholder="Situação">
+                    <option selected disabled>Situação:</option>
+                    @foreach ($situations as $situation)
+                        <option value="{{$situation->id}}">{{$situation->title}}</option>
+                    @endforeach
                   </select>
               </div>
               <div class="col-md-3">
-                <input type="date" class="form-control" placeholder="Data">
+                <input type="date" name="data" class="form-control" placeholder="Data">
               </div>
             </div>
+            <button type="submit" class="btn btn-primary my-2">Pesquisar</button>
         </form>
-        <button type="submit" class="btn btn-primary my-2">Pesquisar</button>
     </div>
     <!-- /.card-body -->
   </div>
@@ -155,6 +151,7 @@
 
                         
                 </div>
+                {!! $attends->links() !!}
             </div>
 
         </div>

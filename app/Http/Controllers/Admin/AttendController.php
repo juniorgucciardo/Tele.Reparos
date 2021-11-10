@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Attend;
 use App\Models\User;
 use App\Models\Status;
+use App\Models\Situation;
+use App\Models\Service;
 use App\Models\StatusLog;
 use App\Models\service_order;
 use Illuminate\Http\Request;
@@ -36,11 +38,13 @@ class AttendController extends Controller
         $this->repositoryAttend = new Attend();
     }
 
-    public function index()
-    {        
-        $attends = $this->repositoryAttend->attendsHistory()->get();
-        return view('admin.pages.attends.index', [
-            'attends' => $attends
+    public function index(Request $request)
+    {
+        $attends = $this->repositoryAttend->search($request)->paginate(100);
+        return view('admin.pages.attends.index', ['attends' => $attends,
+                                                  'services' => Service::all(),
+                                                  'users' => User::all(),
+                                                  'situations' => Situation::all()
         ]);
 
     }
@@ -48,11 +52,23 @@ class AttendController extends Controller
 
 
 
-    public function calendar()
+    public function calendar(Request $request)
     {
-        if(Auth::user()->can('view_service_demands')){
-            $attends = $this->repositoryAttend->calendar();
-        } else {
+
+        $query = Attend::query();
+
+        if(Auth::user()->can('view_service_demands')){ //isAdmin
+
+            if($request->servico){
+                $attends = $this->repositoryAttend->attendsForExecute()->whereHas('orders', function($q) use($request){
+                    $q->where('id_service', $request->service);
+                })->get();
+            }  
+                $attends = $this->repositoryAttend->calendar()->get();
+            
+
+        } else {                                      //n é admin
+
             $attends = Attend::attendsById(Auth::user()->id)->with('users', 'orders', 'orders.service')->whereNotNull('order_id')->get();
         }
         
@@ -117,7 +133,6 @@ class AttendController extends Controller
                     'end' => $end_date,
                     ]);
                 }
-
 
                 return view('admin.pages.attends.calendar');
     }

@@ -73,6 +73,41 @@ class service_order extends Model
         return $this->ordersDemandads()
                     ->with('user', 'type', 'service');
     }
+
+    public function search($request){
+        $contracts = $this
+        ->where(function($query) use($request){
+            if($request->id){
+                $query->where('id', $request->id);
+            }
+            if($request->tipo){
+                $query->where('type_id', $request->id);
+            }
+            if($request->servico){
+                $query->where('id_service', $request->servico);
+            }
+            if($request->cliente){
+                $query->where('nome_cliente', 'like', '%'.$request->cliente.'%');
+            }
+            if($request->data_cadastro){
+                $query->whereDate('created_at', $request->data_cadastro);
+            }
+            if($request->situacao){
+                $query->where('situation_id', $request->situacao);
+            }
+        })
+        ->with('user', 'type', 'service')
+        ->get();
+
+
+        return $contracts;
+    }
+
+
+
+
+
+    //////////////// ESCOPOS ////////////////
     
     public function scopeOrdersDemandads($query){
         return $query->where('situation_id', 1);

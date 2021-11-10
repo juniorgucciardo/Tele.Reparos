@@ -41,19 +41,22 @@ class OsController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
         if(auth()->user()->hasPermissionTo('view_service_demands')){
+
             return view('admin.pages.OS.index', [
                 
-                'service_orders' => $this->repositoryOS->listOrders()->get(),
+                'service_orders' => $this->repositoryOS->search($request),
                 'contracts' => $this->repositoryOS->ordersContracts()->count(),
                 'ordersSolicited' => $this->repositoryOS->solicited()->get(),
                 'insuranceCount' => $this->repositoryOS->ordersInsurance()->count(),
                 'condominiumCount' => $this->repositoryOS->ordersCondominium()->count(),
                 'looseCount' => $this->repositoryOS->ordersLoose()->count(),
-                'users' => $this->repositoryUser->all()
+                'users' => $this->repositoryUser->all(),
+                'services' => $this->repositoryService->all(),
+                'situations' => $this->repositorySituation->all(),
             ]);
         }
 

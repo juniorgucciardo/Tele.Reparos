@@ -17,7 +17,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/detalhes-contrato/{id}', [App\Http\Controllers\Admin\OsController::class, 'attedsByContract'])->name('OS.contract');
-    Route::get('/admin/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
+    Route::any('/admin/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
     Route::get('/admin/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');
     Route::put('/admin/changeStatus/{id}', [App\Http\Controllers\Admin\AttendController::class, 'changeStatus'])->name('attend.changeStatus');
     Route::get('/admin/atendimentos/detalhes/{id}', [App\Http\Controllers\Admin\AttendController::class, 'show'])->name('attend.show');
@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware'=>'can:view_service_demands'], function(){
         
         //SERVICOS
-        Route::get('/admin/servicos', [App\Http\Controllers\Admin\ServicesController::class, 'index'])->name('service');
+        Route::any('/admin/servicos', [App\Http\Controllers\Admin\ServicesController::class, 'index'])->name('service');
         Route::get('/admin/servicos/novo', [App\Http\Controllers\Admin\ServicesController::class, 'create'])->name('service.create');
         Route::Post('/admin/servicos/novo', [App\Http\Controllers\Admin\ServicesController::class, 'store'])->name('service.store');
         Route::get('/admin/servicos/editar/{id}', [App\Http\Controllers\Admin\ServicesController::class, 'edit'])->name('service.edit');

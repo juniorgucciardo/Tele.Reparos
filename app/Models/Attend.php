@@ -38,6 +38,38 @@ class Attend extends Model
         return $this->hasMany('App\Models\StatusLog', 'attend_id');
     }
 
+    public function search($request){
+        $attends = $this
+        ->attendsForExecute()
+        ->attendsPast()
+        ->where(function($query) use($request){
+            if($request->id){
+                $query->where('id', $request->id);
+            }
+            if($request->tipo){
+                $query->whereHas('orders', function($q) use($request){
+                    $q->where('type_id', $request->tipo);
+                });
+            }
+            if($request->servico){
+                $query->whereHas('orders', function($q) use($request){
+                    $q->where('id_service', $request->servico);
+                });
+            }
+            if($request->situacao){
+                $query->whereHas('orders', function($q) use($request){
+                    $q->where('situation_id', $request->situacao);
+                });
+            }
+            if($request->data){
+                $query->whereDate('data_inicial', $request->data);
+            }
+        })
+        ->with('orders');
+
+        return $attends;
+    }
+
     //////////// CUSTOM QUERIES /////////////
 
     public function attendsByAtualDay(){
@@ -75,8 +107,7 @@ class Attend extends Model
 
     public function calendar(){
         return $this->attendsForExecute()
-                    ->with('orders.service', 'orders.type')
-                    ->get();
+                    ->with('orders.service', 'orders.type');
     }
 
     public function calendarByUser($id){
