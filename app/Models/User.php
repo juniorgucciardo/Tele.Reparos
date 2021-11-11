@@ -78,6 +78,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFirstNameAttribute($value)
+    {
+        $value = ucfirst($this->name);
+        return $value;
+    }
+
 
 
     public function service(): HasManyThrough
@@ -93,7 +99,7 @@ class User extends Authenticatable
     
         public function adminlte_profile_url()
         {
-            return 'admin/detalhes-cadastro/'.auth()->user()->id;
+            return route('user.view', auth()->user()->id);
         }
 
 }

@@ -133,6 +133,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <strong>Imagem:</strong><br>
                             <div class="row items-center justify-content-between">
                                 <div class="my-2 row d-flex images_area">

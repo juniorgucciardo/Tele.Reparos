@@ -245,31 +245,32 @@ return [
 //     ],
         [
             'text' => 'blog',
-            'url'  => 'admin/blog',
+            'url'  => 'administrativo/blog',
             'can'  => 'manage-blog',
         ],
         [
             'text' => 'Início',
-            'url'  => 'admin/',
+            'url'  => 'operacional/',
             'icon' => 'fas fa-fw fa-house-user', //AWESOME ICON
             'label'       => 4,
             'label_color' => 'primary',
         ],
         [
             'text' => 'Contratos',
-            'url'  => 'admin/OS',
+            'url'  => 'operacional/OS',
             'icon' => 'fas fa-file-contract',
+            'can'  => 'view_service_demands',
 
         ],
         [
-            'text' => 'Atendimentos',
-            'url'  => 'admin/atendimentos',
+            'text' => 'Histórico de atendimentos',
+            'url'  => 'operacional/atendimentos',
             'icon' => 'fas fa-truck-moving'
 
         ],
         [
             'text' => 'Agenda',
-            'url'  => 'admin/calendario',
+            'url'  => 'operacional/calendario',
             'icon' => 'fas fa-calendar',
 
         ],
@@ -280,25 +281,25 @@ return [
             'submenu' => [
                 [
                     'text' => 'Status de OS',
-                    'url'  => 'admin/status',
+                    'url'  => 'configuracoes/status',
                     'icon' => 'fas fa-stopwatch',
                     'can'  => 'view_service_demands'
                 ],
                 [
                     'text' => 'Funcionarios',
-                    'url'  => 'admin/cadastros',
+                    'url'  => 'configuracoes/cadastros',
                     'icon' => 'fas fa-fw fa-user-check',
                     'can'  => 'view_service_demands'
                 ],
                 [
                     'text' => 'Nossos serviços',
-                    'url'  => 'admin/servicos',
+                    'url'  => 'configuracoes/servicos',
                     'icon' => 'fas fa-fw fa-cogs',
                     'can'  => 'view_service_demands'
                 ],
                 [
                     'text' => 'Tipos de OS',
-                    'url'  => 'admin/tipos',
+                    'url'  => 'configuracoes/tipos',
                     'icon' => 'fas fa-file-export',
                     'can'  => 'view_service_demands'
                 ],

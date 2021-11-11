@@ -34,14 +34,9 @@
 
 <div class="card card-info shadow">
     <div class="card-header">
-        <span color="#fff"><i class="mx-1 fas fa-history"></i>Histórico de atualizações</span>
+        <span color="#fff"><i class="mx-1 fas fa-history"></i>Histórico de atualizações deste atendimento</span>
     </div>
     <div class="card-body">
-        @can('viewAny', $attend)
-        <button class="btn btn-info m-10" data-toggle="modal" data-target="#create">Adicionar atualização</button>
-        @include('admin.pages.logs.create')
-        @endcan
-
 
         @foreach ($attend->statusLogs->sortByDesc('created_at') as $log)
 
@@ -54,6 +49,9 @@
             } else {
                 $icon = 'fas fa-info';
             }
+
+            setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+            date_default_timezone_set('America/Sao_Paulo');
         @endphp
 
         <div class="my-3 callout callout-{{$log->color}} shadow relative">
@@ -109,13 +107,24 @@
                     <h4>{{ date('H:i A', strtotime(explode(' ', $attend->data_inicial)[1])) }}</h4>
                 </div> --}}
                 <div class="my-3 callout callout-info shadow relative">
-                    <h5><i class="fas fa-info"></i> Atendimento cadastrado dia {{ date('d/m', strtotime(explode(' ', $attend->data_inicial)[0])) }}</h5>
-                    <p class="block">demanda agendada para {{ date('l d/m', strtotime(explode(' ', $attend->data_inicial)[0])) }} às {{ date('H:i A', strtotime(explode(' ', $attend->data_inicial)[1])) }}</p>
+                    <h5><i class="fas fa-info"></i> @php
+                                                        if($attend->data_inicial->isPast()){
+                                                            echo 'Este atendimento aconteceu na';
+                                                        } else {
+                                                            echo 'Atendimento agendado para';
+                                                        }
+                                                    @endphp 
+                    {{ $attend->data_final->translatedFormat('l \, j \d\e F \à\s H:i A') }}</h5>
+                    <p class="block">demanda cadastrada dia {{ date('d/m', strtotime(explode(' ', $attend->data_inicial)[0])) }}</p>
                     
                 </div>
             {{-- </div>
         </div> --}}
 
+        @can('viewAny', $attend)
+        <button class="btn btn-info m-10" data-toggle="modal" data-target="#create">Adicionar atualização</button>
+        @include('admin.pages.logs.create')
+        @endcan
 
     </div>
 </div>

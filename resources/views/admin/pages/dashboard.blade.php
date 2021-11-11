@@ -167,7 +167,7 @@
                         $d2 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '18:00:00'));
                     @endphp
 
-                    <a href="/admin/atendimentos"><button type="button" class="mb-3 btn btn-info shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><span><i class=" fas fa-eye mx-1"></i></span>Ver tudo</button></span></a>
+                    <a href="{{route('attend')}}"><button type="button" class="mb-3 btn btn-info shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><span><i class=" fas fa-eye mx-1"></i></span>Ver tudo</button></span></a>
 
 
                   @foreach ($attendsNow as $attend)
