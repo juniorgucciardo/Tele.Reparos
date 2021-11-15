@@ -42,12 +42,11 @@
     
         
     </style>
-    <div class="preloader">
-        <div class="card-info conteudo-preloader">
-            <h1>Tele</h1>
-            <h1>REPAROS</h1>
-        </div>
-     </div>
+  <div class="preloader">
+    <div class="card-info conteudo-preloader">
+        <img width="150px" height="150px" src="/img/brand.png" alt="">
+    </div>
+</div>
      
     <div class="card card-info">
         <div class="card-header">
@@ -88,7 +87,7 @@
                       <div class="card card-outline card-{{$statusColor}} shadow rounded">
                           <div class="card-header">
                               <div class="d-flex d-flex-row justify-content-between">
-                                  <span></span>
+                                  <span>{{$attend->orders->service->service_title}}</span>
                                   <div>
                                       @php
                                           $hora = explode(' ', $attend->data_inicial)[1];
@@ -98,7 +97,7 @@
                                   </div>
                               </div>
                           </div>
-                          {{-- <div class="card-body">
+                          <div class="card-body">
                               <div class="d-flex d-flex-row justify-content-between">
                                   <div class="mr-auto flex-column w-100">
                                       <div>
@@ -137,7 +136,7 @@
 
                                   </div>
                               </div>
-                          </div> --}}
+                          </div>
                       </div>
                   
             @endforeach

@@ -11,7 +11,6 @@
 @stop
 
 @section('content')
-
 <style>
 
 
@@ -27,6 +26,7 @@
         width: 100%;
         object-fit: cover
     }
+
 
     input[type='file'] {
   display: none
@@ -77,21 +77,39 @@
                                     </div>
                                 </div>
                                 <div class="row my-1 d-flex justify-content-between">
-                                    <div class="">
+                                    <div class="block">
                                         <strong>Bairro:</strong><br>
                                         <span>{{$contract->bairro_cliente}}</span>
                                     </div>
-                                    <div class="">
+                                    <div class="block">
                                         <strong>Cidade :</strong><br>
                                         <span>{{$contract->cidade_cliente}}</span>
                                     </div>
-                                    <div class="my-3">
+                                    <div class="my-3 sm-col-8">
                                         <div class="mapouter"><div class="gmap_canvas"><iframe width="369" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q={{$contract->rua_cliente}},{{$contract->numero_cliente}},{{$contract->cidade_cliente}}&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:400px;width:369px;}</style><a href="https://www.embedgooglemap.net">google maps code generator</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:400px;width:369px;}</style></div></div>                            
 
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="card shadow card-info card-outline">
+                        <div class="card-header">
+                            <i class="fas fa-feather"></i>
+                            Outras informações
+                        </div>
+                        <div class="card-body">
+                            <strong>Cadastrado em:</strong><br>
+                            <span>{{ $contract->created_at->translatedFormat('l \, j \d\e F \à\s H:i A') }}</span>
+                            @isset($executing->id)
+                                <p>Atendimento em execução agora: {{$executing->id}}</p>
+                            @endisset
+                        </div>
+                        @can('view_service_demands')
+                        <div class="card-footer">
+                            <a href="{{route('attend.create', $contract->id)}}" class="btn btn-info">Adionar novo atendimento</a>
+                        </div>
+                        @endcan
                     </div>
                 </div>
 
@@ -133,8 +151,9 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            @if(!$contract->img_contract->isEmpty())
                             <strong>Imagem:</strong><br>
+                            @endif
                             <div class="row items-center justify-content-between">
                                 <div class="my-2 row d-flex images_area">
                                     @foreach ($contract->img_contract as $img)
@@ -153,35 +172,169 @@
                                         </div>
                                     </div>
                                     @endforeach
-                                </div>
-                                <div class="add-more my-2">
-                                   @can('view_service_demands')
-                                        <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar imagem</button>
-                                        @include('admin.pages.modal.include_img')
-                                   @endcan
-
-                                </div>
-        
+                                </div>        
                             </div>
+                            <div class="add-more my-2">
+                                @can('view_service_demands')
+                                     <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar imagem</button>
+                                     @include('admin.pages.modal.include_img')
+                                @endcan
+
+                             </div>
                             
                         </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-header ui-sortable-handle" style="cursor: move;">
+                          <h3 class="card-title">
+                            <i class="ion ion-clipboard mr-1"></i>
+                            Checklist de atividades
+                          </h3>
+          
+                          <div class="card-tools">
+                            <ul class="pagination pagination-sm">
+                              <li class="page-item"><a href="#" class="page-link">«</a></li>
+                              <li class="page-item"><a href="#" class="page-link">1</a></li>
+                              <li class="page-item"><a href="#" class="page-link">2</a></li>
+                              <li class="page-item"><a href="#" class="page-link">3</a></li>
+                              <li class="page-item"><a href="#" class="page-link">»</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <ul class="todo-list ui-sortable" data-widget="todo-list">
+                            
+                            <li class="notDone">
+                              
+                              <div class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo2" id="todoCheck2">
+                                <label for="todoCheck2"></label>
+                              </div>
+                              <span class="text">Item um para ser feito</span>
+                              <small class="badge badge-info"><i class="far fa-clock"></i> 4 horas</small>
+                              <div class="tools">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-o"></i>
+                              </div>
+                            </li>
+                            <li class="notDone">
+                              
+                              <div class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo3" id="todoCheck3">
+                                <label for="todoCheck3"></label>
+                              </div>
+                              <span class="text">Item um para ser feito</span>
+                              <small class="badge badge-warning"><i class="far fa-clock"></i> 1 hora</small>
+                              <div class="tools">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-o"></i>
+                              </div>
+                            </li>
+                            <li class="notDone">
+                              
+                              <div class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo4" id="todoCheck4">
+                                <label for="todoCheck4"></label>
+                              </div>
+                              <span class="text">Item um para ser feito</span>
+                              <small class="badge badge-success"><i class="far fa-clock"></i> 50 mins</small>
+                              <div class="tools">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-o"></i>
+                              </div>
+                            </li>
+                            <li class="notDone">
+                             
+                              <div class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo5" id="todoCheck5">
+                                <label for="todoCheck5"></label>
+                              </div>
+                              <span class="text">Item um para ser feito</span>
+                              <small class="badge badge-primary"><i class="far fa-clock"></i> 10 mins</small>
+                              <div class="tools">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-o"></i>
+                              </div>
+                            </li>
+                            <li class="notDone">
+                              
+                              <div class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo6" id="todoCheck6">
+                                <label for="todoCheck6"></label>
+                              </div>
+                              <span class="text">Item um para ser feito</span>
+                              <small class="badge badge-secondary"><i class="far fa-clock"></i> 3 horas</small>
+                              <div class="tools">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-o"></i>
+                              </div>
+                            </li><li class="notDone" style="">
+                
+                              <!-- checkbox -->
+                              <div class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                                <label for="todoCheck1"></label>
+                              </div>
+                              <!-- todo text -->
+                              <span class="text">Item um para ser feito</span>
+                              <!-- Emphasis label -->
+                              <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                              <!-- General tools such as edit or delete-->
+                              <div class="tools">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-o"></i>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer clearfix">
+                          <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+                        </div>
+                      </div>
                     <div class="card shadow card-info card-outline">
                         <div class="card-header">
-                            <i class="fas fa-feather"></i>
-                            Outras informações
+                            <i class="fas fa-toolbox"></i>
+                            checklist de materiais e equipamentos
                         </div>
                         <div class="card-body">
-                            <strong>Cadastrado em:</strong><br>
-                            <span>{{$contract->created_at}}</span>
-                        </div>
-                        <div class="card-footer">
-                            <a href="{{route('attend.create')}}" class="btn btn-info">Adionar novo atendimento</a>
+                            <ul class="list-group">
+                                <li class="list-group-item rounded-0">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="customCheck1" type="checkbox">
+                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck1">Vassoura</label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="customCheck2" type="checkbox">
+                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck2">Alcool</label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="customCheck3" type="checkbox">
+                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck3">Viper</label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="customCheck4" type="checkbox">
+                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck4">Saco de lixo</label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item rounded-0">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="customCheck5" type="checkbox">
+                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck5">Balde</label>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
-                    
 
 
                 </div>

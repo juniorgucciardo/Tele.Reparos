@@ -64,7 +64,7 @@ class ImgContractController extends Controller
         }
 
         Alert::success('Sucesso', 'Cadastrado com sucesso');
-        return redirect('admin/detalhes-contrato/'.$request->id);
+        return route('OS.contract'.$request->id);
         
     }
 

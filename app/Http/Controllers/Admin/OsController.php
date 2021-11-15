@@ -38,6 +38,7 @@ class OsController extends Controller
         $this->repositoryStatus = new Status();
         $this->repositoryType = new Type();
         $this->repositorySituation = new Situation();
+        $this->repositoryAttends = new Attend();
     }
 
 
@@ -392,9 +393,11 @@ class OsController extends Controller
     public function attedsByContract($id){
         $contract = service_order::with('service')->with('user')->with('img_contract')->findOrFail($id);
         $attends = Attend::where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
+        $attendInExec = Attend::where('order_id', $id)->with('users', 'orders.service', 'status', 'orders.type')->where('status_id', 3)->first();
         return view('admin.pages.OS.details', [
             'attends' => $attends,
-            'contract' => $contract
+            'contract' => $contract,
+            'executing' => $attendInExec
         ]);
     }
 

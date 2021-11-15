@@ -228,7 +228,7 @@
                             @can('view_service_demands')
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{url("admin/detalhes-contrato/$order->id")}}">
+                                    <a href="{{ route('OS.contract', $order->id) }}">
                                         <button class="btn-sm btn-warning">
                                             <i class="fas fa-eye"></i>
                                         </button>

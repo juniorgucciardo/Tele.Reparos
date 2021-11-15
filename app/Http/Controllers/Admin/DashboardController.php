@@ -58,11 +58,7 @@ class DashBoardController extends Controller
         };
 
         $user = User::findOrFail(auth()->user()->id);
-        $attends = Attend::whereHas('users', function($query){
-            $query->where('user_id', auth()->user()->id);
-        })
-        ->with('orders', 'orders.service', 'status')
-        ->get();
+        $attends = $this->repositoryAttend->attendsByAtualDayByUser($user->id)->get();
         
         return view('admin.pages.planos.index', [
             'username' => explode(' ', auth()->user()->name)[0],

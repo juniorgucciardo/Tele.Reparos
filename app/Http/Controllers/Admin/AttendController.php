@@ -143,14 +143,15 @@ class AttendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
+        $actualOrder = $this->repositoryOrder::where('id', $id)->with('service')->first();
         $order = $this->repositoryOrder::with('service')->get();
         $users = $this->repositoryUser::all();
         $status = $this->repositoryStatus::all();
         return view('admin.pages.attends.create', [
+            'contract' => $actualOrder,
             'users' => $users,
-            'contracts' => $order
         ]);
     }
 
@@ -160,8 +161,9 @@ class AttendController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+        $order = $this->repositoryOrder::findOrFail($id);
         $data = $request->data;
         $hora = $request->hora;
 
@@ -171,13 +173,15 @@ class AttendController extends Controller
 
         
         $attend = Attend::create([
-            'order_id' => $request->order_id,
+            'order_id' => $id,
             'data_inicial' => $start,
             'data_final' => $end,
             'status_id' => $request->status_id
         ]);
 
         $attend->users()->sync($request->user_id);
+
+        return route('OS.contract', $id);
 
     }
 

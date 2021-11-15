@@ -69,6 +69,9 @@ $(document).ready(function () {
   background-color: #1e90ff;
 }
 </style>
+{{-- {{ dd(get_defined_vars()) }} --}}
+
+
 
     <div class="card card-navy">
             <div class="card-header">
@@ -76,31 +79,11 @@ $(document).ready(function () {
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="{{ route('attend.create') }}" method="POST">
+            <form action="{{ route('attend.store', $contract->id) }}" method="POST">
               @csrf
+              @method('POST')
               <div class="card-body">
-                <div class="form-group">
-                  
-                  {{-- Informações do cliente --}}
-                  <div class="card card-outline card-gray shadow">
-                    <div class="card-header">
-                      <i class="fas fa-file-contract mx-1"></i>
-                      Informações do contrato
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-6 col-12">
-                          <label for="exampleInputEmail1">Selecione o contrato</label>
-                          <select name="order_id" class="selectpicker form-control" data-live-search="true">
-                            @foreach ($contracts as $contract)
-                                <option value="{{$contract->id}}">{{$contract->nome_cliente}} - {{$contract->service->service_title}}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                <div class="form-group"> 
 
                   {{-- Endereço da demanda --}}
                   <div class="card card-outline card-gray shadow">
@@ -121,6 +104,7 @@ $(document).ready(function () {
                         <div class="col-md-4 col-12">
                             <label for="exampleInputEmail1">Duração em horas:</label>
                             <input type="number" value="4" name="quantidade" class="form-control" id="exempleImputServiceTitle" placeholder="duração em horas">
+                            <input type="hidden" value="1" name="status_id">
                           </div>
                       </div>
                     </div>
@@ -165,5 +149,7 @@ $(document).ready(function () {
               </div>
             </form>
     </div>
+
+    
 
 @stop

@@ -81,7 +81,7 @@ class service_order extends Model
                 $query->where('id', $request->id);
             }
             if($request->tipo){
-                $query->where('type_id', $request->id);
+                $query->where('type_id', $request->tipo);
             }
             if($request->servico){
                 $query->where('id_service', $request->servico);
@@ -101,6 +101,13 @@ class service_order extends Model
 
 
         return $contracts;
+    }
+
+    public function inExecutionNow($order){
+        return $this->where('id', $order)
+                    ->where('situation_id', 3)
+                    ->get();
+
     }
 
 

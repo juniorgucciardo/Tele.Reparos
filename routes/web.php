@@ -44,8 +44,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/operacional/OS/generalReport', [App\Http\Controllers\Admin\OsController::class, 'export'])->name('OS.export');
 
         //Atendimentos
-        Route::get('/operacional/atendimentos/novo', [App\Http\Controllers\Admin\AttendController::class, 'create'])->name('attend.create');
-        Route::post('/operacional/atendimentos/novo', [App\Http\Controllers\Admin\AttendController::class, 'store'])->name('attend.store');
+        Route::get('/operacional/atendimentos/novo/{id}', [App\Http\Controllers\Admin\AttendController::class, 'create'])->name('attend.create');
+        Route::post('/operacional/atendimentos/novo/{id}', [App\Http\Controllers\Admin\AttendController::class, 'store'])->name('attend.store');
         Route::get('/operacional/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'edit'])->name('attend.edit');
         Route::put('/operacional/atendimentos/editar/{id}', [App\Http\Controllers\Admin\AttendController::class, 'update'])->name('attend.update');
         Route::DELETE('/operacional/deletar/atendimento/{id}', [App\Http\Controllers\Admin\AttendController::class, 'destroy'])->name('attend.destroy');

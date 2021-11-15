@@ -79,10 +79,23 @@ class Attend extends Model
 
     //////////// CUSTOM QUERIES /////////////
 
+    public function attendInExecution($id){
+        return $this->scopeAttendsForExecute()
+                    ->where('order_id', $id)
+                    ->where('status', 3);
+    }
+
     public function attendsByAtualDay(){
         return $this->attendsForExecute()
                     ->whereDate('data_inicial', Carbon::now()->format('Y-m-d'))
                     ->with('users', 'orders.service', 'orders.type', 'status');
+    }
+
+    public function attendsByAtualDayByUser($id){
+        return $this->whereHas('users', function($query) use($id){
+              $query->where('user_id', $id); })
+                    ->attendsForExecute()
+                    ->whereDate('data_inicial', Carbon::now()->format('Y-m-d'));
     }
 
     public function attendsConclutedById(){
