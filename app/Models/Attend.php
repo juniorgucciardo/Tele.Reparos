@@ -32,6 +32,10 @@ class Attend extends Model
     }
 
 
+    public function checklists(){
+        return $this->hasMany('App\Models\Checklist', 'checklist_id', 'id');
+    }
+
     public function users()
     {
         return $this->belongsToMany('App\Models\User', 'attend_user');
@@ -80,7 +84,7 @@ class Attend extends Model
     //////////// CUSTOM QUERIES /////////////
 
     public function attendInExecution($id){
-        return $this->scopeAttendsForExecute()
+        return $this->attendsForExecute()
                     ->where('order_id', $id)
                     ->where('status', 3);
     }

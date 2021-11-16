@@ -57,6 +57,14 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Post', 'user_id', 'id');
     }
 
+    public function checklists(){
+        return $this->hasMany('App\Models\Checklist', 'user_id', 'id');
+    }
+
+    public function itemsConcluted(){
+        return $this->hasMany('App\Models\ChecklistItem', 'concluted_by', 'id');
+    }
+
 
 
     /**
@@ -86,7 +94,7 @@ class User extends Authenticatable
 
 
 
-    public function service(): HasManyThrough
+    public function service()
         {
             return $this->hasManyThrough('App\Models\Service', 'App\Models\service_order', 'users_id', 'id_service' );
         }

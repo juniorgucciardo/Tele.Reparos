@@ -33,6 +33,10 @@ class service_order extends Model
         'duration'
     ];
 
+    public function checklists(){
+        return $this->hasMany('App\Models\Checklist', 'checklist_id', 'id');
+    }
+
     public function service(){
 
         //ordem de serviço pertence a uma categoria de serviço
