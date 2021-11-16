@@ -8,9 +8,13 @@
     <i class="fas fa-file-contract mx-1"></i>
     {{$contract->nome_cliente}} - {{$contract->service->service_title}}  
   </h5>
+
+
 @stop
 
 @section('content')
+
+
 <style>
 
 
@@ -192,7 +196,7 @@
                             Checklist de atividades
                           </h3>
           
-                          <div class="card-tools">
+                          {{-- <div class="card-tools">
                             <ul class="pagination pagination-sm">
                               <li class="page-item"><a href="#" class="page-link">«</a></li>
                               <li class="page-item"><a href="#" class="page-link">1</a></li>
@@ -200,93 +204,36 @@
                               <li class="page-item"><a href="#" class="page-link">3</a></li>
                               <li class="page-item"><a href="#" class="page-link">»</a></li>
                             </ul>
-                          </div>
+                          </div> --}}
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                          <ul class="todo-list ui-sortable" data-widget="todo-list">
+                          <ul class="todo-list" data-widget="todo-list">
                             
+                            @foreach ($contract->checklists[0]->items as $item)
                             <li class="notDone">
-                              
-                              <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo2" id="todoCheck2">
-                                <label for="todoCheck2"></label>
-                              </div>
-                              <span class="text">Item um para ser feito</span>
-                              <small class="badge badge-info"><i class="far fa-clock"></i> 4 horas</small>
-                              <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                              </div>
+                                <div class="icheck-primary d-inline ml-2">
+                                  <input type="checkbox" 
+                                    @if ($item->is_concluted === 1)
+                                        checked
+                                    @else
+                                        uncheked    
+                                    @endif
+                                  name="todo2" id="todoCheck2" checklist="{{$contract->checklists[0]}}" value="{{$item->id}}">
+                                  <label for="todoCheck2"></label>
+                                </div>
+                                <span class="text">{{$item->title}}</span>
+                                @if ($item->is_concluted === 1)
+                                    <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
+                                @endif
+                                
+                                <div class="tools">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash"></i>
+                                </div>
                             </li>
-                            <li class="notDone">
-                              
-                              <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                                <label for="todoCheck3"></label>
-                              </div>
-                              <span class="text">Item um para ser feito</span>
-                              <small class="badge badge-warning"><i class="far fa-clock"></i> 1 hora</small>
-                              <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                              </div>
-                            </li>
-                            <li class="notDone">
-                              
-                              <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                                <label for="todoCheck4"></label>
-                              </div>
-                              <span class="text">Item um para ser feito</span>
-                              <small class="badge badge-success"><i class="far fa-clock"></i> 50 mins</small>
-                              <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                              </div>
-                            </li>
-                            <li class="notDone">
-                             
-                              <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                                <label for="todoCheck5"></label>
-                              </div>
-                              <span class="text">Item um para ser feito</span>
-                              <small class="badge badge-primary"><i class="far fa-clock"></i> 10 mins</small>
-                              <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                              </div>
-                            </li>
-                            <li class="notDone">
-                              
-                              <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                                <label for="todoCheck6"></label>
-                              </div>
-                              <span class="text">Item um para ser feito</span>
-                              <small class="badge badge-secondary"><i class="far fa-clock"></i> 3 horas</small>
-                              <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                              </div>
-                            </li><li class="notDone" style="">
-                
-                              <!-- checkbox -->
-                              <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                <label for="todoCheck1"></label>
-                              </div>
-                              <!-- todo text -->
-                              <span class="text">Item um para ser feito</span>
-                              <!-- Emphasis label -->
-                              <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                              <!-- General tools such as edit or delete-->
-                              <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                              </div>
-                            </li>
+                            @endforeach
+                            
                           </ul>
                         </div>
                         <!-- /.card-body -->
@@ -359,6 +306,37 @@
 
         </div>
     </div>
+
+    
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $("input:checkbox").change(function() {
+    var id = $(this).attr('value');
+    var os_id = $(this).attr('checklist');
+    if($(this).prop('checked')){
+        var checked = 'checked'
+    } else {
+        var checked = 'not checked'
+    };
+
+    $.ajax({
+            type:'POST',
+            url:"{{route('checklists.teste')}}",
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            data: { "attend_id" : id,
+                    "os_id" : os_id
+        },
+        success: function (response) {
+                      console.log(response);
+          },
+        });
+
+    
+    });
+});
+    </script>
+
 
     
 @stop

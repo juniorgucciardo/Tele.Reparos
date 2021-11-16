@@ -26,7 +26,7 @@
     
 </style>
 
-<table id="table-user" class="table tableResponsive table-striped">
+<table id="table" class="table tableResponsive table-striped">
     <thead>
         <tr>
             <th>id</th>

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Auth;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/operacional', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/operacional/checklist', [App\Http\Controllers\Admin\ChecklistController::class, 'index'])->name('checklists');
+    Route::post('/operacional/checklist', [App\Http\Controllers\Admin\ChecklistController::class, 'teste'])->name('checklists.teste');
+
     Route::get('/operacional/detalhes-contrato/{id}', [App\Http\Controllers\Admin\OsController::class, 'attedsByContract'])->name('OS.contract');
     Route::any('/operacional/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
     Route::get('/operacional/getCalendario', [App\Http\Controllers\Admin\AttendController::class, 'calendar'])->name('attend.calendar');

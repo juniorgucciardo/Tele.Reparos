@@ -19,16 +19,18 @@ class Checklist extends Model
         'user_id'
     ];
 
+    protected $with = ['items'];
+
     // RELACIONAMENTOS  //
 
     public function items()
     {
-        return $this->hasMany('App\Models\Checklist', 'checklist_id', 'id');
+        return $this->hasMany('App\Models\ChecklistItem', 'checklist_id');
     }
 
     public function order()
     {
-        return $this->belongsTo('App\Models\service_order', 'order_id', 'id');
+        return $this->belongsTo('App\Models\service_order', 'order_id');
     }
 
     public function attend()

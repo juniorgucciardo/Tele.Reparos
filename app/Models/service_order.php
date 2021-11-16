@@ -34,7 +34,7 @@ class service_order extends Model
     ];
 
     public function checklists(){
-        return $this->hasMany('App\Models\Checklist', 'checklist_id', 'id');
+        return $this->hasMany('App\Models\Checklist', 'order_id', 'id');
     }
 
     public function service(){

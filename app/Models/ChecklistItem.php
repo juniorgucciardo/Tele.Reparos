@@ -20,8 +20,12 @@ class ChecklistItem extends Model
         'type_id',
     ];
 
+    protected $dates = [
+        'concluted_at'
+    ];
+
     public function checklist(){
-        return $this->belongsTo('App\Models\Checklist', 'checklist_id', 'id');
+        return $this->belongsTo('App\Models\Checklist', 'checklist_id');
     }
 
     public function conclutedBy(){
