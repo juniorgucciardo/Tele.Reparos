@@ -6,7 +6,7 @@
 @section('content_header')
 <h5>
     <i class="fas fa-truck-moving mx-1"></i>
-    {{$attend->orders->nome_cliente}} - {{$attend->orders->service->service_title}} | {{ date('d/m', strtotime(explode(' ', $attend->data_inicial)[1])) }}
+    {{$attend->orders->nome_cliente}} - {{$attend->orders->service->service_title}} | {{ $attend->data_inicial->translatedFormat('l \, j \d\e F ') }}
   </h5>
 @stop
 
@@ -34,9 +34,65 @@
 
 <div class="card card-info shadow">
     <div class="card-header">
-        <span color="#fff"><i class="mx-1 fas fa-history"></i>Histórico de atualizações deste atendimento</span>
+        <span color="#fff"><i class="mx-1 fas fa-history"></i>Atualizações deste atendimento</span>
     </div>
     <div class="card-body">
+
+        <div class="card card-danger">
+            <div class="card-header">
+                Informações deste atendimento
+            </div>
+            <div class="card-body">
+
+
+                @if($activities !== null)
+                    @foreach ($activities as $checklist)
+                    {{$checklist->attend->id}}
+                          <ul class="todo-list" data-widget="todo-list">
+                            
+                            @foreach ($checklist->items as $item)
+                            <li class="notDone">
+                                <div class="icheck-primary d-inline ml-2">
+                                  <input type="checkbox" 
+                                    @if ($item->is_concluted === 1)
+                                        checked
+                                    @else
+                                        uncheked    
+                                    @endif
+                                  name="todo2" id="todoCheck2" value="{{$item->id}}">
+                                  <label for="todoCheck2"></label>
+                                </div>
+                                <span class="text">{{$item->title}}</span>
+                                @if ($item->is_concluted === 1)
+                                    <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
+                                @endif
+                                
+                                @can('view_service_demands')
+                                <div class="tools d-flex btn-group">
+                                    <button class="btn-sm" data-toggle="modal" data-target="#editItemOnChecklist{{$item->id}}"><i class="fas fa-edit"></i></button>
+                                    @include('admin.pages.modal.editChecklistItem')
+                                    <form action="{{ route('checklistItem.destroy', $item->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-sm"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
+                                @endcan
+                            </li>
+                            @endforeach
+                            
+                          </ul>
+                        </div>
+                          @can('view_service_demands')
+                          <div class="card-footer add-more m-3">
+                            <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
+                            @include('admin.pages.modal.addItemOnChecklist')
+                          </div>
+                          @endcan
+                        
+                    @endforeach
+                    @endif
+
 
         @foreach ($attend->statusLogs->sortByDesc('created_at') as $log)
 
@@ -114,8 +170,8 @@
                                                             echo 'Atendimento agendado para';
                                                         }
                                                     @endphp 
-                    {{ $attend->data_final->translatedFormat('l \, j \d\e F \à\s H:i A') }}</h5>
-                    <p class="block">demanda cadastrada dia {{ date('d/m', strtotime(explode(' ', $attend->data_inicial)[0])) }}</p>
+                    {{ $attend->data_inicial->translatedFormat('l \, j \d\e F \à\s H:i A') }}</h5>
+                    <p class="block">demanda cadastrada dia {{ date('d/m', strtotime(explode(' ', $attend->created_at)[0])) }}</p>
                     
                 </div>
             {{-- </div>
@@ -128,5 +184,40 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+      $("input:checkbox").change(function() {
+        var id = $(this).attr('value');
+        var os_id = $(this).attr('checklist');
+        if($(this).prop('checked')){
+            $.ajax({
+                type:'POST',
+                url:"{{route('checklistItem.check')}}",
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                data: { "id" : id },
+            success: function (response) {
+                          console.log(response);
+              },
+            });
+        } else {
+            $.ajax({
+                type:'POST',
+                url:"{{route('checklistItem.uncheck')}}",
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                data: { "id" : id },
+            success: function (response) {
+                          console.log(response);
+              },
+            });
+        };
+    
+        
+    
+        
+        });
+    });
+        </script>
 
 @stop

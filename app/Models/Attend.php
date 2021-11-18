@@ -33,7 +33,7 @@ class Attend extends Model
 
 
     public function checklists(){
-        return $this->hasMany('App\Models\Checklist', 'checklist_id', 'id');
+        return $this->hasMany('App\Models\Checklist', 'attend_id', 'id');
     }
 
     public function users()

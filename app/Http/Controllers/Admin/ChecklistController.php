@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Checklist;
 use App\Models\service_order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChecklistController extends Controller
 {
@@ -37,10 +38,16 @@ class ChecklistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function teste(Request $request)
+    public function store(Request $request)
     {
-        $checklist = Checklist::findOrFail($request);
-        return $checklist;
+        $checklist = Checklist::create([
+            'title' => $request->title,
+            'order_id' => $request->order_id,
+            'type_id' => $request->type_id,
+            'user_id' => Auth::user()->id
+        ]);
+
+        return redirect()->back();
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attend;
 use App\Models\User;
 use App\Models\Status;
+use App\Models\Checklist;
 use App\Models\Situation;
 use App\Models\Service;
 use App\Models\StatusLog;
@@ -28,6 +29,7 @@ class AttendController extends Controller
     private $repositoryUser;
     private $repositoryStatus;
     private $repositoryStatusLog;
+    private $repositoryChecklist;
 
     public function __construct()
     {
@@ -36,6 +38,7 @@ class AttendController extends Controller
         $this->repositoryStatus = new Status();
         $this->repositoryStatusLog = new StatusLog();
         $this->repositoryAttend = new Attend();
+        $this->repositoryChecklist = new Checklist();
     }
 
     public function index(Request $request)
@@ -194,10 +197,12 @@ class AttendController extends Controller
     public function show(Attend $attend, $id)
     {
         $attendShow = Attend::attendShow($id)->first();
+        $activities = $this->repositoryChecklist->checklistByAttend($attendShow->id)->get();
            
         if(Auth::user()->can('viewAny', $attendShow)){
             return view('admin.pages.attends.show', [
-            'attend' => $attendShow
+            'attend' => $attendShow,
+            'activities' => $activities,
         ]);
         } else {
             return redirect()->back();
@@ -251,7 +256,7 @@ class AttendController extends Controller
 
         $attend->users()->sync($request->user_id);
         Alert::success('Successo', 'Atualizado com sucesso');
-        return redirect('admin/');
+        return redirect()->back();
     }
 
     /**
@@ -313,6 +318,7 @@ class AttendController extends Controller
         $data_inicial = date('Y-m-d H:i:s', strtotime($request->data_inicial.$request->hora_inicial));
         $final = date('Y-m-d H:i:s', strtotime($data_inicial. '+'.$request->duration.' hours'));
         $attend = Attend::findOrFail($id);
+        $checklist = $attend->orders->checklists->where('type_id', 1)->first();
         $attend->update([
             'data_inicial' => $data_inicial,
             'data_final' => $final,
@@ -320,6 +326,18 @@ class AttendController extends Controller
         ]);
 
         $attend->users()->sync($request->user_id);
+        $newChecklist = $checklist->replicate();
+                    $newChecklist->attend_id = $attend->id;
+                    $newChecklist->save();
+                    //salvar os items no checklist copiado
+                    foreach($checklist->items as $item){
+                        $newItem = $item->replicate();
+                        $newItem->push();
+                        $newItem->checklist_id = $newChecklist->id;
+                        $newItem->save();
+                        var_dump($newItem->checklist_id);
+                    }
+
 
 
         Alert::success('Successo', 'Atualizado com sucesso');

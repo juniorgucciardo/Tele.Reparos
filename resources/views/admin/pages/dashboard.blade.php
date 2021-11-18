@@ -170,7 +170,7 @@
                     <a href="{{route('attend')}}"><button type="button" class="mb-3 btn btn-info shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><span><i class=" fas fa-eye mx-1"></i></span>Ver tudo</button></span></a>
 
 
-                  @foreach ($attendsNow as $attend)
+                  @foreach ($attendsNow->sortBy('data_inicial') as $attend)
                   
                     {{-- CARD DAS DEMANDAS DE HOJE --}}
 

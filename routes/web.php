@@ -19,8 +19,6 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/operacional', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/operacional/checklist', [App\Http\Controllers\Admin\ChecklistController::class, 'index'])->name('checklists');
-    Route::post('/operacional/checklist', [App\Http\Controllers\Admin\ChecklistController::class, 'teste'])->name('checklists.teste');
 
     Route::get('/operacional/detalhes-contrato/{id}', [App\Http\Controllers\Admin\OsController::class, 'attedsByContract'])->name('OS.contract');
     Route::any('/operacional/atendimentos', [App\Http\Controllers\Admin\AttendController::class, 'index'])->name('attend');
@@ -30,6 +28,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/operacional/atendimentos/novolog/', [App\Http\Controllers\Admin\StatusLogController::class, 'store'])->name('log.store');
     Route::DELETE('/operacional/atendimentos/deleteimg/{id}', [App\Http\Controllers\Admin\ImgLogController::class, 'destroy'])->name('imglog.destroy');
     Route::post('/operacional/atendimentos/detalhes', [App\Http\Controllers\Admin\ImgLogController::class, 'store'])->name('imglog.store');
+    //check and uncheck
+    Route::post('/operacional/checklist/item/check', [App\Http\Controllers\Admin\ChecklistItemController::class, 'check'])->name('checklistItem.check');
+    Route::post('/operacional/checklist/item/uncheck', [App\Http\Controllers\Admin\ChecklistItemController::class, 'unCheck'])->name('checklistItem.uncheck');
+
+
+
     //view profile
     Route::get('/administrativo/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');
     Route::get('/operacional/calendario', [App\Http\Controllers\Admin\AttendController::class, 'calendarView'])->name('attend.calendarView');
@@ -48,6 +52,16 @@ Route::middleware(['auth'])->group(function () {
         Route::DELETE('/operacional/OS/excluir/{id}', [App\Http\Controllers\Admin\OsController::class, 'destroy'])->name('OS.destroy');
         Route::get('/operacional/OS/getData', [App\Http\Controllers\Admin\OsController::class, 'getData'])->name('OS.getData');
         Route::get('/operacional/OS/generalReport', [App\Http\Controllers\Admin\OsController::class, 'export'])->name('OS.export');
+
+        //checklists
+        Route::get('/operacional/checklist', [App\Http\Controllers\Admin\ChecklistController::class, 'index'])->name('checklists');
+        Route::post('/operacional/checklist/novo-item', [App\Http\Controllers\Admin\ChecklistItemController::class, 'store'])->name('checklistItem.create');
+        Route::DELETE('/operacional/checklist/delete-item/{id}', [App\Http\Controllers\Admin\ChecklistItemController::class, 'destroy'])->name('checklistItem.destroy');
+        Route::put('/operacional/checklist/editar-item/{id}', [App\Http\Controllers\Admin\ChecklistItemController::class, 'update'])->name('checklistItem.update');
+        Route::post('/operacional/checklist/novo-checklist', [App\Http\Controllers\Admin\ChecklistController::class, 'store'])->name('checklist.new');
+        Route::DELETE('/operacional/checklist/delete-checklist/{id}', [App\Http\Controllers\Admin\ChecklistController::class, 'destroy'])->name('checklist.destroy');
+        Route::post('/operacional/checklist/editar-checklist/{id}', [App\Http\Controllers\Admin\ChecklistController::class, 'update'])->name('checklist.update');
+        
 
         //Atendimentos
         Route::get('/operacional/atendimentos/novo/{id}', [App\Http\Controllers\Admin\AttendController::class, 'create'])->name('attend.create');

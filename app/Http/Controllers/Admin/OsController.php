@@ -8,6 +8,8 @@ use App\Models\Service;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Attend;
+use App\Models\Checklist;
+use App\Models\ChecklistType;
 use App\Models\Type;
 use App\Models\Situation;
 use App\Models\Status;
@@ -30,6 +32,7 @@ class OsController extends Controller
     private $repositoryStatus;
     private $repositoryOS;
     private $repositorySituation;
+    private $repositoryChecklist;
 
     public function __construct(Service $service, service_order $service_order){
         $this->repositoryService = new Service();
@@ -39,6 +42,7 @@ class OsController extends Controller
         $this->repositoryType = new Type();
         $this->repositorySituation = new Situation();
         $this->repositoryAttends = new Attend();
+        $this->repositoryChecklist = new Checklist();
     }
 
 
@@ -391,13 +395,19 @@ class OsController extends Controller
     }
 
     public function attedsByContract($id){
-        $contract = service_order::with('service', 'user', 'img_contract', 'checklists')->findOrFail($id);
+        $contract = service_order::with('service', 'user', 'img_contract')->findOrFail($id);
         $attends = Attend::where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
-        $attendInExec = Attend::where('order_id', $id)->with('users', 'orders.service', 'status', 'orders.type')->where('status_id', 3)->first();
+        $attendInExec = Attend::attendsForExecute()->attendsFuture()->select('id')->where('order_id', $id)->where('status_id', [2, 3])->first();
+        $checklists = $this->repositoryChecklist->checklistByOS($id)->general()->get();
+        $activities = $this->repositoryChecklist->checklistByAttend($attendInExec->id)->get();
+        // dd($attendInExec);
         return view('admin.pages.OS.details', [
             'attends' => $attends,
             'contract' => $contract,
-            'executing' => $attendInExec
+            'executing' => $attendInExec,
+            'activities' => $activities,
+            'checklists' => $checklists,
+            'checklistTypes' => ChecklistType::all()
         ]);
     }
 

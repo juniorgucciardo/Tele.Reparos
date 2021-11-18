@@ -109,11 +109,6 @@
                                 <p>Atendimento em execução agora: {{$executing->id}}</p>
                             @endisset
                         </div>
-                        @can('view_service_demands')
-                        <div class="card-footer">
-                            <a href="{{route('attend.create', $contract->id)}}" class="btn btn-info">Adionar novo atendimento</a>
-                        </div>
-                        @endcan
                     </div>
                 </div>
 
@@ -178,7 +173,7 @@
                                     @endforeach
                                 </div>        
                             </div>
-                            <div class="add-more my-2">
+                            <div class="add-more m-2">
                                 @can('view_service_demands')
                                      <button type="button" class="btn btn-outline-info rounded" data-toggle="modal" data-target="#addModal" data-whatever="@getbootstrap">Adicionar imagem</button>
                                      @include('admin.pages.modal.include_img')
@@ -189,28 +184,28 @@
                         </div>
                     </div>
 
+                    <div class="card card-info card-outline px-0">
+                        <div class="card-header d-flex">
+                            <i class="fas fa-clipboard-list mx-1"></i> 
+                            <h6>Checklists</h6>
+                        </div>
+                        <div class="card-body px-0 py-2">
+
+
+                            {{-- ATIVIDADES --}}
+                    @if($activities !== null)
+                    @foreach ($activities as $checklist)
                     <div class="card">
                         <div class="card-header ui-sortable-handle" style="cursor: move;">
-                          <h3 class="card-title">
+                          <h6 class="card-title">
                             <i class="ion ion-clipboard mr-1"></i>
-                            Checklist de atividades
-                          </h3>
-          
-                          {{-- <div class="card-tools">
-                            <ul class="pagination pagination-sm">
-                              <li class="page-item"><a href="#" class="page-link">«</a></li>
-                              <li class="page-item"><a href="#" class="page-link">1</a></li>
-                              <li class="page-item"><a href="#" class="page-link">2</a></li>
-                              <li class="page-item"><a href="#" class="page-link">3</a></li>
-                              <li class="page-item"><a href="#" class="page-link">»</a></li>
-                            </ul>
-                          </div> --}}
+                            {{$checklist->title}} - atendimento do dia: {{$checklist->attend->data_final->format('d/m')}}
+                          </h6>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body px-0">
                           <ul class="todo-list" data-widget="todo-list">
                             
-                            @foreach ($contract->checklists[0]->items as $item)
+                            @foreach ($checklist->items as $item)
                             <li class="notDone">
                                 <div class="icheck-primary d-inline ml-2">
                                   <input type="checkbox" 
@@ -219,7 +214,7 @@
                                     @else
                                         uncheked    
                                     @endif
-                                  name="todo2" id="todoCheck2" checklist="{{$contract->checklists[0]}}" value="{{$item->id}}">
+                                  name="todo2" id="todoCheck2" value="{{$item->id}}">
                                   <label for="todoCheck2"></label>
                                 </div>
                                 <span class="text">{{$item->title}}</span>
@@ -227,63 +222,101 @@
                                     <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
                                 @endif
                                 
-                                <div class="tools">
-                                    <i class="fas fa-edit"></i>
-                                    <i class="fas fa-trash"></i>
+                                @can('view_service_demands')
+                                <div class="tools d-flex btn-group">
+                                    <button class="btn-sm" data-toggle="modal" data-target="#editItemOnChecklist{{$item->id}}"><i class="fas fa-edit"></i></button>
+                                    @include('admin.pages.modal.editChecklistItem')
+                                    <form action="{{ route('checklistItem.destroy', $item->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-sm"><i class="fas fa-trash"></i></button>
+                                    </form>
                                 </div>
+                                @endcan
                             </li>
                             @endforeach
                             
                           </ul>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                          <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+                          @can('view_service_demands')
+                          <div class="add-more m-3">
+                            <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
+                            @include('admin.pages.modal.addItemOnChecklist')
+                          </div>
+                          @endcan
                         </div>
                       </div>
-                    <div class="card shadow card-info card-outline">
-                        <div class="card-header">
-                            <i class="fas fa-toolbox"></i>
-                            checklist de materiais e equipamentos
+                    @endforeach
+                    @endif
+
+                    {{-- CHECKLISTS --}}
+                    @if($checklists !== null)
+                    @foreach ($checklists as $checklist)
+                    <div class="card">
+                        <div class="card-header ">
+                          <h6 class="card-title">
+                            <i class="ion ion-clipboard mr-1"></i>
+                            {{$checklist->title}}
+                          </h6>
                         </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item rounded-0">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="customCheck1" type="checkbox">
-                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck1">Vassoura</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="customCheck2" type="checkbox">
-                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck2">Alcool</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="customCheck3" type="checkbox">
-                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck3">Viper</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="customCheck4" type="checkbox">
-                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck4">Saco de lixo</label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item rounded-0">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="customCheck5" type="checkbox">
-                                        <label class="cursor-pointer font-italic d-block custom-control-label" for="customCheck5">Balde</label>
-                                    </div>
-                                </li>
-                            </ul>
+                        <div class="card-body px-0">
+                          <ul class="todo-list" data-widget="todo-list">
+                            
+                            @foreach ($checklist->items as $item)
+                            <li class="notDone">
+                                <div class="icheck-primary d-inline ml-2">
+                                  <input type="checkbox" 
+                                    @if ($item->is_concluted === 1)
+                                        checked
+                                    @else
+                                        uncheked    
+                                    @endif
+                                  name="todo2" id="todoCheck2" value="{{$item->id}}">
+                                  <label for="todoCheck2"></label>
+                                </div>
+                                <span class="text">{{$item->title}}</span>
+                                @if ($item->is_concluted === 1)
+                                    <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
+                                @endif
+                                
+                                @can('view_service_demands')
+                                <div class="tools d-flex btn-group">
+                                    <button class="btn-sm" data-toggle="modal" data-target="#editItemOnChecklist{{$item->id}}"><i class="fas fa-edit"></i></button>
+                                    @include('admin.pages.modal.editChecklistItem')
+                                    <form action="{{ route('checklistItem.destroy', $item->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-sm"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
+                                @endcan
+                            </li>
+                            @endforeach
+                            
+                          </ul>
+                          @can('view_service_demands')
+                          <div class="add-more m-3">
+                            <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
+                            @include('admin.pages.modal.addItemOnChecklist')
+                          </div>
+                          @endcan
                         </div>
+                      </div>
+                    @endforeach
+                    @endif
+
+                    @if($checklists === [])
+                    Nenhuma checklist cadastrada
+                    @endif
+                        </div>
+
+                            @can('view_service_demands')
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklist"> Adionar novo checklist</button>
+                            @include('admin.pages.modal.addChecklist')
+                        </div>
+                        @endcan
                     </div>
-
-
-
+    
                 </div>
 
 
@@ -315,22 +348,28 @@ $(document).ready(function(){
     var id = $(this).attr('value');
     var os_id = $(this).attr('checklist');
     if($(this).prop('checked')){
-        var checked = 'checked'
-    } else {
-        var checked = 'not checked'
-    };
-
-    $.ajax({
+        $.ajax({
             type:'POST',
-            url:"{{route('checklists.teste')}}",
+            url:"{{route('checklistItem.check')}}",
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-            data: { "attend_id" : id,
-                    "os_id" : os_id
-        },
+            data: { "id" : id },
         success: function (response) {
                       console.log(response);
           },
         });
+    } else {
+        $.ajax({
+            type:'POST',
+            url:"{{route('checklistItem.uncheck')}}",
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            data: { "id" : id },
+        success: function (response) {
+                      console.log(response);
+          },
+        });
+    };
+
+    
 
     
     });

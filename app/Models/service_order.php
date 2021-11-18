@@ -109,8 +109,8 @@ class service_order extends Model
 
     public function inExecutionNow($order){
         return $this->where('id', $order)
-                    ->where('situation_id', 3)
-                    ->get();
+                    ->where('situation_id', [2 ,3])
+                    ->first();
 
     }
 

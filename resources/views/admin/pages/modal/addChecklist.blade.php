@@ -1,4 +1,4 @@
-<div class="modal fade" id="addItemOnChecklist{{$checklist->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="addChecklist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -8,12 +8,17 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="{{route('checklistItem.create')}}" method="POST">
+          <form action="{{route('checklist.new')}}" method="POST">
             @csrf
-            <label for="exampleInputEmail1">Item:</label>
+            <label for="exampleInputEmail1">Nome do checklist:</label>
             <input type="text" class="form-control" name="title" id="exampleInputEmail1"  placeholder="Novo item">
-            <input type="hidden" name="checklist_id" value="{{$checklist->id}}">
-            <input type="hidden" name="type_id" value="{{$checklist->type_id}}">
+            <label for="exampleFormControlSelect1">Tipo de checklist</label>
+            <select class="form-control" name="type_id" id="exampleFormControlSelect1">
+                @foreach ($checklistTypes as $type)
+                <option value="{{$type->id}}">{{$type->title}}</option>
+                @endforeach
+            </select>
+            <input type="hidden" name="order_id" value="{{$contract->id}}">
 
             <div class="buttons d-flex my-3">
               <button type="submit" class="btn btn-primary mx-1">Enviar</button>

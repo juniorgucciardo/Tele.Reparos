@@ -16,10 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
       }
     ],
-    lang: 'pt-br',
     locale: 'pt-br',
     themeSystem: 'bootstrap',
-    themeColor: 'blue',
     selectable: true,
     dayMaxEventRows: true,
     views:{

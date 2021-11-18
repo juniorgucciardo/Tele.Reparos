@@ -38,6 +38,22 @@ class Checklist extends Model
         return $this->belongsTo('App\Models\Attend', 'attend_id', 'id');
     }
 
-    
+    public function checklistByOS($id){
+        return $this->where('order_id', $id);
+    }
+
+    public function checklistByAttend($id){
+        return $this->where('attend_id', $id);
+    }
+
+    public function scopeActivities($query)
+    {
+        return $query->where('type_id', 1);
+    }
+
+    public function scopeGeneral($query)
+    {
+        return $query->where('type_id', '>', 1);
+    }
 
 }
