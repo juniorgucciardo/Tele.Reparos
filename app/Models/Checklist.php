@@ -16,7 +16,9 @@ class Checklist extends Model
         'order_id',
         'attend_id',
         'type_id',
-        'user_id'
+        'user_id',
+        'service_id',
+        'contract_type_id'
     ];
 
     protected $with = ['items'];
@@ -36,6 +38,16 @@ class Checklist extends Model
     public function attend()
     {
         return $this->belongsTo('App\Models\Attend', 'attend_id', 'id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo('App\Models\Service', 'service_id', 'id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Type', 'contract_type_id', 'id');
     }
 
     public function checklistByOS($id){

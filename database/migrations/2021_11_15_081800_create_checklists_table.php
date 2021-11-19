@@ -16,7 +16,7 @@ class CreateChecklistsTable extends Migration
         Schema::create('checklists', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('order_id');
+            $table->foreignId('order_id')->nullable();
             $table->foreignId('attend_id')->nullable();
             $table->foreignId('type_id');
             $table->foreignId('user_id');

@@ -22,4 +22,9 @@ class Service extends Model
         return $this->hasMany('App\Models\service_order', 'id_service', 'id');
     }
 
+    public function checklists(){
+        return $this->hasMany('App\Models\Checklist', 'service_id', 'id');
+    }
+
+
 }

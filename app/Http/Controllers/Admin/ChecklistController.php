@@ -40,12 +40,32 @@ class ChecklistController extends Controller
      */
     public function store(Request $request)
     {
-        $checklist = Checklist::create([
-            'title' => $request->title,
-            'order_id' => $request->order_id,
-            'type_id' => $request->type_id,
-            'user_id' => Auth::user()->id
-        ]);
+        if($request->has('service_id')){
+            $checklist = Checklist::create([
+                'title' => $request->title,
+                'service_id' => $request->service_id,
+                'type_id' => $request->type_id,
+                'user_id' => Auth::user()->id
+            ]);
+
+            dd($checklist);
+        } else if($request->has('order_id')){
+            $checklist = Checklist::create([
+                'title' => $request->title,
+                'order_id' => $request->order_id,
+                'type_id' => $request->type_id,
+                'user_id' => Auth::user()->id
+            ]);
+        } else if($request->has('contract_type_id')){
+            $checklist = Checklist::create([
+                'title' => $request->title,
+                'contract_type_id' => $request->contract_type_id,
+                'type_id' => $request->type_id,
+                'user_id' => Auth::user()->id
+            ]);
+        }
+
+        
 
         return redirect()->back();
     }

@@ -47,7 +47,6 @@
 
                 @if($activities !== null)
                     @foreach ($activities as $checklist)
-                    {{$checklist->attend->id}}
                           <ul class="todo-list" data-widget="todo-list">
                             
                             @foreach ($checklist->items as $item)

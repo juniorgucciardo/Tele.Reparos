@@ -14,11 +14,19 @@
             <input type="text" class="form-control" name="title" id="exampleInputEmail1"  placeholder="Novo item">
             <label for="exampleFormControlSelect1">Tipo de checklist</label>
             <select class="form-control" name="type_id" id="exampleFormControlSelect1">
-                @foreach ($checklistTypes as $type)
-                <option value="{{$type->id}}">{{$type->title}}</option>
+                @foreach ($checklistTypes as $checklistType)
+                <option value="{{$checklistType->id}}">{{$checklistType->title}}</option>
                 @endforeach
             </select>
-            <input type="hidden" name="order_id" value="{{$contract->id}}">
+            @isset($contract->id)
+              <input type="hidden" name="order_id" value="{{$contract->id}}">
+            @endisset
+            @isset($service->id)
+            <input type="hidden" name="service_id" value="{{$service->id}}">              
+            @endisset
+            @isset($type->id)
+            <input type="hidden" name="contract_type_id" value="{{$type->id}}">              
+            @endisset
 
             <div class="buttons d-flex my-3">
               <button type="submit" class="btn btn-primary mx-1">Enviar</button>

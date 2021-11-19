@@ -9,14 +9,21 @@ class Type extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable = 
+    [
         'type_title'
     ];
 
     protected $table = 'type';
 
 
-    public function service_order(){
+    public function service_order()
+    {
         return $this->hasMany('App\Models\service_order', 'type_id', 'id');
+    }
+
+    public function checklists()
+    {
+        return $this->hasMany('App\Models\Checklist', 'contract_type_id', 'id');
     }
 }

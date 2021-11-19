@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Models\Checklist;
+use App\Models\ChecklistType;
 use Illuminate\Http\Request;
 
 class ServicesController extends Controller
@@ -15,17 +17,22 @@ class ServicesController extends Controller
      */
 
     private $repository;
+    private $repositoryChecklist;
+    private $repositoryChecklistType;
 
     public function __construct(Service $service){
         $this->repository = $service;
+        $this->repositoryChecklist = new Checklist;
+        $this->repositoryChecklistType = new ChecklistType;
+
     }
 
     public function index()
     {
-        $services = $this->repository->all();
-
+        $services = $this->repository->with('checklists')->get();
         return view('admin.pages.services.index', [
-            'services' => $services
+            'services' => $services,
+            'checklistTypes' => $this->repositoryChecklistType->all()
         ]);
     }
 

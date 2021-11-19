@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Type;
+use App\Models\Checklist;
+use App\Models\ChecklistType;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class TypeController extends Controller
@@ -15,18 +17,23 @@ class TypeController extends Controller
      * @return \Illuminate\Http\Response
      */
     private $typeRepository;
+    private $checklistRepository;
+    private $checklistTypeRepository;
 
     public function __construct(){
         $this->typeRepository = new Type();
+        $this->checklistRepository = new Checklist();
+        $this->checklistTypeRepository = new ChecklistType();
     }
 
     public function index()
     {
         if(auth()->user()->hasPermissionTo('view_service_demands')){
             
-            $types = $this->typeRepository->all();
+            $types = $this->typeRepository->with('checklists')->get();
             return view('admin.pages.Types.index', [
-                'types' => $types
+                'types' => $types,
+                'checklistTypes' => $this->checklistTypeRepository->all()
             ]);
 
         } else {

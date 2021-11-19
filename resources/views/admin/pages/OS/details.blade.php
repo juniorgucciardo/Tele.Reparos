@@ -196,7 +196,7 @@
                     @if($activities !== null)
                     @foreach ($activities as $checklist)
                     <div class="card">
-                        <div class="card-header ui-sortable-handle" style="cursor: move;">
+                        <div class="card-header py-2">
                           <h6 class="card-title">
                             <i class="ion ion-clipboard mr-1"></i>
                             {{$checklist->title}} - atendimento do dia: {{$checklist->attend->data_final->format('d/m')}}
@@ -252,7 +252,7 @@
                     @if($checklists !== null)
                     @foreach ($checklists as $checklist)
                     <div class="card">
-                        <div class="card-header ">
+                        <div class="card-header py-2">
                           <h6 class="card-title">
                             <i class="ion ion-clipboard mr-1"></i>
                             {{$checklist->title}}
