@@ -108,30 +108,43 @@
             </td>
             <td><div class="badge badge-{{$statusColor}} p-2">{{$attend->status->status_title}}</div></td>
             @can('view_service_demands')
-            <td>
-                <div class="row d-flex nowrap">
-                        <a href="{{ route('attend.show' ,$attend->id) }}">
-                            <button class=" btn-sm btn-warning">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </a>
-                        <a href="{{ route('attend.edit' ,$attend->id) }}">
-                            <button class=" btn-sm btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </a>
-                        <form action="{{ route('attend.destroy', $attend->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn-sm btn-danger" type="submit">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
-                </div>
-                </td>
+            <td class="btn-group">
+                <a href="{{ route('attend.show' ,$attend->id) }}">
+                    <button class=" btn-sm btn-warning">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </a>
+                <button class="btn-sm btn-primary" data-toggle="modal" data-target="#schedulle-modal{{$attend->id}}">
+                    <i class="fas fa-calendar-week"></i>
+                </button>
+                @include('admin.pages.modal.schedulle', ['a' => $attend, $users])
+                <form action="{{ route('attend.destroy', $attend->id)}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn-sm btn-danger" type="submit">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+            </td>
             @endcan
         </tr>
        @endforeach
     </tbody>
 </table>
+
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable( {
+
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json' //PT-BR
+            },
+
+            "order": [ 0, "asc" ],
+
+            responsive: true,
+
+        } );
+    } );
+</script>
 

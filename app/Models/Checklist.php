@@ -62,6 +62,11 @@ class Checklist extends Model
         return $this->where('service_id', $id);
     }
 
+    public function scopeChecklistDefault($query)
+    {
+        return $query->where('order_id', NULL);
+    }
+
     public function scopeActivities($query)
     {
         return $query->where('type_id', 1);

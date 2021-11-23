@@ -436,28 +436,27 @@ class OsController extends Controller
     public function attedsByContract($id){
 
         $contract = service_order::with('service', 'user', 'img_contract')->findOrFail($id);
-        $attends = Attend::where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
-        $attendInExec = Attend::attendsForExecute()->attendsFuture()->select('id')->where('order_id', $id)->where('status_id', [2, 3])->first();
+        $attends = Attend::attendsFuture()->where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
+        $attendInExec = Attend::attendsForExecute()->attendsFuture()->select('id')->where('order_id', $id)->whereIn('status_id', [2, 3])->orderBy('status_id', 'desc')->first();
         if($attendInExec === null){
-            $activities = $this->repositoryChecklist->where('service_id', $contract->service_id)->where('order_id', NULL)->where('type_id', 1)->where('order_id', null)->get();
-            
+            //nao existe atendimento no mommento
+            $activities = $this->repositoryChecklist->where('service_id', $contract->id_service)->where('type_id', 1)->checklistDefault()->get();
         } else {
-            //nao for nulo
+            //existe atendimento -> prcurar checklist do atendimento com 
             $activities = $this->repositoryChecklist->checklistByAttend($attendInExec->id)->get();
         }
 
         $checklists = $this->repositoryChecklist->checklistByOS($id)->general()->get();
 
-       
-        
-        // dd($attendInExec);
         return view('admin.pages.OS.details', [
             'attends' => $attends,
             'contract' => $contract,
             'executing' => $attendInExec,
             'activities' => $activities,
             'checklists' => $checklists,
-            'checklistTypes' => ChecklistType::all()
+            'checklistTypes' => ChecklistType::all(),
+            'users' => User::all(),
+            'status' => Status::all(),
         ]);
     }
 

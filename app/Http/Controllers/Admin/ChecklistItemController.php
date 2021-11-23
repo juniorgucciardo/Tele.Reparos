@@ -104,63 +104,13 @@ class ChecklistItemController extends Controller
         $checklist->load('items');
         $checklistItens = $checklist->items->pluck('is_concluted');
 
-        if($checklist->type_id == 1){
-            if(($checklistItens->contains(1))){ 
-                //tem pelo menos um item marcado
+        
                 $item->update([ 
                     'is_concluted' => 1,
                     'concluted_at' => Carbon::now(),
                     'concluted_by' => Auth::user()->id
                 ]);
-                return json_encode('ja possui itens marcados'); //debug
-            } else {          
-                //nao tem itens marcados
-                //caso nao exista nenhum atendimento cadastrado, 
-                //criar novo checklists passando os itens deste
-                $item->update([ 
-                    'is_concluted' => 1,
-                    'concluted_at' => Carbon::now(),
-                    'concluted_by' => Auth::user()->id
-                ]);
-                if(isset($checklist->attend_id)){ 
-                    //caso exista attend
-                    return json_encode('checklist ja possui atendimento cadastrado');
-                } else {
-                    $item->update([ 
-                        'is_concluted' => 1,
-                        'concluted_at' => Carbon::now(),
-                        'concluted_by' => Auth::user()->id
-                    ]);
-                    //caso nao exista attend
-                    $newChecklist = $checklist->replicate();
-                    $newChecklist->save();
-                    //salvar os items no checklist copiado
-                    foreach($checklist->items as $item){
-                        $newItem = $item->replicate();
-                        $newItem->push();
-                        $newItem->checklist_id = $newChecklist->id;
-                        $newItem->save();
-                        var_dump($newItem->checklist_id);
-                    }
-                    return json_encode([
-                        'duplicado' => 'true',
-                        'item' => $newChecklist
-                    ]);
-                }
-                $item->update([
-                    'is_concluted' => 1,
-                    'concluted_at' => Carbon::now(),
-                    'concluted_by' => Auth::user()->id
-                ]);
-                return json_encode('primeiro item marcado');
-            }
-        } else {
-            $item->update([ 
-                'is_concluted' => 1,
-                'concluted_at' => Carbon::now(),
-                'concluted_by' => Auth::user()->id
-            ]);
-        }
+               
 
     }
 
