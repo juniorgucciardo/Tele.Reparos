@@ -21,7 +21,7 @@ class Checklist extends Model
         'contract_type_id'
     ];
 
-    protected $with = ['items'];
+    protected $with = ['items', 'type'];
 
     // RELACIONAMENTOS  //
 
@@ -56,6 +56,10 @@ class Checklist extends Model
 
     public function checklistByAttend($id){
         return $this->where('attend_id', $id);
+    }
+
+    public function checklistsByService($id){
+        return $this->where('service_id', $id);
     }
 
     public function scopeActivities($query)

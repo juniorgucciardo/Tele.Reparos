@@ -93,9 +93,12 @@ class OsController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
+
 
         if(auth()->user()->can('view_service_demands')){
+
+            // REQUEST
 
             $service_order = service_order::create([
                 'nome_cliente' => $request->nome_cliente,
@@ -116,6 +119,8 @@ class OsController extends Controller
                 'insurance_cod' => $request->insurance_cod,
                 'duration' => $request->duration ? $request->duration : 4
             ]);
+
+            //RECORRENCIA
 
             
 
@@ -144,6 +149,40 @@ class OsController extends Controller
                 $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
                 
             }
+
+             //CHECKLISTS
+
+        //identificar o serviço escolhido e copiar  checklist com id da OS
+        $checklistsd = $this->repositoryChecklist->checklistsByService($request->id_service)->where('order_id', NULL)->get();
+        //verificar se veio algo desta consulta
+
+        if(!$checklistsd->isEmpty()){
+            //dd('nao vazio');
+            //foreach para percorrer todos os elementos de checklistd
+            foreach($checklistsd as $checklist){
+                    $newChecklist = $checklist->replicate();
+                    $newChecklist->order_id = $service_order->id; //OS ID
+                    $newChecklist->save();
+                    //salvar os items no checklist copiado
+                    dump($newChecklist);
+                    foreach($checklist->items as $item){
+                        $newItem = $item->replicate();
+                        $newItem->push();
+                        $newItem->checklist_id = $newChecklist->id;
+                        $newItem->save();
+                        dump($newItem);
+                    }
+            }
+
+            
+        } else {
+            var_dump('vazio');    
+        } 
+
+
+
+            
+
 
 
 
@@ -395,11 +434,22 @@ class OsController extends Controller
     }
 
     public function attedsByContract($id){
+
         $contract = service_order::with('service', 'user', 'img_contract')->findOrFail($id);
         $attends = Attend::where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
         $attendInExec = Attend::attendsForExecute()->attendsFuture()->select('id')->where('order_id', $id)->where('status_id', [2, 3])->first();
+        if($attendInExec === null){
+            $activities = $this->repositoryChecklist->where('service_id', $contract->service_id)->where('order_id', NULL)->where('type_id', 1)->where('order_id', null)->get();
+            
+        } else {
+            //nao for nulo
+            $activities = $this->repositoryChecklist->checklistByAttend($attendInExec->id)->get();
+        }
+
         $checklists = $this->repositoryChecklist->checklistByOS($id)->general()->get();
-        $activities = $this->repositoryChecklist->checklistByAttend($attendInExec->id)->get();
+
+       
+        
         // dd($attendInExec);
         return view('admin.pages.OS.details', [
             'attends' => $attends,

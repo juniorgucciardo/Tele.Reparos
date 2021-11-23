@@ -48,7 +48,6 @@ class ChecklistController extends Controller
                 'user_id' => Auth::user()->id
             ]);
 
-            dd($checklist);
         } else if($request->has('order_id')){
             $checklist = Checklist::create([
                 'title' => $request->title,

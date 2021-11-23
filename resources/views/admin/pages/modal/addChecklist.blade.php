@@ -30,7 +30,7 @@
 
             <div class="buttons d-flex my-3">
               <button type="submit" class="btn btn-primary mx-1">Enviar</button>
-              <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Sair</button>
             </div>
 
           </form>

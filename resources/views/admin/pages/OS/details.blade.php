@@ -199,7 +199,7 @@
                         <div class="card-header py-2">
                           <h6 class="card-title">
                             <i class="ion ion-clipboard mr-1"></i>
-                            {{$checklist->title}} - atendimento do dia: {{$checklist->attend->data_final->format('d/m')}}
+                            {{$checklist->title}}
                           </h6>
                         </div>
                         <div class="card-body px-0">

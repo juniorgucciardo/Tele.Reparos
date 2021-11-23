@@ -29,7 +29,9 @@ class ServicesController extends Controller
 
     public function index()
     {
-        $services = $this->repository->with('checklists')->get();
+        $services = $this->repository->with(["checklists" => function($q){
+            $q->where('order_id', NULL);   
+        }])->get();
         return view('admin.pages.services.index', [
             'services' => $services,
             'checklistTypes' => $this->repositoryChecklistType->all()
