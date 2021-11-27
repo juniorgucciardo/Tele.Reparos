@@ -72,7 +72,6 @@
     {{-- SCRIPT CALENDARIO --}}
 
     <script src="/js/calendar.js"></script> 
-    @include('admin.pages.modal.eventDetails')
 
 
 
@@ -171,81 +170,7 @@
 
 
                   @foreach ($attendsNow->sortBy('data_inicial') as $attend)
-                  
-                    {{-- CARD DAS DEMANDAS DE HOJE --}}
-
-                    @php
-                        switch ($attend->status->id) {
-                            case '1': //solicitado
-                                $statusColor = 'secondary';
-                                break;
-                            case '2': //agendado
-                                $statusColor = 'info';
-                                break;
-                            case '3': //execução
-                                $statusColor = 'primary';
-                                break;
-                            case '4': //concluido
-                                $statusColor = 'success';
-                                break;
-                            case '5': //atrasado
-                                $statusColor = 'warning';
-                                break;
-                            case '6': //cancelado
-                                $statusColor = 'danger';
-                                break;
-                            default:
-                                $statusColor = 'primary';
-                                break;
-                            }
-                    @endphp
-                      <div class="card card-outline card-{{$statusColor}} shadow rounded">
-                          <div class="card-header">
-                              <div class="d-flex d-flex-row justify-content-between">
-                                  <span>{{$attend->orders->service->service_title}}</span>
-                                  <div>
-                                      @php
-                                          $hora = explode(' ', $attend->data_inicial)[1];
-                                      @endphp
-                                      <span class="mx-3">{{date('H:i', strtotime($hora))}}</span>
-                                      <a href="{{ route('attend.show', $attend->id) }}"><span title="Visualizar informações deste serviço"><i class=" fas fa-eye"></i></span></a>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="card-body">
-                              <div class="d-flex d-flex-row justify-content-between">
-                                  <div class="mr-auto flex-column w-100">
-                                      <div>
-                                          Cliente: <span>{{mb_strimwidth($attend->orders->nome_cliente, 0, 16, "...")}}</span>
-                                      </div>
-                                      <div>
-                                          <div class="flex-row">  
-                                              @foreach ($attend->users as $user)
-                                                @php
-                                                    $name = explode(' ', $user->name);
-                                                @endphp
-                                                <a href="{{route('user.view', $user->id)}}"><span class="badge badge-{{$statusColor}}" title="Visualizar prestador">{{$name[0]}}</span></a>
-                                              @endforeach
-                                              
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="ml-auto flex-column">
-                                      
-                                      <span class="bg-gradient-{{$statusColor}} rounded px-1">{{mb_strimwidth($attend->status->status_title, 0, 16, "...")}}</span>
-                                      <div class="btn-group">
-                                        <button type="button" class="btn-sm btn-outline-{{$statusColor}} rounded" data-toggle="modal" data-target="#statusModal{{$attend->id}}" title="Alterar prestador e status" data-whatever="@getbootstrap"><i class="fas fa-stopwatch"></i></button>
-                                        @include('admin.pages.modal.status-modal')
-                                        <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{route('attend.edit', $attend->id)}}" title="Editar Registro"><i class="fas fa-edit"></i></a>
-                                        <a class="btn-sm btn-outline-{{$statusColor}} rounded"  href="{{ route('OS.contract', $attend->orders->id) }}" title="Informações desse atendimento"><i class="fas fa-info"></i></a>
-                                      </div>
-                                      
-
-
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+                    @include('components.attend-card');
                   @endforeach
 
                 </div>
@@ -272,6 +197,8 @@
     
       </div>
 
+      {{-- ATENDIMENTOS DA PROXIMA SEMANA --}}
+
 
       <div class="card card-success my-2">
         <div class="card-header">
@@ -288,6 +215,9 @@
             </div>
         </div>
     </div>
+
+
+    {{-- SOLICITAÇÕES SITE --}}
 
     <div class="card card-info">
         <div class="card-header">

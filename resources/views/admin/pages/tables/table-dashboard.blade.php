@@ -24,8 +24,9 @@
 <table id="table" class="table tableDashboard nowrap stripe">
     <thead>
         <tr>
-            <th class="none"data-priority="1">cliente</th>
+            <th class="none">cliente</th>
             <th class="none"data-priority="1">Data</th>
+            <th class="none"data-priority="1">Hora</th>
             <th class="all"data-priority="0">Atividade</th>
             <th class="all"data-priority="0">Funcionários</th>
             <th class="all"data-priority="0">Status</th>
@@ -37,7 +38,7 @@
     @php
    @endphp
     <tbody>
-       @foreach ($attendsNext as $a)
+       @foreach ($attendsNext->sortBy('data_inicial') as $a)
        @php
                         switch ($a->status->id) {
                             case '1': //solicitado
@@ -66,11 +67,11 @@
         <tr>
             <td class="cliente"><a href="{{ route('OS.contract', $a->orders->id) }}">{{ $a->orders->nome_cliente }}</a></td>
             <td>
-                @php
-                    $data = date('d/m/Y', strtotime(explode(' ', $a->data_inicial)[0]));
-                    $hora = date('H:i', strtotime(explode(' ', $a->data_inicial)[1]));
-                @endphp
-                {{$data}}  {{$hora}}
+               
+                {{$a->data_inicial->format('d m y')}}
+            </td>
+            <td>
+                {{$a->data_inicial->format('h:i')}}
             </td>
             <td>{{ $a->orders->service->service_title }}</td>
             <td>
@@ -89,6 +90,19 @@
                         <i class="fas fa-calendar-week mx-2"></i>Agendamento
                     </button>
                     @include('admin.pages.modal.schedulle', [$a, $users])
+                    <div class="dropdown">
+                        <button class="btn btn-{{$statusColor}} dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ações
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="{{ route('attend.show', $a->id) }}"><span title="Visualizar informações deste serviço"><i class=" fas fa-eye mx-1"></i> Execução deste atendimento</span></a>
+                          @if ($a->status_id >= 2)
+                              <a class="dropdown-item" href="{{ route('get.os', $a->id) }}"><i class="fas fa-file-download mx-1"></i> Imprimir OS</a>
+                          @endif
+                          <a class="dropdown-item" href="{{ route('OS.contract', $a->orders->id) }}"><i class="fas fa-edit mx-1"></i> Alterar informações do cliente</a>
+                          <a class="dropdown-item" href="{{ route('attend.edit', $a->id) }}"><i class="fas fa-edit mx-1"></i> Editar informações do atendimento</a>
+                        </div>
+                      </div>
 
         
                     
@@ -108,7 +122,7 @@
             url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json' //PT-BR
         },
 
-        "order": [ 1, "asc" ],
+        "order": [],
 
         responsive: true,
 

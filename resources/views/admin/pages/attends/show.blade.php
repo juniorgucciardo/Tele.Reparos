@@ -32,66 +32,101 @@
     }
 </style>
 
-<div class="card card-info shadow">
-    <div class="card-header">
-        <span color="#fff"><i class="mx-1 fas fa-history"></i>Atualizações deste atendimento</span>
+<div class="my-3 callout relative d-md-flex justify-content-between align-items-start">
+    <div>
+        <h5> @php
+            if($attend->data_final->isPast()){
+                echo 'Este atendimento aconteceu na';
+            } else if($attend->data_inicial->isPast()) {
+                echo 'Acontecendo agora, ';
+            } else {
+                echo 'Atendimento agendado para';
+            }
+        @endphp 
+        {{ $attend->data_inicial->translatedFormat('l \, j \d\e F \à\s H:i A') }}</h5>
+        <p class="block">demanda cadastrada dia {{ date('d/m', strtotime(explode(' ', $attend->created_at)[0])) }}</p>
+
     </div>
-    <div class="card-body">
+    <a href="{{ route('OS.contract', $attend->orders->id) }}"><button class="btn btn-secondary">Inforamações sobre o serviço</button></a>
+</div>
 
-        <div class="card card-danger">
+
+
+<div class="card card-info shadow" id="card">
+    <div class="card-header">
+        <i class="mx-1 fas fa-history"></i>Atualizações</span>
+    </div>
+    <div class="card-body px-2">
+        @if(!$activities->isEmpty())
+        @foreach ($activities as $checklist)
+        <div class="card">
             <div class="card-header">
-                Informações deste atendimento
+                {{$checklist->title}}
             </div>
-            <div class="card-body">
-
-
-                @if($activities !== null)
-                    @foreach ($activities as $checklist)
-                          <ul class="todo-list" data-widget="todo-list">
+            <div class="card-body px-1">
+                
                             
-                            @foreach ($checklist->items as $item)
-                            <li class="notDone">
-                                <div class="icheck-primary d-inline ml-2">
-                                  <input type="checkbox" 
-                                    @if ($item->is_concluted === 1)
-                                        checked
-                                    @else
-                                        uncheked    
-                                    @endif
-                                  name="todo2" id="todoCheck2" value="{{$item->id}}">
-                                  <label for="todoCheck2"></label>
+                                  <ul class="todo-list" data-widget="todo-list">
+                                    
+                                    @foreach ($checklist->items as $item)
+                                    <li class="notDone d-flex justify-content-between">
+                                        <div class="icheck-primary d-inline ml-2">
+                                          <input type="checkbox" 
+                                            @if ($item->is_concluted === 1)
+                                                checked
+                                            @else
+                                                uncheked    
+                                            @endif
+                                          name="todo2" id="todoCheck2" value="{{$item->id}}">
+                                          <label for="todoCheck2"></label>
+                                          <span class="text">{{$item->title}}</span>
+                                        @if ($item->is_concluted === 1)
+                                            <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
+                                        @endif
+                                        </div>
+                                        
+                                        
+                                        @can('view_service_demands')
+                                        <div class="tools d-flex btn-group">
+                                            <button class="btn-sm" data-toggle="modal" data-target="#editItemOnChecklist{{$item->id}}"><i class="fas fa-edit"></i></button>
+                                            @include('admin.pages.modal.editChecklistItem')
+                                            <form action="{{ route('checklistItem.destroy', $item->id)}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-sm"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                        @endcan
+                                    </li>
+                                    @endforeach
+                                    
+                                  </ul>
                                 </div>
-                                <span class="text">{{$item->title}}</span>
-                                @if ($item->is_concluted === 1)
-                                    <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
-                                @endif
+                                  @can('view_service_demands')
+                                  <div class="card-footer add-more m-3">
+                                    <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
+                                    @include('admin.pages.modal.addItemOnChecklist')
+                                  </div>
+                                  @endcan
                                 
-                                @can('view_service_demands')
-                                <div class="tools d-flex btn-group">
-                                    <button class="btn-sm" data-toggle="modal" data-target="#editItemOnChecklist{{$item->id}}"><i class="fas fa-edit"></i></button>
-                                    @include('admin.pages.modal.editChecklistItem')
-                                    <form action="{{ route('checklistItem.destroy', $item->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn-sm"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </div>
-                                @endcan
-                            </li>
                             @endforeach
-                            
-                          </ul>
-                        </div>
-                          @can('view_service_demands')
-                          <div class="card-footer add-more m-3">
-                            <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
-                            @include('admin.pages.modal.addItemOnChecklist')
-                          </div>
-                          @endcan
-                        
-                    @endforeach
-                    @endif
+                           
+            </div>
+        </div>
+        @endif
 
+        <div class="card card px-2">
+            <div class="card-header py-2">
+                Histórico de atividades
+            </div>
+            <div class="card-body p-0">
+
+        
+        @if ($attend->statusLogs->isEmpty())
+            <div class="alert" role="alert">
+                Nenhuma atualização cadastrada!
+          </div>
+        @endif
 
         @foreach ($attend->statusLogs->sortByDesc('created_at') as $log)
 
@@ -109,7 +144,7 @@
             date_default_timezone_set('America/Sao_Paulo');
         @endphp
 
-        <div class="my-3 callout callout-{{$log->color}} shadow relative">
+        <div class="my-3 callout callout-{{$log->color}} relative">
             <h5><i class="{{$icon}}"></i> {{$log->title}}</h5>
             <p class="block">{{$log->content}}</p>
             <div class="row flex-row d-flex">
@@ -161,18 +196,7 @@
                 {{-- <div class="p-2 bg-info rounded m-2">
                     <h4>{{ date('H:i A', strtotime(explode(' ', $attend->data_inicial)[1])) }}</h4>
                 </div> --}}
-                <div class="my-3 callout callout-info shadow relative">
-                    <h5><i class="fas fa-info"></i> @php
-                                                        if($attend->data_inicial->isPast()){
-                                                            echo 'Este atendimento aconteceu na';
-                                                        } else {
-                                                            echo 'Atendimento agendado para';
-                                                        }
-                                                    @endphp 
-                    {{ $attend->data_inicial->translatedFormat('l \, j \d\e F \à\s H:i A') }}</h5>
-                    <p class="block">demanda cadastrada dia {{ date('d/m', strtotime(explode(' ', $attend->created_at)[0])) }}</p>
-                    
-                </div>
+                
             {{-- </div>
         </div> --}}
 
@@ -217,6 +241,8 @@
         
         });
     });
+
+
         </script>
 
 @stop

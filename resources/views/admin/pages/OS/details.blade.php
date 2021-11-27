@@ -151,7 +151,7 @@
                                 </div>
                             </div>
                             @if(!$contract->img_contract->isEmpty())
-                            <strong>Imagem:</strong><br>
+                                <strong>Imagem:</strong><br>
                             @endif
                             <div class="row items-center justify-content-between">
                                 <div class="my-2 row d-flex images_area">
@@ -237,13 +237,14 @@
                             @endforeach
                             
                           </ul>
+                        </div>
                           @can('view_service_demands')
-                          <div class="add-more m-3">
+                          <div class="card-footer">
                             <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
                             @include('admin.pages.modal.addItemOnChecklist')
                           </div>
                           @endcan
-                        </div>
+                        
                       </div>
                     @endforeach
                     @endif

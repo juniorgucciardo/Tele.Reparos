@@ -427,7 +427,7 @@ class OsController extends Controller
     public function export() 
     {
         if(auth()->user()->can('view_service_demands')){
-            return Excel::download(new GeneralReport, 'RelatorioGeral.xlsx');
+            return Excel::download(new GeneralReport, 'RelatorioGeral.pdf');
             
         }
 
@@ -445,6 +445,7 @@ class OsController extends Controller
             //existe atendimento -> prcurar checklist do atendimento com 
             $activities = $this->repositoryChecklist->checklistByAttend($attendInExec->id)->get();
         }
+
 
         $checklists = $this->repositoryChecklist->checklistByOS($id)->general()->get();
 

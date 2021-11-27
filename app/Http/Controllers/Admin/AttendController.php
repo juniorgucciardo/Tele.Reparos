@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Carbon;
+use PDF;
 
 
 class AttendController extends Controller
@@ -30,6 +31,7 @@ class AttendController extends Controller
     private $repositoryStatus;
     private $repositoryStatusLog;
     private $repositoryChecklist;
+    private $pdf;
 
     public function __construct()
     {
@@ -39,6 +41,7 @@ class AttendController extends Controller
         $this->repositoryStatusLog = new StatusLog();
         $this->repositoryAttend = new Attend();
         $this->repositoryChecklist = new Checklist();
+        $this->pdf = new PDF();
     }
 
     public function index(Request $request)
@@ -204,6 +207,7 @@ class AttendController extends Controller
             'attend' => $attendShow,
             'activities' => $activities,
         ]);
+
         } else {
             return redirect()->back();
         }
@@ -318,7 +322,10 @@ class AttendController extends Controller
         $data_inicial = date('Y-m-d H:i:s', strtotime($request->data_inicial.$request->hora_inicial));
         $final = date('Y-m-d H:i:s', strtotime($data_inicial. '+'.$request->duration.' hours'));
         $attend = Attend::findOrFail($id);
-        $checklist = $attend->orders->checklists->where('type_id', 1)->first();
+        $checklists = $attend->orders->checklists->where('type_id', 1)->where('attend_id', NULL);
+        dd($checklists);
+        
+
         $attend->update([
             'data_inicial' => $data_inicial,
             'data_final' => $final,
@@ -326,22 +333,47 @@ class AttendController extends Controller
         ]);
 
         $attend->users()->sync($request->user_id);
-        $newChecklist = $checklist->replicate();
-                    $newChecklist->attend_id = $attend->id;
-                    $newChecklist->save();
-                    //salvar os items no checklist copiado
-                    foreach($checklist->items as $item){
-                        $newItem = $item->replicate();
-                        $newItem->push();
-                        $newItem->checklist_id = $newChecklist->id;
-                        $newItem->save();
-                        var_dump($newItem->checklist_id);
-                    }
 
-
-
+        if(!$checklists->isEmpty()){
+            foreach($checklists as $checklist){
+                $newChecklist = $checklist->replicate();
+                $newChecklist->attend_id = $attend->id;
+                $newChecklist->save();
+                //salvar os items no checklist copiado
+                foreach($checklist->items as $item){
+                    $newItem = $item->replicate();
+                    $newItem->push();
+                    $newItem->checklist_id = $newChecklist->id;
+                    $newItem->save();
+                    var_dump($newItem->checklist_id);
+                }
+    
+            }
+        }
+        
         Alert::success('Successo', 'Atualizado com sucesso');
         return redirect()->back();
+    }
+
+    public function getOS($id)
+    {
+        $attend = Attend::where('id', $id)->with('orders.img_contract')->first();
+        if($attend->status_id >= 2){
+            
+        $activities = $this->repositoryChecklist->checklistByAttend($attend->id)->get();
+    
+        
+        $pdf = \App::make('dompdf.wrapper');
+
+        $pdf->loadView('admin.pages.exports.ordem-de-servico', [
+            'attend' => $attend,
+            'activities' => $activities,
+        ]);
+        
+        return $pdf->stream();
+        } else {
+            return 'voce nao pode acessar uma OS de uma demanda que ainda nao esta agendada';
+        }
     }
 
     

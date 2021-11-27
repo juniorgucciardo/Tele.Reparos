@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" id="schedulle-modal{{$a->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg text-left" id="schedulle-modal{{$a->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
@@ -90,5 +90,3 @@
       </div>
     </div>
   </div>
-</div>
-</div>

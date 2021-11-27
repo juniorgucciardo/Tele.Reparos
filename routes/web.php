@@ -33,6 +33,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/operacional/checklist/item/uncheck', [App\Http\Controllers\Admin\ChecklistItemController::class, 'unCheck'])->name('checklistItem.uncheck');
 
 
+    //gerar OS
+    Route::get('/operacional/ordem-de-servico/{id}', [App\Http\Controllers\Admin\AttendController::class, 'getOS'])->name('get.os');
+
 
     //view profile
     Route::get('/administrativo/detalhes-cadastro/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.view');

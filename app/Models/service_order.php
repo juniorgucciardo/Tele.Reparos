@@ -100,6 +100,7 @@ class service_order extends Model
                 $query->where('situation_id', $request->situacao);
             }
         })
+        ->orderBy('created_at', 'desc')
         ->with('user', 'type', 'service')
         ->get();
 
