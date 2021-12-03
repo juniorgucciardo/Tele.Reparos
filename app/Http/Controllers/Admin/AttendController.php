@@ -322,10 +322,9 @@ class AttendController extends Controller
         $data_inicial = date('Y-m-d H:i:s', strtotime($request->data_inicial.$request->hora_inicial));
         $final = date('Y-m-d H:i:s', strtotime($data_inicial. '+'.$request->duration.' hours'));
         $attend = Attend::findOrFail($id);
+        //checklist -> pode ser que nao tenha nada aqui
         $checklists = $attend->orders->checklists->where('type_id', 1)->where('attend_id', NULL);
-        dd($checklists);
         
-
         $attend->update([
             'data_inicial' => $data_inicial,
             'data_final' => $final,
@@ -334,7 +333,7 @@ class AttendController extends Controller
 
         $attend->users()->sync($request->user_id);
 
-        if(!$checklists->isEmpty()){
+        if(!$checklists->isEmpty()){ //is NOT empty
             foreach($checklists as $checklist){
                 $newChecklist = $checklist->replicate();
                 $newChecklist->attend_id = $attend->id;
@@ -345,7 +344,6 @@ class AttendController extends Controller
                     $newItem->push();
                     $newItem->checklist_id = $newChecklist->id;
                     $newItem->save();
-                    var_dump($newItem->checklist_id);
                 }
     
             }

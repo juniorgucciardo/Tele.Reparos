@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Type;
 use App\Models\Situation;
 use App\Models\Status;
+use App\Models\ChecklistType;
+use App\Models\Checklist;
 use App\Models\Service;
 use App\Models\service_order;
 use App\Models\Attend;
@@ -47,7 +49,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'view_service_demands'
+            'name' => 'manage-blog'
         ]);
 
         $role->givePermissionTo('view_service_demands');
@@ -202,6 +204,21 @@ class DatabaseSeeder extends Seeder
             'description' => 'Serviço solicitado pelo cliente'
         ]);
 
+        ChecklistType::create([
+            'id' => 1,
+            'title' => 'Atividades',
+        ]);
+
+        ChecklistType::create([
+            'id' => 2,
+            'title' => 'Produtos e equipamentos',
+        ]);
+
+        ChecklistType::create([
+            'id' => 3,
+            'title' => 'Equipamentos de proteção',
+        ]);
+
         
 
 
@@ -229,7 +246,7 @@ class DatabaseSeeder extends Seeder
             'data_ordem' => '2021-09-30',
             'hora_ordem' => '10:00',
             'type_id' => 1,
-            'recurrence' => 0,
+            'recurrence_type' => 'daily',
             'months' => 1,
             'situation_id' => 3
         ]);

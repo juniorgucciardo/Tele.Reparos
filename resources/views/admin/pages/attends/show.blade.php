@@ -1,7 +1,7 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Detalhes do atendimento - Liberdade acompanhada')
 
 @section('content_header')
 <h5>

@@ -47,7 +47,7 @@ class Checklist extends Model
 
     public function type()
     {
-        return $this->belongsTo('App\Models\Type', 'contract_type_id', 'id');
+        return $this->belongsTo('App\Models\ChecklistType', 'type_id', 'id');
     }
 
     public function checklistByOS($id){
@@ -67,9 +67,26 @@ class Checklist extends Model
         return $query->where('order_id', NULL);
     }
 
+    public function checklistModel()
+    {
+        return $this->where('order_id', NULL)
+                    ->where('attend_id', NULL);
+    }
+
     public function scopeActivities($query)
     {
         return $query->where('type_id', 1);
+    }
+
+    public function scopeProducts($query)
+    {
+        return $query->where('type_id', 2);
+    }
+
+
+    public function scopeIpis($query)
+    {
+        return $query->where('type_id', 3);
     }
 
     public function scopeGeneral($query)

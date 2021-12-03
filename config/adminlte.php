@@ -243,11 +243,7 @@ return [
 //            'type' => 'sidebar-menu-search',
 //            'text' => 'search',
 //     ],
-        [
-            'text' => 'blog',
-            'url'  => 'administrativo/blog',
-            'can'  => 'manage-blog',
-        ],
+        
         [
             'text' => 'Início',
             'url'  => 'operacional/',
@@ -311,12 +307,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'Ver postagens',
-                    'url'  => 'admin/blog',
+                    'url'  => 'administrativo/blog',
                     'can'  => 'view_service_demands'
                 ],
                 [
                     'text' => 'Novo post',
-                    'url'  => 'admin/blog/novo',
+                    'url'  => 'administrativo/blog/novo',
                     'can'  => 'view_service_demands'
                 ],
                 

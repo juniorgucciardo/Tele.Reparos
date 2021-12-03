@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+
+@section('title', 'Novo Serviço')
 
 @section('content_header')
 <h4>
@@ -76,67 +77,80 @@ function showCheckboxes() {
                 <div class="form-group">
                   
                   {{-- Informações do cliente --}}
-                  <div class="card card-outline card-navy shadow">
-                    <div class="card-header">
-                      <i class="fas fa-user-friends mx-1"></i>
-                      Informações o cliente
+
+                  <div class="row d-flex justify-content-between">
+
+                    <div class="col-md-5 col-12 card card-outline card-navy ">
+                      <div class="card-header py-2">
+                        <i class="fas fa-user-friends mx-1"></i>
+                        Informações o cliente
+                      </div>
+                      <div class="card-body py-2">
+                          <div class="col-md-12 col-12">
+                            <label for="exampleInputEmail1">Nome do cliente</label>
+                            <input required type="text" name="nome_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Nome do cliente">
+                          </div>
+                          <div class="col-md-8 col-12 my-1">
+                            <label for="exampleInputEmail1">Contato:</label>
+                            <input type="tel" name="contato_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Contato do cliente">
+                          </div>
+                      </div>
                     </div>
-                    <div class="card-body">
-                      <div class="row  my-1">
-                        <div class="col-md-6 col-12">
-                          <label for="exampleInputEmail1">Nome do cliente</label>
-                          <input required type="text" name="nome_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Nome do cliente">
+                    {{-- Endereço da demanda --}}
+                    <div class="col-md-7 col-12 card card-outline card-gray ">
+                      <div class="card-header py-2">
+                        <i class="fas fa-map-marked-alt mx-1"></i>
+                        Endereço da demanda
+                      </div>
+                      <div class="card-body py-2">
+                        <div class="row  my-1">
+                          <div class="col-md-5 col-12">
+                            <label for="exampleInputEmail1">Rua:</label>
+                            <input required type="text" name="rua_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          </div>
+                          <div class="col-md-3 col-12">
+                            <label for="exampleInputEmail1">Numero:</label>
+                            <input required type="number" name="numero_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          </div>
+                          <div class="col-md-4 col-12">
+                            <label for="exampleInputEmail1">Bairro:</label>
+                            <input required type="text" name="bairro_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                          <label for="exampleInputEmail1">Contato:</label>
-                          <input type="text" name="contato_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Contato do cliente">
+                        <div class="row  my-1">
+                          <div class="col-md-8 col-12">
+                            <label for="exampleInputEmail1">Cidade:</label>
+                            <input required type="text" name="cidade_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
 
-                  {{-- Endereço da demanda --}}
-                  <div class="card card-outline card-gray shadow">
-                    <div class="card-header">
-                      <i class="fas fa-map-marked-alt mx-1"></i>
-                      Endereço da demanda
-                    </div>
-                    <div class="card-body">
-                      <div class="row  my-1">
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Rua:</label>
-                          <input required type="text" name="rua_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
-                        </div>
-                        <div class="col-md-3 col-12">
-                          <label for="exampleInputEmail1">Numero:</label>
-                          <input required type="text" name="numero_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
-                        </div>
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Bairro:</label>
-                          <input required type="text" name="bairro_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
-                        </div>
-                      </div>
-                      <div class="row  my-1">
-                        <div class="col-md-8 col-12">
-                          <label for="exampleInputEmail1">Cidade:</label>
-                          <input required type="text" name="cidade_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  </div> {{-- end row --}}
 
 
 
                   {{-- Informações sobre o serviço --}}
                   <div class="card card-outline card-gray shadow">
-                    <div class="card-header">
+                    <div class="card-header py-2">
                       <i class="fas fa-tools mx-1"></i>
                       Serviço
                     </div>
-                    <div class="card-body">
+                    <div class="card-body py-2">
                       <div class="row  my-1">
-                        <div class="col-md-5 col-12">
+
+                        <div class="col-md-5 col-12" data-toggle="tooltip" data-placement="top" title="Caso você selecione contrato, será gerado uma recorrencia de atendimentos, caso contrário só sera gerado apenas um atendimento">
+                          <label for="exampleInputEmail1">Tipo de serviço:</label>
+                          <select required name="type" id="campo" class="form-control" onchange="funcao(this.value)">
+                            <option selected disable value="0">Escolha um tipo</option>
+                            @foreach ($types as $type)
+                                <option value="{{$type->id}}">{{$type->type_title}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        
+                        <div class="col-md-3 col-12">
                           <label for="exampleInputEmail1">Serviço:</label>
                           <select required name="id_service" class="form-control" onchange="funcao2(this.value)">
                               <option selected disable value="">Escolha o serviço</option>
@@ -145,23 +159,43 @@ function showCheckboxes() {
                             @endforeach
                           </select>
                         </div>
-                        <div class="col-md-3 col-12">
-                          <label for="exampleInputEmail1">DATA:</label>
-                          <input required type="date" name="data_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
-                        </div>
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">HORA:</label>
-                          <input required type="time" name="hora_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+
+                        <div class="col-md-4 col-12" data-toggle="tooltip" data-placement="top" title="A situação é responsável por determinar se o contrato ja esta apto para iniciar a ser executado ou se haverá algum processo anterior">
+                          <label for="exampleInputEmail1">Situação:</label>
+                          <select required name="situation" class="form-control">
+                            <option selected value="3">Confirmado</option>
+                             @foreach ($situations as $situation)
+                              <option value="{{$situation->id}}">{{$situation->title}}</option>
+                            @endforeach
+                          </select>
                         </div>
                       </div>
-                      <div class="row  my-1">
-                        <div class="col-md-2 col-12">
-                          <label for="exampleInputEmail1">Duração em horas</label>
-                          <input required type="number" name="duration" class="form-control" id="exempleImputServiceTitle" value="4" placeholder="4 horas">
-                        </div>
-                        <div class="col-md-10 col-12">
+                        <div class="row  my-1 d-flex align-items-center">
+                        <div class="col-md-8 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
                           <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
+                        </div>
+                        <div class="col-md-4">
+                          {{-- AQUI VAI UM LOOP, COM OS CHECKLISTS DO SERVIÇO E TIPO DE SERVIÇO ADICIONADO --}}
+                          <label for="checkbox">Incluir Checklists (caso tenham)</label>
+                          <div id="checkbox" class="form-check">
+                            <input class="form-check-input" type="checkbox" name="include_activities" value="1">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              Incluir Checklist de atividades
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="include_products" value="1">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Incluir Checklist de materias e produtos
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="include_ipis" value="1">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Incluir Checklist de EPI's
+                            </label>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -169,18 +203,18 @@ function showCheckboxes() {
 
 
             
-                  {{-- Informações adicionais --}}
+                  {{-- AGENDAMENTO --}}
 
                   <div class="card card-outline card-gray shadow">
                     <div class="card-header">
                       <i class="fas fa-info-circle mx-1"></i>
-                      Informações adicionais
+                      Agendamento
                     </div>
                     <div class="card-body">
                       <div class="row  my-1">
-                        <div class="col-md-3 col-12">
-                          <label for="exampleInputEmail1">Funcionário(s):</label>
-                            <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker" data-live-search="true" title="
+                        <div class="col-md-4 col-12 d-flex flex-column text-left" id="funcionarios" data-toggle="tooltip" data-placement="top" title="Isso incluirá os funcionários em todos atendimentos gerados">
+                          <label for="funcionarios">Funcionário(s):</label>
+                            <select multiple name="user_id[]" aria-label="multiple select example" class="selectpicker w-100" data-live-search="true" title="
                             selecione
                             ">
     
@@ -190,25 +224,21 @@ function showCheckboxes() {
                             </select>
                         </div>
 
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Tipo de serviço:</label>
-                          <select required name="type" id="campo" class="form-control" onchange="funcao(this.value)">
-                            <option selected disable value="">Escolha um tipo</option>
-                            @foreach ($types as $type)
-                                <option value="{{$type->id}}">{{$type->type_title}}</option>
-                            @endforeach
-                          </select>
+                        <div class="col-md-3 col-12">
+                          <label for="exampleInputEmail1">Data:</label>
+                          <input required type="date" name="data_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
                         </div>
+                        <div class="col-md-2 col-12">
+                          <label for="exampleInputEmail1">Hora:</label>
+                          <input required type="time" name="hora_ordem" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                        </div>
+                      
+                    
+                      <div class="col-md-3 col-12">
+                        <label for="exampleInputEmail1">Duração</label>
+                        <input required type="number" name="duration" class="form-control" id="exempleImputServiceTitle" value="4" min="1" max="8" placeholder="4 horas">
+                      </div>
 
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Situação:</label>
-                          <select required name="situation" class="form-control">
-                            <option selected value="3">Confirmado</option>
-                             @foreach ($situations as $situation)
-                              <option value="{{$situation->id}}">{{$situation->title}}</option>
-                            @endforeach
-                          </select>
-                        </div>
 
 
                         
@@ -219,7 +249,7 @@ function showCheckboxes() {
 
                   
 
-                  {{-- Contrato --}}
+                  {{-- Recorrencia --}}
 
                   <div class="card card-outline card-gray shadow" id="recorrencia" type="hidden">
                     <div class="card-header shadow-sm">
@@ -230,19 +260,30 @@ function showCheckboxes() {
                       <div class="row my-1 d-flex items-center">
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Recorrência:</label>
-                          <select required name="recurrence" class="form-control">
+                          <select required name="recurrence_type" class="form-control" onchange="funcaorecurrence(this.value)">
                             <option selected disabled>Selecione uma recorrência</option>
-                            <option value="1">Diário</option>
-                            <option value="7">Semanal</option>
-                            <option value="15">Quinzenal</option>
-                            <option value="30">Mensal</option>
-                            <option value="60">Bimestral</option>
+                            <option value="daily">Diário</option>
+                            <option value="weekly">Semanal</option>
+                            <option value="monthly">Mensal</option>
                           </select>
                         
                         </div>
                         <div class="col-md-4 col-12">
                           <label for="exampleInputEmail1">Meses</label>
-                          <input type="text" name="months" class="form-control" id="exempleImputServiceTitle" placeholder="Meses">
+                          <input type="number" name="months" class="form-control" id="exempleImputServiceTitle" placeholder="Meses" value="12">
+                        </div>
+                      </div>
+                      <div class="row my-2">
+                        <div class="col-md-3 col-12" id="daysweek">
+                          <label for="exampleInputEmail1">Dias da semana</label>
+                            <select multiple name="recurrenceWeekdays[]" data-actions-box="true" class="selectpicker" data-live-search="true" title="Selecione o dia da semana">
+                              <option value="MO">Segunda-feira</option>
+                              <option value="TU">Terça-feira</option>
+                              <option value="WE">Quarta-feira</option>
+                              <option value="TH">Quinta-feira</option>
+                              <option value="FR">Sexta-feira</option>
+                              <option value="SA">Sábado</option> 
+                            </select>
                         </div>
                       </div>
                     </div>
@@ -276,7 +317,7 @@ function showCheckboxes() {
 
 
                   
-                  {{-- Piscineiro --}}
+                  {{-- Piscineiro
 
                   <div class="card card-outline card-gray shadow" id="piscineiro" type="hidden">
                     <div class="card-header shadow-sm">
@@ -308,12 +349,12 @@ function showCheckboxes() {
 
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
 
 
                   {{-- Jardinagem --}}
 
-                  <div class="card card-outline card-gray shadow" id="jardinagem" type="hidden">
+                  {{-- <div class="card card-outline card-gray shadow" id="jardinagem" type="hidden">
                     <div class="card-header shadow-sm">
                       <i class="fas fa-seedling"></i>
                       
@@ -348,27 +389,12 @@ function showCheckboxes() {
 
                       </div>
 
-                      <div id="poda" class="row my-2 d-flex items-center">
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Arvore</label>
-                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
-                        </div>
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Altura aproximada</label>
-                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
-                        </div>
-                        <div class="col-md-4 col-12">
-                          <label for="exampleInputEmail1">Observação</label>
-                        <input type="text" name="insurance_cod" class="form-control" id="exempleImputServiceTitle" placeholder="Recolhimento de galhos e residuos">
-                        </div>
-                      </div>
-
                     </div>
-                  </div>
+                  </div> --}}
 
+{{-- 
 
-
-                  {{-- Pós obra --}}
+                  Pós obra
 
                   <div class="card card-outline card-gray shadow" id="pos-obra" type="hidden">
                     <div class="card-header shadow-sm">
@@ -396,10 +422,10 @@ function showCheckboxes() {
 
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
 
 
-                  {{-- Pós obra --}}
+                  {{-- Pós obra
 
                   <div class="card card-outline card-gray shadow" id="limpeza-pesada" type="hidden">
                     <div class="card-header shadow-sm">
@@ -426,10 +452,10 @@ function showCheckboxes() {
 
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
 
 
-                  {{-- Condomínio --}}
+                  {{-- Condomínio
 
                   <div class="card card-outline card-gray shadow" id="condominio" type="hidden">
                     <div class="card-header shadow-sm">
@@ -462,7 +488,7 @@ function showCheckboxes() {
                   
                 
                 
-              </div>
+              </div> --}}
               <!-- /.card-body -->
 
               <div class="card-footer">
@@ -473,87 +499,104 @@ function showCheckboxes() {
     </div>
 
     <script>
+
+      
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
       var recorrencia = document.getElementById("recorrencia");
       recorrencia.hidden = true;
       var seguradora = document.getElementById("seguradora");
       seguradora.hidden = true;
-      var piscineiro = document.getElementById("piscineiro");
-      piscineiro.hidden = true;
-      var jardinagem = document.getElementById("jardinagem");
-      jardinagem.hidden = true;
-      var posobra = document.getElementById("pos-obra");
-      posobra.hidden = true;
-      var limpezapesada = document.getElementById("limpeza-pesada");
-      limpezapesada.hidden = true;
+      // var piscineiro = document.getElementById("piscineiro");
+      // piscineiro.hidden = true;
+      // var jardinagem = document.getElementById("jardinagem");
+      // jardinagem.hidden = true;
+      // var posobra = document.getElementById("pos-obra");
+      // posobra.hidden = true;
+      // var limpezapesada = document.getElementById("limpeza-pesada");
+      // limpezapesada.hidden = true;
 
-      var condominio = document.getElementById("condominio");
-      condominio.hidden = true;
+      var daysweek = document.getElementById("daysweek");
+      daysweek.hidden = true;
 
-      var poda = document.getElementById("poda");
-      poda.hidden = true;
+      // var condominio = document.getElementById("condominio");
+      // condominio.hidden = true;
+
+      // var poda = document.getElementById("poda");
+      // poda.hidden = true;
+
+      function funcaorecurrence(value){
+        if(value === 'weekly'){
+          daysweek.hidden = false;
+        } else {
+          daysweek.hidden = true;
+        }
+      }
 
       
       function funcao(value){
         if(value == 2){
           recorrencia.hidden = false;
-
-        }else if(value == 4){
+        } else {
           recorrencia.hidden = true;
+        }
+        
+        if(value == 4){
           seguradora.hidden = false;
-          condominio.hidden = true;
-          posobra.hidden = true;
-        }else if(value == 1){
+        }else {
+          seguradora.hidden = true;
+        }
+        if(value == 1){
           recorrencia.hidden = true;
           seguradora.hidden = true;
           condominio.hidden = true;
           posobra.hidden = true;
-        }else if(value == 5){
+        } 
+        if(value == 5){
           recorrencia.hidden = false;
-          seguradora.hidden = true;
           condominio.hidden = false;
-          posobra.hidden = true;
         }else if(value == 3){
-          recorrencia.hidden = true;
-          seguradora.hidden = true;
-          condominio.hidden = true;
           posobra.hidden = false;
+        } else {
+          posobra.hidden = true;
         }
       }
 
-      function funcao2(value){
-        if(value == 1){
-          piscineiro.hidden = true;
-          jardinagem.hidden = false;
-          limpezapesada.hidden = true;
-          posobra.hidden = true;
-        } else if (value == 5){
-          piscineiro.hidden = false;
-          jardinagem.hidden = true;
-          limpezapesada.hidden = true;
-          posobra.hidden = true;
-        } else if (value == 10){
-          piscineiro.hidden = true;
-          jardinagem.hidden = true;
-          limpezapesada.hidden = false;
-          posobra.hidden = true;
+      // function funcao2(value){
+      //   if(value == 1){
+      //     jardinagem.hidden = false;
+      //   } else {
+      //     jardinagem.hidden = true;
+      //   }
+        
+      //   if (value == 5){
+      //     piscineiro.hidden = false;
+      //   } else {
+      //     piscineiro.hidden = true;
+      //   }
+      //   if (value == 10){
+      //     limpezapesada.hidden = false;
+      //   } else {
+      //     limpezapesada.hidden = true;
+      //   } 
+      //   if (value == 6){
+      //     posobra.hidden = false;
+      //   } else {
+      //     posobra.hidden = true;
+      //   }
+      // }
 
-        } else if (value == 6){
-          piscineiro.hidden = true;
-          jardinagem.hidden = true;
-          limpezapesada.hidden = true;
-          posobra.hidden = false;
-
-        }
-      }
-
-      function funcaoJardinagem(value){
-        if(value == 1){
-          console.log('poda');
-          poda.hidden = true;
-        } else if(value == 2){
-          poda.hidden = true;
-        }
-      }
+      // function funcaoJardinagem(value){
+      //   if(value == 1){
+      //     console.log('poda');
+      //     poda.hidden = true;
+      //   } else if(value == 2){
+      //     poda.hidden = true;
+      //   }
+      // }
     </script>
 
 @stop

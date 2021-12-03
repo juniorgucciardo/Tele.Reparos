@@ -1,10 +1,10 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Histórico de atendimentos')
 
 @section('content_header')
-<h5><i class="fas fa-calendar"></i> Calendario de atendimentos</h5>
+<h5><i class="fas fa-calendar"></i> Histórico de atendimentos</h5>
 @stop
 
 @section('content')

@@ -16,12 +16,9 @@ class ChecklistType extends Model
     ];
 
     public function checklist(){
-        return $this->hasMany('App\Models\Checklist', 'type_id', 'id');
+        return $this->hasMany('App\Models\Checklist', 'contract_type_id', 'id');
     }
 
-    public function items(){
-        return $this->hasMany('App\Models\ChecklistItem', 'type_id', 'id');
-    }
 
 
 }

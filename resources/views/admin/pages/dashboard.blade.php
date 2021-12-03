@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 
-@section('title', 'Dashboard')
+@section('title', 'Operacional -  Tele Reparos')
 
 @section('content_header')
 @php
@@ -156,26 +156,24 @@
 
         <div class="col-md-4 col-sm-12 col-12">
             <div class="card card-info shadow-sm">
-                <div class="card-header">
-                  <span style="text-color: #fff; font-weight:600">Atividades em andamento hoje, {{date('d/m', strtotime($firstdate));}} 
+                <div class="card-header py-2">
+                  <div class="row d-flex justify-content-between">
+                    <span style="text-color: #fff; font-weight:600">Atividades em andamento</span>
+                    <a class="btn-sm btn-info" href="{{route('attend')}}"><span><i class="fas fa-cash-register mx-1"></i></span>Ver histórico</button></span></a>     
+                  </div>
                 </div>
                 <div class="card-body servicesNow">
+
                     {{-- laço dos cards --}}
-                    @php
-                        $d1 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '01:00:00'));
-                        $d2 = date('Y-m-d H:i:s', strtotime(Carbon\Carbon::now()->format('Y-m-d'). '18:00:00'));
-                    @endphp
-
-                    <a href="{{route('attend')}}"><button type="button" class="mb-3 btn btn-info shadow-md" data-toggle="modal" data-target="#osDetails" data-whatever="@getbootstrap"><span><i class=" fas fa-eye mx-1"></i></span>Ver tudo</button></span></a>
-
 
                   @foreach ($attendsNow->sortBy('data_inicial') as $attend)
-                    @include('components.attend-card');
+                    @include('components.attend-card')
                   @endforeach
 
                 </div>
             </div>
         </div>
+
 
 
         {{-- CALENDARIO --}}
@@ -184,12 +182,13 @@
         <div class="col-md-8 col-sm-12 col-12">
             
             <div class="card-info shadow-sm bg-light">
-                <div class="card-header">
-                    Calendário 
-                    
+                <div class="card-header py-2">
+                   <div class="row d-flex justify-content-between align-items-center">
+                    <span>Calendário</span> 
+                    <a href="{{route('OS.create')}}"><button type="button" class="btn-sm btn-info shadow-md"><i class="fas fa-truck-moving mx-1"></i>Novo Atendimento</button></a>
+                   </div>
                 </div>
                 <div class="card-body">
-                    <a href="{{route('OS.create')}}"><button type="button" class="mb-3 btn btn-info shadow-md"><i class="fas fa-truck-moving mx-1"></i>Novo Atendimento</button></a>
                     <div id="calendar"></div>
                 </div>
             </div>
@@ -231,6 +230,7 @@
             </div>
         </div>
     </div>
+
 
 
     

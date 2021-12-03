@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
     headerToolbar: {
         left: 'prev,next',
         center: 'title',
-        right: 'today dayGridMonth,dayGridWeek,timeGridDay,timelineDay'
+        right: 'today dayGridMonth,dayGridWeek,timeGridDay'
     },
     businessHours: {
       daysOfWeek: [ 1, 2, 3, 4, 5], // Monday, Tuesday, Wednesday
       startTime: '08:00', // 8am
-      endTime: '17:30' // 6pm
+      endTime: '18:00' // 6pm
     },
     businessHours: {
       daysOfWeek: [6], // sabado
@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
     eventLimit: true, // for all non-TimeGrid views
   views: {
     dayGridMonth: {
-      eventLimit: 5, // adjust to 6 only for timeGridWeek/timeGridDay
-      dayMaxEventRows: 5
+      eventLimit: 6, // adjust to 6 only for timeGridWeek/timeGridDay
+      dayMaxEventRows: 3
     }
   },
     

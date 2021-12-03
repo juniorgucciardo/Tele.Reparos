@@ -149,6 +149,7 @@
         </tbody>
     </table>
 
+    @if(!$attend->orders->img_contract->isEmpty())
     <table>
         <thead>
             <tr>Imagens</tr>
@@ -163,7 +164,9 @@
             </tr>
         </tbody>
     </table>
+    @endif
 
+    @if(!$activities->isEmpty())
     <table width="100%">
         @foreach ($activities as $checklist)
         <thead style="background-color: lightblue;">
@@ -183,6 +186,7 @@
            @endforeach
         </tbody>
     </table>
+    @endif
 
     <table>
         <thead>
@@ -196,11 +200,13 @@
                     -> Lembramos que o uso de EPI é obrigatório para a sua segurança e segurança de todos!
                 </td>
             </tr>
+            @if(!$activities->isEmpty())
             <tr>
                 <td>
                     -> A lista anterior serve apenas como um guia para padronizar o nosso atendimento, É necessário visualizar sempre o que pode ser feito alem disto.
                 </td>
             </tr>
+            @endif
             <tr>
                 <td>
                     -> É de extrema importância respeitar os horários de inicio e fim das demandas! Caso seja necessário ultrapassar o horário previsto, entre em contato com a empresa.

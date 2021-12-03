@@ -20,6 +20,8 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use App\Exports\GeneralReport;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
+use When\When;
+use DateTime;
 
 
 class OsController extends Controller
@@ -93,9 +95,7 @@ class OsController extends Controller
     }
 
     public function store(Request $request)
-    {   
-
-
+    {           
         if(auth()->user()->can('view_service_demands')){
 
             // REQUEST
@@ -120,76 +120,130 @@ class OsController extends Controller
                 'duration' => $request->duration ? $request->duration : 4
             ]);
 
-            //RECORRENCIA
 
-            
+            //Checklists
 
-            $data_inicial = $service_order->data_ordem;
-            $hora_inicial = $service_order->hora_ordem;
+            if($request->include_activities){
+                $checklists = $this->repositoryChecklist->checklistsByService($request->id_service)->activities()->checklistDefault()->get();
 
-            $add_days = '+'.$service_order->recurrence.' days';
-            $add_attend_duration = '+'.$request->duration.' hours';
-            $add_contract_duration = $request->months != 0 ? '+'.$request->months .' months' : $add_attend_duration;
-
-            $attend_start = date('Y-m-d H:i:s', strtotime($data_inicial.$hora_inicial));
-            $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-            $contract_end = date('Y-m-d H:i:s', strtotime($attend_start. ($add_contract_duration === 0 ? $request->duration : $add_contract_duration)));
-            
-
-
-            while($attend_start <= $contract_end){
-                $a = Attend::create([
-                    'order_id' => $service_order->id,
-                    'data_inicial' => $attend_start,
-                    'data_final' => $attend_end,
-                    'status_id' => 1
-                ]);
-
-                $attend_start = date('Y-m-d H:i:s', strtotime($attend_start. $add_days));
-                $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-                
-            }
-
-             //CHECKLISTS
-
-        //identificar o serviço escolhido e copiar  checklist com id da OS
-        $checklistsd = $this->repositoryChecklist->checklistsByService($request->id_service)->where('order_id', NULL)->get();
-        //verificar se veio algo desta consulta
-
-        if(!$checklistsd->isEmpty()){
-            //dd('nao vazio');
-            //foreach para percorrer todos os elementos de checklistd
-            foreach($checklistsd as $checklist){
+                foreach($checklists as $checklist){
                     $newChecklist = $checklist->replicate();
-                    $newChecklist->order_id = $service_order->id; //OS ID
+                    $newChecklist->order_id = $service_order->id;
                     $newChecklist->save();
-                    //salvar os items no checklist copiado
-                    dump($newChecklist);
                     foreach($checklist->items as $item){
                         $newItem = $item->replicate();
                         $newItem->push();
                         $newItem->checklist_id = $newChecklist->id;
                         $newItem->save();
-                        dump($newItem);
+                    }
+                }
+            }
+            if($request->include_products){
+                $productsLists = $this->repositoryChecklist->checklistsByService($request->id_service)->products()->checklistDefault()->get();
+
+                foreach($productsLists as $productsList){
+                    $newProductsList = $productsList->replicate();
+                    $newProductsList->order_id = $service_order->id;
+                    $newProductsList->save();
+                    foreach($productsList->items as $item){
+                        $newItem = $item->replicate();
+                        $newItem->push();
+                        $newItem->checklist_id = $newProductsList->id;
+                        $newItem->save();
+                    }
+                }
+            }
+            if($request->include_ipis){
+                $ipisLists = $this->repositoryChecklist->checklistsByService($request->id_service)->ipis()->checklistDefault()->get();
+
+                foreach($ipisLists as $ipisList){
+                    $newIpisList = $ipisList->replicate();
+                    $newIpisList->order_id = $service_order->id;
+                    $newIpisList->save();
+                    foreach($ipisList->items as $item){
+                        $newItem = $item->replicate();
+                        $newItem->push();
+                        $newItem->checklist_id = $newIpisList->id;
+                        $newItem->save();
+                    }
+                }
+            } 
+
+    
+    
+
+            //RECORRENCIA
+
+            if($request->type == 2){
+                $startDate = Carbon::parse($request->data_ordem.$request->hora_ordem);
+                $count = $request->months;
+                $recurrence_type = $request->recurrence_type;
+                //Utilizing When Library for generate dates recurring
+                $r = new When();
+                $r->startDate($startDate);
+                if($recurrence_type === 'daily')
+                {
+                    $r->freq($recurrence_type)
+                    ->byday(['MO', 'TU', 'WE', 'TH', 'FR', 'SA'])
+                    ->byhour($startDate->format('H'))
+                    ->byminute($startDate->format('i'))
+                    ->until($startDate->addMonths($count));
+                }
+                if($recurrence_type === 'weekly')
+                {
+                    $r->freq($recurrence_type)
+                    ->byday($request->recurrenceWeekdays)
+                    ->byhour($startDate->format('H'))
+                    ->byminute($startDate->format('i'))
+                    ->until($startDate->addMonths($count));
+                }
+                if($recurrence_type === 'monthly')
+                {
+                    $r->freq('daily')
+                    ->interval(30)
+                    ->count($count)
+                    ->byday(['MO', 'TU', 'WE', 'TH', 'FR', 'SA'])
+                    ->byhour($startDate->format('H'))
+                    ->byminute($startDate->format('i'));
+                }
+    
+                $r->generateOccurrences();
+            
+
+                foreach($r->occurrences as $occurrence)
+                {
+                    $a = new Attend();
+                    $a->order_id = $service_order->id;
+                    $a->data_inicial = $occurrence;
+                    $a->data_final = $occurrence->addHours($request->duration);
+                    $a->status_id = 1;   
+                    $a->save();
+                    
+                    //funcionário
+                    if($request->user_id){
+                        $a->users()->sync($request->user_id);
+                    }
+                }
+
+            } else {
+                $a = new Attend();
+                    $a->order_id = $service_order->id;
+                    $a->data_inicial = $request->data_ordem;
+                    $a->data_final = Carbon::parse($request->data_ordem)->addHours($request->duration);
+                    $a->status_id = 1;   
+                    $a->save();
+                    
+                    //funcionário
+                    if($request->user_id){
+                        $a->users()->sync($request->user_id);
                     }
             }
 
-            
+
+            return redirect()->route('OS.contract', $service_order->id);
+
         } else {
-            var_dump('vazio');    
-        } 
-
-
-
-            
-
-
-
-
-
-            return redirect('admin/OS');
-        } else {
-            return redirect('admin/OS');
+            return redirect()->back();
         }
     }
 
@@ -440,7 +494,7 @@ class OsController extends Controller
         $attendInExec = Attend::attendsForExecute()->attendsFuture()->select('id')->where('order_id', $id)->whereIn('status_id', [2, 3])->orderBy('status_id', 'desc')->first();
         if($attendInExec === null){
             //nao existe atendimento no mommento
-            $activities = $this->repositoryChecklist->where('service_id', $contract->id_service)->where('type_id', 1)->checklistDefault()->get();
+            $activities = $this->repositoryChecklist->where('service_id', $contract->id_service)->where('type_id', 1)->where('order_id', $contract->id)->get();
         } else {
             //existe atendimento -> prcurar checklist do atendimento com 
             $activities = $this->repositoryChecklist->checklistByAttend($attendInExec->id)->get();
