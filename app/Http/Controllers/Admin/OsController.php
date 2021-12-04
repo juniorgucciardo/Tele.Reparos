@@ -22,6 +22,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use When\When;
 use DateTime;
+use DB;
 
 
 class OsController extends Controller
@@ -96,6 +97,7 @@ class OsController extends Controller
 
     public function store(Request $request)
     {           
+        
         if(auth()->user()->can('view_service_demands')){
 
             // REQUEST
@@ -194,17 +196,16 @@ class OsController extends Controller
                     $r->freq($recurrence_type)
                     ->byday($request->recurrenceWeekdays)
                     ->byhour($startDate->format('H'))
-                    ->byminute($startDate->format('i'))
-                    ->until($startDate->addMonths($count));
+                    ->until($startDate->addMonths($count))
+                    ->byminute($startDate->format('i'));
                 }
                 if($recurrence_type === 'monthly')
                 {
-                    $r->freq('daily')
-                    ->interval(30)
-                    ->count($count)
-                    ->byday(['MO', 'TU', 'WE', 'TH', 'FR', 'SA'])
-                    ->byhour($startDate->format('H'))
-                    ->byminute($startDate->format('i'));
+                    $r->freq('monthly')
+                        ->byhour($startDate->format('H'))
+                        ->byminute($startDate->format('i'))
+                        ->bymonthday($request->daymonth)
+                        ->until($startDate->addMonths($count));
                 }
     
                 $r->generateOccurrences();
@@ -223,7 +224,9 @@ class OsController extends Controller
                     if($request->user_id){
                         $a->users()->sync($request->user_id);
                     }
+
                 }
+
 
             } else {
                 $a = new Attend();
@@ -240,11 +243,13 @@ class OsController extends Controller
             }
 
 
+
             return redirect()->route('OS.contract', $service_order->id);
 
         } else {
             return redirect()->back();
         }
+
     }
 
     

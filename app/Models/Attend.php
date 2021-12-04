@@ -12,6 +12,8 @@ class Attend extends Model
 
     protected $table = 'attends';
 
+    protected $with = ['orders'];
+
     protected $fillable = [
         'id',
         'data_inicial',

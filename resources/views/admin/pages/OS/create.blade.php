@@ -285,6 +285,10 @@ function showCheckboxes() {
                               <option value="SA">Sábado</option> 
                             </select>
                         </div>
+                        <div class="daysmonth">
+                          <label for="exampleInputEmail1">Dia do mes</label>
+                          <input type="text" name="daymonth" class="form-control" id="exempleImputServiceTitle" placeholder="Meses" value="12">
+                         </div>
                       </div>
                     </div>
                   </div>
@@ -519,8 +523,37 @@ $(function () {
       // var limpezapesada = document.getElementById("limpeza-pesada");
       // limpezapesada.hidden = true;
 
+      function duplicarCampos(){
+      console.log('oi')
+	    var clone = document.getElementById("daysweek").cloneNode(true);
+	    var destino = document.getElementById("destiny");
+	    destino.appendChild (clone);
+	
+	    var camposClonados = clone.getElementsByTagName("daysweek");
+	
+	    for(i=0; i<camposClonados.length;i++){
+		    camposClonados[i].value = '';
+	    }
+	
+	
+	
+    }
+
+
+
       var daysweek = document.getElementById("daysweek");
       daysweek.hidden = true;
+
+      var daysmonth = document.getElementById("daysmonth");
+      var daysmonth1 = document.getElementById("daysmonth1");
+      var daysmonth2 = document.getElementById("daysmonth2");
+      var daysmonth3 = document.getElementById("daysmonth3");
+
+      daysmonth.hidden = true;
+      daysmonthbottom.hidden = true;
+      daysmonth1.hidden = true;
+      daysmonth2.hidden = true;
+      daysmonth3.hidden = true;
 
       // var condominio = document.getElementById("condominio");
       // condominio.hidden = true;
@@ -531,8 +564,23 @@ $(function () {
       function funcaorecurrence(value){
         if(value === 'weekly'){
           daysweek.hidden = false;
+
         } else {
           daysweek.hidden = true;
+        }
+
+        if(value === 'monthly'){
+          daysmonth.hidden = false;
+          daysmonthbottom.hidden = false;
+          daysmonth1.hidden = false;
+      daysmonth2.hidden = false;
+      daysmonth3.hidden = false;
+        } else {
+          daysmonth.hidden = true;
+          daysmonthbottom.hidden = true;
+          daysmonth1.hidden = true;
+      daysmonth2.hidden = true;
+      daysmonth3.hidden = true;
         }
       }
 
