@@ -53,7 +53,6 @@
                         <tr>
                             <th>Serviço</th>
                             <th>Descrição</th>
-                            <th>Checklist</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -61,70 +60,10 @@
                         @foreach ($services as $service)
                             <tr>
                                 <td>
-                                    {{ $service->service_title }} - {{$service->id}} <br>
+                                    <b>{{ $service->service_title }}</b>
                                 </td>
                                 <td>
                                     {{ $service->service_description }}
-                                </td>
-                                <td>
-                                    @can('view_service_demands')
-                                        <div class="checklists">
-                                            <button type="button" class="btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklist"> Adionar novo checklist</button>
-                                            @include('admin.pages.modal.addChecklist')
-                                        </div>
-                                    @endcan
-                                    @foreach ($service->checklists as $checklist)
-                    <div class="card my-2 checklist">
-                        <div class="card-header py-2">
-                          <h6 class="card-title">
-                            <i class="ion ion-clipboard mr-1"></i>
-                            {{$checklist->title}}
-                          </h6>
-                        </div>
-                        <div class="card-body px-0">
-                          <ul class="todo-list" data-widget="todo-list">
-                            
-                            @foreach ($checklist->items as $item)
-                            <li class="notDone">
-                                <div class="icheck-primary d-inline ml-2">
-                                  <input type="checkbox" 
-                                    @if ($item->is_concluted === 1)
-                                        checked
-                                    @else
-                                        uncheked    
-                                    @endif
-                                  name="todo2" id="todoCheck2" value="{{$item->id}}">
-                                  <label for="todoCheck2"></label>
-                                </div>
-                                <span class="text">{{$item->title}}</span>
-                                @if ($item->is_concluted === 1)
-                                    <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
-                                @endif
-                                
-                                @can('view_service_demands')
-                                <div class="tools d-flex btn-group">
-                                    <button class="btn-sm" data-toggle="modal" data-target="#editItemOnChecklist{{$item->id}}"><i class="fas fa-edit"></i></button>
-                                    @include('admin.pages.modal.editChecklistItem')
-                                    <form action="{{ route('checklistItem.destroy', $item->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn-sm"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </div>
-                                @endcan
-                            </li>
-                            @endforeach
-                            
-                          </ul>
-                          @can('view_service_demands')
-                          <div class="add-more m-3">
-                            <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
-                            @include('admin.pages.modal.addItemOnChecklist')
-                          </div>
-                          @endcan
-                        </div>
-                      </div>
-                    @endforeach
                                 </td>
                                 <td class="btn-group">
                                     <a href="{{url("admin/servicos/editar/$service->id")}}">
@@ -136,6 +75,70 @@
                                       @method('DELETE')
                                       <button class="btn btn-danger" type="submit">Delete</button>
                                     </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-around">
+                                    @foreach ($service->checklists as $checklist)
+                                        <div class="col-md-5 col-12 card my-2 checklist mx-1">
+                                            <div class="card-header bg-light py-2">
+                                            <h6 class="card-title">
+                                                <i class="ion ion-clipboard mr-1"></i>
+                                                {{$checklist->title}}
+                                            </h6>
+                                            </div>
+                                            <div class="card-body px-0">
+                                            <ul class="todo-list" data-widget="todo-list">
+                                                
+                                                @foreach ($checklist->items as $item)
+                                                <li class="notDone">
+                                                    <div class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" 
+                                                        @if ($item->is_concluted === 1)
+                                                            checked
+                                                        @else
+                                                            uncheked    
+                                                        @endif
+                                                    name="todo2" id="todoCheck2" value="{{$item->id}}">
+                                                    <label for="todoCheck2"></label>
+                                                    </div>
+                                                    <span class="text">{{$item->title}}</span>
+                                                    @if ($item->is_concluted === 1)
+                                                        <small class="badge badge-info"><i class="far fa-clock mx-1"></i>{{$item->concluted_at->diffForHumans()}}</small>
+                                                    @endif
+                                                    
+                                                    @can('view_service_demands')
+                                                    <div class="tools d-flex btn-group">
+                                                        <button class="btn-sm" data-toggle="modal" data-target="#editItemOnChecklist{{$item->id}}"><i class="fas fa-edit"></i></button>
+                                                        @include('admin.pages.modal.editChecklistItem')
+                                                        <form action="{{ route('checklistItem.destroy', $item->id)}}" method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn-sm"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                    @endcan
+                                                </li>
+                                            @endforeach
+                                            
+                                        </ul>
+                                        @can('view_service_demands')
+                                        <div class="add-more m-3">
+                                            <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
+                                            @include('admin.pages.modal.addItemOnChecklist')
+                                        </div>
+                                        @endcan
+                                        </div>
+                                    </div>
+                                @endforeach
+                                @can('view_service_demands')
+                                        <div class="checklists">
+                                            <button type="button" class="h-100 btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklist"> Adicionar Checklist</button>
+                                            @include('admin.pages.modal.addChecklist')
+                                        </div>
+                                    @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

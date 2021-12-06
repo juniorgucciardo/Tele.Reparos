@@ -65,7 +65,7 @@
                             }
                     @endphp
         <tr>
-            <td class="cliente"><a href="{{ route('OS.contract', $a->orders->id) }}">{{ $a->orders->nome_cliente }}</a></td>
+            <td class="cliente"><a href="{{ route('OS.contract', $a->orders->id) }}">{{mb_strimwidth($a->orders->nome_cliente, 0, 25, "...")}}</a></td>
             <td>
                
                 {{$a->data_inicial->format('d m y')}}
@@ -86,8 +86,8 @@
             
             <td>
                 <div class="btn-group">
-                    <button class="p-2 rounded shadow btn-sm btn-primary bolder" data-toggle="modal" data-target="#schedulle-modal{{$a->id}}">
-                        <i class="fas fa-calendar-week mx-2"></i>Agendamento
+                    <button class="shadow btn btn-primary" data-toggle="modal" data-target="#schedulle-modal{{$a->id}}">
+                        <i class="fas fa-calendar-week mx-2"></i>Agendar
                     </button>
                     @include('admin.pages.modal.schedulle', [$a, $users])
                     <div class="dropdown">
