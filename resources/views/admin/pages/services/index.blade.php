@@ -134,7 +134,7 @@
                                 @endforeach
                                 @can('view_service_demands')
                                         <div class="checklists">
-                                            <button type="button" class="h-100 btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklist"> Adicionar Checklist</button>
+                                            <button type="button" class="h-100 btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklistService{{$service->id}}"> Adicionar Checklist</button>
                                             @include('admin.pages.modal.addChecklist')
                                         </div>
                                     @endcan
