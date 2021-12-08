@@ -196,11 +196,14 @@
                     @if($activities !== null)
                     @foreach ($activities as $checklist)
                     <div class="card">
-                        <div class="card-header py-2">
-                          <h6 class="card-title">
-                            <i class="ion ion-clipboard mr-1"></i>
-                            {{$checklist->title}}
-                          </h6>
+                        <div class="card-header bg-light py-2">
+                            <div class="d-flex d-flex-row justify-content-between align-items-start">
+                                <h6 class="card-title">
+                                    {{$checklist->title}}
+                                </h6>
+                                  <button class="btn-sm btn-danger" data-toggle="modal" data-target="#deleteChecklist{{$checklist->id}}"><i class="fas fa-trash-alt"></i></button>
+                                  @include('admin.pages.modal.deleteChecklist') @include('admin.pages.modal.deleteChecklist')
+                            </div>
                         </div>
                         <div class="card-body px-0">
                           <ul class="todo-list" data-widget="todo-list">
@@ -253,11 +256,14 @@
                     @if($checklists !== null)
                     @foreach ($checklists as $checklist)
                     <div class="card">
-                        <div class="card-header py-2">
-                          <h6 class="card-title">
-                            <i class="ion ion-clipboard mr-1"></i>
-                            {{$checklist->title}}
-                          </h6>
+                        <div class="card-header bg-light py-2">
+                            <div class="d-flex d-flex-row justify-content-between align-items-start">
+                                <h6 class="card-title">
+                                    {{$checklist->title}}
+                                </h6>
+                                  <button class="btn-sm btn-danger" data-toggle="modal" data-target="#deleteChecklist{{$checklist->id}}"><i class="fas fa-trash-alt"></i></button>
+                                  @include('admin.pages.modal.deleteChecklist')
+                            </div>
                         </div>
                         <div class="card-body px-0">
                           <ul class="todo-list" data-widget="todo-list">
@@ -312,8 +318,10 @@
 
                             @can('view_service_demands')
                         <div class="card-footer">
-                            <button type="button" class="btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklist"> Adionar novo checklist</button>
+                            <button type="button" class="btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklist"> Adicionar novo checklist</button>
                             @include('admin.pages.modal.addChecklist')
+                            <button type="button" class="btn btn-outline-primary rounded" data-toggle="modal" data-target="#addExistisChecklist"> Adicionar checklist de {{$contract->service->service_title}}</button>
+                            @include('admin.pages.modal.addExistisChecklist')
                         </div>
                         @endcan
                     </div>

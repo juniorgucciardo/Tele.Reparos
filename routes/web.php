@@ -64,7 +64,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/operacional/checklist/novo-checklist', [App\Http\Controllers\Admin\ChecklistController::class, 'store'])->name('checklist.new');
         Route::DELETE('/operacional/checklist/delete-checklist/{id}', [App\Http\Controllers\Admin\ChecklistController::class, 'destroy'])->name('checklist.destroy');
         Route::post('/operacional/checklist/editar-checklist/{id}', [App\Http\Controllers\Admin\ChecklistController::class, 'update'])->name('checklist.update');
-        
+        Route::GET('/operacional/checklist/adicionar-ordem/{id}/{orderId}', [App\Http\Controllers\Admin\ChecklistController::class, 'addOnOrder'])->name('checklist.addOnOrder');
+
 
         //Atendimentos
         Route::get('/operacional/atendimentos/novo/{id}', [App\Http\Controllers\Admin\AttendController::class, 'create'])->name('attend.create');

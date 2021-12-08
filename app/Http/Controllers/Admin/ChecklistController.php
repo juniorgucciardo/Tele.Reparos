@@ -7,6 +7,8 @@ use App\Models\Checklist;
 use App\Models\service_order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class ChecklistController extends Controller
 {
@@ -80,6 +82,24 @@ class ChecklistController extends Controller
         //
     }
 
+    public function addOnOrder(Checklist $checklist, $id, $orderId){
+        //adicionar checklist na OS
+        $checklist = Checklist::findOrFail($id);
+        $newChecklist = $checklist->replicate();
+        $newChecklist->order_id = $orderId;
+        $newChecklist->save();
+        foreach($checklist->items as $item){
+            $newItem = $item->replicate();
+            $newItem->push();
+            $newItem->checklist_id = $newChecklist->id;
+            $newItem->save();
+        }
+
+        Alert::success('Successo', 'Atualizado com sucesso');
+        return redirect()->back();
+    
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -109,8 +129,12 @@ class ChecklistController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Checklist $checklist)
+    public function destroy(Checklist $checklist, $id)
     {
-        //
+        $checklist = Checklist::findOrFail($id);
+        $checklist->destroy($id);
+
+        Alert::success('Successo', 'Deletado com sucesso');
+        return redirect()->back();
     }
 }

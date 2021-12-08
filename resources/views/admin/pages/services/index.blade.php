@@ -43,10 +43,10 @@
 </style>
     <div class="card card-info
     ">
-        <div class="card-header">
-            <a class="btn btn-secondary" href="{{ route('service.create'); }}" role="button">Cadastrar</a> 
+        <div class="card-header py-2">
+            <a class="btn-sm btn-outline-secondary" href="{{ route('service.create'); }}" role="button"><i class="fas fa-plus-circle mx-1"></i>Cadastrar novo serviço</a> 
         </div>
-        <div class="card-body">
+        <div class="card-body px-1">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -60,7 +60,7 @@
                         @foreach ($services as $service)
                             <tr>
                                 <td>
-                                    <b>{{ $service->service_title }}</b>
+                                    <h4><span class="badge badge-secondary p-2 rounded">{{ $service->service_title }}</span></h4>
                                 </td>
                                 <td>
                                     {{ $service->service_description }}
@@ -79,14 +79,17 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <div class="d-flex flex-wrap align-items-center justify-content-around">
+                                    <div class="d-flex flex-wrap align-items-baseline">
                                     @foreach ($service->checklists as $checklist)
-                                        <div class="col-md-5 col-12 card my-2 checklist mx-1">
+                                        <div class="col-md-5 col-6 card m-3 checklist p-0">
                                             <div class="card-header bg-light py-2">
-                                            <h6 class="card-title">
-                                                <i class="ion ion-clipboard mr-1"></i>
-                                                {{$checklist->title}}
-                                            </h6>
+                                                <div class="d-flex d-flex-row justify-content-between align-items-start">
+                                                    <h6 class="card-title">
+                                                        {{$checklist->title}}
+                                                    </h6>
+                                                      <button class="btn-sm btn-danger" data-toggle="modal" data-target="#deleteChecklist{{$checklist->id}}"><i class="fas fa-trash-alt"></i></button>
+                                                      @include('admin.pages.modal.deleteChecklist')
+                                                </div>
                                             </div>
                                             <div class="card-body px-0">
                                             <ul class="todo-list" data-widget="todo-list">
@@ -124,7 +127,7 @@
                                             
                                         </ul>
                                         @can('view_service_demands')
-                                        <div class="add-more m-3">
+                                        <div class="add-more m-2">
                                             <button type="button" class="btn-sm btn-outline-primary rounded" data-toggle="modal" data-target="#addItemOnChecklist{{$checklist->id}}"><i class="fas fa-plus"></i> Adicionar item</button>
                                             @include('admin.pages.modal.addItemOnChecklist')
                                         </div>
@@ -133,9 +136,9 @@
                                     </div>
                                 @endforeach
                                 @can('view_service_demands')
-                                        <div class="checklists">
+                                        <div class="checklists m-3">
                                             <button type="button" class="h-100 btn btn-outline-primary rounded" data-toggle="modal" data-target="#addChecklistService{{$service->id}}"> Adicionar Checklist</button>
-                                            @include('admin.pages.modal.addChecklist')
+                                            @include('admin.pages.modal.addChecklistService')
                                         </div>
                                     @endcan
                                     </div>

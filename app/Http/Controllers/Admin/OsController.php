@@ -494,22 +494,27 @@ class OsController extends Controller
 
     public function attedsByContract($id){
 
-        $contract = service_order::with('service', 'user', 'img_contract')->findOrFail($id);
-        $attends = Attend::attendsFuture()->where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
+        $contract = service_order::with('service', 'user', 'img_contract', 'checklists')->findOrFail($id);
+        $checklistModels = $contract->checklists->where('attend_id', NULL);
+        
+        $futureAttends = Attend::attendsFuture()->where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
         $attendInExec = Attend::attendsForExecute()->attendsFuture()->select('id')->where('order_id', $id)->whereIn('status_id', [2, 3])->orderBy('status_id', 'desc')->first();
-        if($attendInExec === null){
+
+        if( ($attendInExec === null) OR ($attendInExec->checklists->isEmpty()) ){ //não existe atendimento no momento OU o atedimento em execução nao possui checklists?
             //nao existe atendimento no mommento
-            $activities = $this->repositoryChecklist->where('service_id', $contract->id_service)->where('type_id', 1)->where('order_id', $contract->id)->get();
+            //OU atendimento em execução n tem checklists
+            $activities = $checklistModels->where('type_id', 1);
         } else {
-            //existe atendimento -> prcurar checklist do atendimento com 
-            $activities = $this->repositoryChecklist->checklistByAttend($attendInExec->id)->get();
+            //existe atendimento -> pega o checklist do atendimento para exibir
+            $activities = $attendInExec->checklists;
         }
+
 
 
         $checklists = $this->repositoryChecklist->checklistByOS($id)->general()->get();
 
         return view('admin.pages.OS.details', [
-            'attends' => $attends,
+            'attends' => $futureAttends,
             'contract' => $contract,
             'executing' => $attendInExec,
             'activities' => $activities,

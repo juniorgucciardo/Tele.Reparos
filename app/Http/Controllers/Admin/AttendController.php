@@ -322,7 +322,6 @@ class AttendController extends Controller
         $data_inicial = date('Y-m-d H:i:s', strtotime($request->data_inicial.$request->hora_inicial));
         $final = date('Y-m-d H:i:s', strtotime($data_inicial. '+'.$request->duration.' hours'));
         $attend = Attend::findOrFail($id);
-        //checklist -> pode ser que nao tenha nada aqui
         
         $attend->update([
             'data_inicial' => $data_inicial,
@@ -332,23 +331,28 @@ class AttendController extends Controller
 
         $attend->users()->sync($request->user_id);
 
-        $checklists = $attend->orders->checklists->where('type_id', 1)->where('attend_id', NULL);
-        if(!$checklists->isEmpty()){ //is NOT empty
-            foreach($checklists as $checklist){
-                $newChecklist = $checklist->replicate();
-                $newChecklist->attend_id = $attend->id;
-                $newChecklist->save();
-                //salvar os items no checklist copiado
-                foreach($checklist->items as $item){
-                    $newItem = $item->replicate();
-                    $newItem->push();
-                    $newItem->checklist_id = $newChecklist->id;
-                    $newItem->save();
+        //verificar se a attend ja tem checklist
+        if($attend->checklists->isEmpty()){
+            $checklists = $attend->orders->checklists->where('type_id', 1)->where('attend_id', NULL); //retorna checklist com id da ordem e id do attend nulo
+            if(!$checklists->isEmpty()){ //is NÃO empty
+                foreach($checklists as $checklist){
+                    $newChecklist = $checklist->replicate();
+                    $newChecklist->attend_id = $attend->id;
+                    $newChecklist->save();
+                    //salvar os items no checklist copiado
+                    foreach($checklist->items as $item){
+                        $newItem = $item->replicate();
+                        $newItem->push();
+                        $newItem->checklist_id = $newChecklist->id;
+                        $newItem->save();
+                    }
+            
                 }
-        
             }
         }
-        
+
+        die;
+
         
         Alert::success('Successo', 'Atualizado com sucesso');
         return redirect()->back();
