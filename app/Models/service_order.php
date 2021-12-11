@@ -28,9 +28,14 @@ class service_order extends Model
         'recurrence_type',
         'months',
         'situation_id',
+        'is_insurance',
         'insurance',
         'insurance_cod',
-        'duration'
+        'duration',
+        'work_at_height',
+        'products_included',
+        'omit_duration',
+        'own_transport'
     ];
 
     public function checklists(){
@@ -67,6 +72,23 @@ class service_order extends Model
 
         return $this->belongsTo('App\Models\Type', 'type_id', 'id');
     }
+
+    public function getRecurrence(){
+        $recurrence = 'não recorrente';
+        if($this->type_id == 2){
+            $recurrence = 'ocasional';
+            if($this->recurrence_type == 'weekly'){
+                $recurrence = 'semanal';
+            } else if($this->recurrence_type == 'daily'){
+                $recurrence = 'diário';
+            } else if($this->recurrence_type == 'monthly'){
+                $recurrence = 'mensal';
+            }
+        }
+
+        return $recurrence;
+    }
+
 
     public function listOrders(){
         return $this->where('situation_id', 3)

@@ -187,7 +187,7 @@ class AttendController extends Controller
 
         $attend->users()->sync($request->user_id);
 
-        return route('OS.contract', $id);
+        return redirect()->route('OS.contract', $id);
 
     }
 
@@ -363,17 +363,18 @@ class AttendController extends Controller
         $attend = Attend::where('id', $id)->with('orders.img_contract')->first();
         if($attend->status_id >= 2){
             
-        $activities = $this->repositoryChecklist->checklistByAttend($attend->id)->get();
-    
+            $activities = $this->repositoryChecklist->checklistByAttend($attend->id)->get();
         
-        $pdf = \App::make('dompdf.wrapper');
+            $pdf = \App::make('dompdf.wrapper');
 
-        $pdf->loadView('admin.pages.exports.ordem-de-servico', [
-            'attend' => $attend,
-            'activities' => $activities,
-        ]);
-        
-        return $pdf->stream();
+            $pdf->loadView('admin.pages.exports.ordem-de-servico', [
+                'attend' => $attend,
+                'activities' => $activities,
+            ]);
+            
+            $name = \Str::slug($attend->orders->nome_cliente.'-'.$attend->orders->data_ordem);
+
+            return $pdf->stream($name);
         } else {
             return 'voce nao pode acessar uma OS de uma demanda que ainda nao esta agendada';
         }

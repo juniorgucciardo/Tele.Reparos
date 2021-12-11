@@ -100,27 +100,27 @@ function showCheckboxes() {
                     <div class="col-md-7 col-12 card card-outline card-gray ">
                       <div class="card-header py-2">
                         <i class="fas fa-map-marked-alt mx-1"></i>
-                        Endereço da demanda
+                        Endereço do atendimento
                       </div>
                       <div class="card-body py-2">
                         <div class="row  my-1">
                           <div class="col-md-5 col-12">
                             <label for="exampleInputEmail1">Rua:</label>
-                            <input required type="text" name="rua_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                            <input required type="text" name="rua_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua">
                           </div>
                           <div class="col-md-3 col-12">
                             <label for="exampleInputEmail1">Numero:</label>
-                            <input required type="number" name="numero_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                            <input required type="number" name="numero_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Numero">
                           </div>
                           <div class="col-md-4 col-12">
                             <label for="exampleInputEmail1">Bairro:</label>
-                            <input required type="text" name="bairro_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                            <input required type="text" name="bairro_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Bairro">
                           </div>
                         </div>
                         <div class="row  my-1">
                           <div class="col-md-8 col-12">
                             <label for="exampleInputEmail1">Cidade:</label>
-                            <input required type="text" name="cidade_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente">
+                            <input required type="text" name="cidade_cliente" class="form-control" id="exempleImputServiceTitle" placeholder="Cidade">
                           </div>
                         </div>
                       </div>
@@ -173,7 +173,7 @@ function showCheckboxes() {
                         <div class="row  my-1 d-flex align-items-center">
                         <div class="col-md-8 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
-                          <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Rua do cliente"></textarea>
+                          <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Descrição do serviço a ser realizado"></textarea>
                         </div>
                         <div class="col-md-4">
                           {{-- AQUI VAI UM LOOP, COM OS CHECKLISTS DO SERVIÇO E TIPO DE SERVIÇO ADICIONADO --}}
@@ -196,6 +196,33 @@ function showCheckboxes() {
                               Incluir Checklist de EPI's
                             </label>
                           </div>
+                        </div>
+                      </div>
+                      <label for="checkbox">Detalhes sobre o serviço</label>
+                      <div class="row px-2 py-1">
+                        <div id="checkbox" class="form-check d-flex flex-column">
+                          <input class="form-check-input" type="checkbox" name="trabalho_altura" value="1">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Serviço em altura
+                          </label>
+                        </div>
+                        <div class="form-check mx-3">
+                          <input class="form-check-input" type="checkbox" name="produtos_incluidos" value="1">
+                          <label class="form-check-label" for="flexCheckChecked">
+                            Produtos incluidos
+                          </label>
+                        </div>
+                        <div class="form-check mx-3">
+                          <input class="form-check-input" type="checkbox" name="transporte_empresa" value="1">
+                          <label class="form-check-label" for="flexCheckChecked">
+                             Utiliza transporte da empresa
+                          </label>
+                        </div>
+                        <div class="form-check mx-3">
+                          <input class="form-check-input" type="checkbox" name="omitir_duracao" value="1">
+                          <label class="form-check-label" for="flexCheckChecked">
+                            Não possui duração fixa
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -292,6 +319,8 @@ function showCheckboxes() {
                       </div>
                     </div>
                   </div>
+
+                  
 
 
 

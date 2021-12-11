@@ -6,7 +6,7 @@
 @section('content_header')
 <h5>
     <i class="fas fa-truck-moving mx-1"></i>
-    {{$attend->orders->nome_cliente}} - {{$attend->orders->service->service_title}} | {{ $attend->data_inicial->translatedFormat('l \, j \d\e F ') }}
+    Detalhes deste atendimento
   </h5>
 @stop
 
@@ -32,7 +32,7 @@
     }
 </style>
 
-<div class="my-3 callout relative d-md-flex justify-content-between align-items-start">
+<div class="my-3 callout callout relative d-md-flex justify-content-md-between justify-content-center align-items-center">
     <div>
         <h5> @php
             if($attend->data_final->isPast()){
@@ -48,6 +48,8 @@
 
     </div>
     <a href="{{ route('OS.contract', $attend->orders->id) }}"><button class="btn btn-secondary">Inforamações sobre o serviço</button></a>
+    <a href="{{ route('OS.contract', $attend->orders->id) }}"><button class="btn btn-secondary">Inforamações sobre o serviço</button></a>
+    
 </div>
 
 
@@ -200,10 +202,7 @@
             {{-- </div>
         </div> --}}
 
-        @can('viewAny', $attend)
-        <button class="btn btn-info m-10" data-toggle="modal" data-target="#create">Adicionar atualização</button>
-        @include('admin.pages.logs.create')
-        @endcan
+        
 
     </div>
 </div>

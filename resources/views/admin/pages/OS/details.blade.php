@@ -76,21 +76,21 @@
                             <div class="card-body">
                                 <div class="row my-1 d-flex justify-content-between">
                                     <div class="">
-                                        <strong>Rua:</strong><br>
+                                        <strong>Rua: </strong>
                                         <span>{{$contract->rua_cliente}}, {{$contract->numero_cliente}}</span>
                                     </div>
                                 </div>
                                 <div class="row my-1 d-flex justify-content-between">
                                     <div class="block">
-                                        <strong>Bairro:</strong><br>
-                                        <span>{{$contract->bairro_cliente}}</span>
+                                        <strong>Bairro: </strong>
+                                        <span>{{mb_strimwidth($contract->bairro_cliente, 0, 15, '...')}}</span>
                                     </div>
                                     <div class="block">
-                                        <strong>Cidade :</strong><br>
-                                        <span>{{$contract->cidade_cliente}}</span>
+                                        <strong>Cidade: </strong>
+                                        <span>{{mb_strimwidth($contract->cidade_cliente, 0, 20, '...')}}</span>
                                     </div>
                                     <div class="my-3 sm-col-8">
-                                        <div class="mapouter"><div class="gmap_canvas"><iframe width="369" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q={{$contract->rua_cliente}},{{$contract->numero_cliente}},{{$contract->cidade_cliente}}&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:400px;width:369px;}</style><a href="https://www.embedgooglemap.net">google maps code generator</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:400px;width:369px;}</style></div></div>                            
+                                        <div class="mapouter"><div class="gmap_canvas"><iframe width="400" height="380" id="gmap_canvas" src="https://maps.google.com/maps?q={{$contract->rua_cliente}},{{$contract->numero_cliente}},{{$contract->cidade_cliente}}&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:350px;width:400px;}</style><a href="https://www.embedgooglemap.net">google maps code generator</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:400px;width:369px;}</style></div></div>                            
 
                                     </div>
                                 </div>
@@ -108,6 +108,8 @@
                             @isset($executing->id)
                                 <p>Atendimento em execução agora: {{$executing->id}}</p>
                             @endisset
+                            <a href="{{route('attend.create', $contract->id)}}" class="btn btn-outline-primary"><i class="fas fa-plus"></i> Atendimento</a>
+                            <a href="{{route('OS.edit', $contract->id)}}" class="btn btn-outline-primary"><i class="fas fa-pen"></i> Editar</a>
                         </div>
                     </div>
                 </div>
@@ -120,32 +122,56 @@
                             Informações sobre o serviço
                         </div>
                         <div class="card-body">
+                            @if($contract->work_at_height)
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong><i class="fas fa-mountain"></i> ATENÇÃO!</strong> Serviço em altura, IPI's obrigatórios.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                            @endif
+                            @if($contract->is_insurance)
+                            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                <strong><i class="fas fa-shield-alt"></i> ATENÇÃO!</strong> Serviço de seguradora
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                            @endif
                             <div class="row d-flex justify-content-between">
                                 <div class="col-6">
-                                    <div class="">
-                                        <strong>Serviço:</strong><br>
+                                    <div class="inline">
+                                        <strong>Serviço: </strong>
                                         <span>{{$contract->service->service_title}}</span>
                                     </div>
-                                    <div class="my-2">
-                                        <strong>Descrição do serviço:</strong><br>
+                                    <div class="my-3">
+                                        <strong>Situação: </strong>
+                                        <span>{{$contract->situation->title}}</span>
+                                    </div>
+                                    <div class="">
+                                        <strong>Recorrência: </strong>
+                                        <span>{{$contract->getRecurrence()}}</span>
+                                    </div>
+                                    <div class="my-3">
+                                        <strong>Descrição: </strong>
                                         <span>{{$contract->descricao_servico}}</span>
-                                    </div>
-                                    <div class="">
-                                        <strong>Serviço:</strong><br>
-                                        <span>{{$contract->service->service_title}}</span>
                                     </div>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <div class="my-2">
-                                        <strong>Tipo de serviço:</strong><br>
+                                    <div class="">
+                                        <strong>Tipo de serviço: </strong>
                                         <span>{{$contract->type->type_title}}</span>
                                     </div>
-                                    <div class="">
-                                        <strong>Recorrência:</strong><br>
-                                        <span>{{$contract->recurrence}} dias</span>
+                                    <div class="my-3">
+                                        <strong>produtos e equipamentos: </strong>
+                                        @if($contract->products_included)
+                                            <span>Inclusos</span>
+                                        @else
+                                            <span>Não inclusos</span>
+                                        @endif
                                     </div>
-                                    <div class="my-2">
-                                        <strong>Quantidade de atendimentos:</strong><br>
+                                    <div class="my-3">
+                                        <strong>Quantidade de atendimentos: </strong>
                                         <span>{{$contract->attends->count()}}</span>
                                     </div>
                                 </div>
@@ -179,8 +205,7 @@
                                      @include('admin.pages.modal.include_img')
                                 @endcan
 
-                             </div>
-                            
+                             </div>                            
                         </div>
                     </div>
 
@@ -312,7 +337,7 @@
                     @endif
 
                     @if($checklists === [])
-                    Nenhuma checklist cadastrada
+                        Nenhuma checklist cadastrada
                     @endif
                         </div>
 

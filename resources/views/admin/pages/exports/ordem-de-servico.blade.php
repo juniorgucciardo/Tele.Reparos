@@ -26,8 +26,19 @@
             margin: 2px 0;
         }
 
+        .border td, .border tr, .border th{
+            border: 1px solid #36454F;
+            border-collapse: collapse;
+        }
+
         .destak{
             background-color: lightblue;
+            margin: 0.3rem 0;
+            padding: 2px 0;
+        }
+
+        .alert{
+            background-color: lightcoral;
             margin: 0.3rem 0;
             padding: 2px 0;
         }
@@ -56,17 +67,18 @@
         <td align="right" width="10%">
             <pre>
                 telereparoscialtda@hotmail.com
-                (55)99735-8040, (55)99701-4195
-                @if ($attend->users->count() > 1)
-                    Responsáveis:
-                @else
-                    Responsável:
-
-                @endif
-                @foreach ($attend->users as $user)
-                    {{$user->name}}
-                @endforeach
+                SAC (55)99735-8040
+                Supervisão (55)99701-4195
             </pre>
+            @if ($attend->users->count() > 1)
+            Responsáveis: <br>
+        @else
+            Responsável: <br>
+
+        @endif
+        @foreach ($attend->users as $user)
+            <b style="background-color: lightblue;padding: 2px">{{$user->name}}</b> <br>
+        @endforeach
         </td>
     </tr>
   </table>
@@ -78,9 +90,16 @@
         </thead>
     </table>
 
+    @if($attend->orders->work_at_height)
+    <table width="100%">
+        <thead>
+                <th width="60%" class="alert">Cuidado, serviço em altura, IPI's obrigatórios!</th> 
+        </thead>
+    </table>
+    @endif
 
 
-    <table width="100%" border="1px">
+    <table width="100%" class="border">
         <thead style="background-color: lightblue;">
             <tr>
                 <th colspan="4">
@@ -107,8 +126,7 @@
         </tbody>
     </table>
 
-
-    <table width="100%" border="1px">
+    <table width="100%" class="border">
         <thead style="background-color: lightblue;">
             <tr>
                 <th colspan="4">
@@ -129,16 +147,24 @@
             <tr>
                 
                 <th align="left">recorrência de atendimento</th>
-                <td align="left">Diário</td>
+                <td align="left">{{$attend->orders->getRecurrence()}}</td>
 
                 <th align="left">Produtos e equipamentos</th>
-                <td scope="row">Inclusos</td>
+                <td scope="row">
+                    @if($attend->orders->products_included)
+                         inclusos
+                    @else
+                         não inclusos
+                    @endif
+                </td>
 
 
             </tr>
             <br>
         </tbody>
     </table>
+
+    
 
     <table width="100%">
         <tbody>
@@ -218,20 +244,22 @@
 
     <table width="100%" footer>
         <tbody>
-            <tr style="background-color: lightblue;">
-                <td align="center">Inicio do atendimento: <b>{{$attend->data_inicial->format('H:i')}}</b></td>
-                <td align="center">Fim do atendimento: <b>{{$attend->data_final->format('H:i')}}</b></td>
-            </tr>
-            <tr style="margin:30px 0">
-                <td align="center" style="padding: 30px 0">
-                    <div>_____________________________</div>
-                    <div>Assinatura do cliente</div>
-                </td>
-                <td align="center" style="padding: 30px 0">
-                    <div>_____________________________</div>
-                    <div>Assinatura do prestador</div>
-                </td>
-            </tr>
+            @if(!$attend->orders->omit_duration)
+                <tr style="background-color: lightblue;">
+                    <td align="center">Inicio do atendimento: <b>{{$attend->data_inicial->format('H:i')}}</b></td>
+                    <td align="center">Fim do atendimento: <b>{{$attend->data_final->format('H:i')}}</b></td>
+                </tr>
+            @endif
+                <tr style="margin:30px 0">
+                    <td align="center" style="padding: 30px 0">
+                        <div>_____________________________</div>
+                        <div>Assinatura do cliente</div>
+                    </td>
+                    <td align="center" style="padding: 30px 0">
+                        <div>_____________________________</div>
+                        <div>Assinatura do prestador</div>
+                    </td>
+                </tr>
         </tbody>
     </table>
     
