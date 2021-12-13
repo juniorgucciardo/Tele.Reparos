@@ -281,178 +281,41 @@ class OsController extends Controller
 
     public function update(Request $request, service_order $service_order, $id)
     {
-
         if(auth()->user()->can('view_service_demands')){
 
             $service_order = service_order::findOrFail($id);
+     
+            $service_order->update([
+                'nome_cliente'        => $request->nome_cliente,
+                'rua_cliente'         => $request->rua_cliente,
+                'numero_cliente'      => $request->numero_cliente,
+                'bairro_cliente'      => $request->bairro_cliente,
+                'cidade_cliente'      => $request->cidade_cliente,
+                'contato_cliente'     => $request->contato_cliente,
+                'descricao_servico'   => $request->descricao_servico,
+                'id_service'          => $request->id_service,
+                'data_ordem'          => $request->data_ordem,
+                'hora_ordem'          => $request->hora_ordem,
+                'recurrence_type'     => $request->recurrence_type,
+                'type_id'             => $request->type               ? $request->type               : 1,
+                'situation_id'        => $request->situation          ? $request->situation          : 3,
+                'recurrence'          => $request->recurrence         ? $request->recurrence         : 1,
+                'months'              => $request->months             ? $request->months             : 0,
+                'products_included'   => $request->produtos_incluidos ? $request->produtos_incluidos : 0,
+                'work_at_height'      => $request->trabalho_altura    ? $request->trabalho_altura    : 0,
+                'omit_duration'       => $request->omitir_duracao     ? $request->omitir_duracao     : 0,
+                'own_transport'       => $request->transporte_empresa ? $request->transporte_empresa : 0,
+                'is_insurance'        => $request->type == 4          ? 1                            : 0,
+                'insurance'           => $request->insurance,
+                'insurance_cod'       => $request->insurance_cod,
+                'duration'            => $request->duration           ? $request->duration           : 4
+            ]);
 
-            if($service_order->data_ordem === $request->data_ordem){ //data inicio igual
-
-                if($service_order->months === intval($request->months)){  //meses iguais
-
-                    if(($service_order->recurrence === intval($request->recurrence)) AND ($service_order->duration === intval($request->duration))){
-
-                    } else { 
-                        
-                        $service_order->update([
-                            'nome_cliente'      => $request->nome_cliente,
-                            'rua_cliente'       => $request->rua_cliente,
-                            'numero_cliente'    => $request->numero_cliente,
-                            'bairro_cliente'    => $request->bairro_cliente,
-                            'cidade_cliente'    => $request->cidade_cliente,
-                            'contato_cliente'   => $request->contato_cliente,
-                            'descricao_servico' => $request->descricao_servico,
-                            'id_service'        => $request->id_service,
-                            'data_ordem'        => $request->data_ordem,
-                            'hora_ordem'        => $request->hora_ordem,
-                            'type_id'           => $request->type,
-                            'recurrence'        => $request->recurrence,
-                            'months'            => $request->months,
-                            'situation_id'      => $request->situation,
-                            'insurance'         => $request->insurance,
-                            'insurance'         => $request->insurance_cod,
-                            'duration'          => $request->duration
-                        ]);
-                        $service_order->attends()->attendsFuture()->where('status_id', 1)->delete(); //delete atendimentos que nao foram iniciados e nem agendados
-                        $data_inicial          = $service_order->data_ordem;
-                        $hora_inicial          = $service_order->hora_ordem; 
-                        $add_days              = '+'.$service_order->recurrence.' days';
-                        $add_attend_duration   = '+'.$request->duration.' hours';
-                        $add_contract_duration = '+'.$request->months .' months';
-                        $attend_start          = date('Y-m-d H:i:s', strtotime($data_inicial.$hora_inicial));
-                        $attend_end            = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-                        $contract_end          = date('Y-m-d H:i:s', strtotime($attend_start. $add_contract_duration));
-          
-                        while($attend_start <= $contract_end){
-                            $a = Attend::create([
-                                'order_id'     => $service_order->id,
-                                'data_inicial' => $attend_start,
-                                'data_final'   => $attend_end,
-                                'status_id'    => 1
-                            ]);
-                            $attend_start = date('Y-m-d H:i:s', strtotime($attend_start. $add_days));
-                            $attend_end   = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-                        }
-                    }
-
-                } else { //meses diferentes
-
-                    if($request->months > $service_order->months){
-                        $diference = intval($request->months) - $service_order->months;
-                        $lastAttend = $service_order->attends()->orderBy('data_inicial', 'desc')->pluck('data_inicial')->first();
-                        $service_order->update([
-                            'nome_cliente' => $request->nome_cliente,
-                            'rua_cliente' => $request->rua_cliente,
-                            'numero_cliente' => $request->numero_cliente,
-                            'bairro_cliente' => $request->bairro_cliente,
-                            'cidade_cliente' => $request->cidade_cliente,
-                            'contato_cliente' => $request->contato_cliente,
-                            'descricao_servico' => $request->descricao_servico,
-                            'id_service' => $request->id_service,
-                            'data_ordem' => $request->data_ordem,
-                            'hora_ordem' => $request->hora_ordem,
-                            'type_id' => $request->type,
-                            'recurrence' => $request->recurrence,
-                            'months' => $request->months,
-                            'situation_id' => $request->situation,
-                            'insurance' => $request->insurance,
-                            'insurance' => $request->insurance_cod,
-                            'duration' => $request->duration
-                        ]);
-                        $add_days              =  '+'.$request->recurrence.' days';
-                        $add_attend_duration   =  '+'.$request->duration.' hours';
-                        $add_contract_duration =  '+'.$diference.' months';
-                        $attend_start          =  date('Y-m-d H:i:s', strtotime($lastAttend));
-                        $attend_end            =  date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-                        $contract_end          =  date('Y-m-d H:i:s', strtotime($attend_start. $add_contract_duration));
-            
-                        while($attend_start <= $contract_end){
-                            $attend_start = date('Y-m-d H:i:s', strtotime($attend_start. $add_days)); //O laço começa no dia do ultimo atendimento cadastrado
-                            $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration)); /// por isso tem que incrementar + os dias da recorrencia antes
-                            $a = Attend::create([
-                                'order_id' => $service_order->id,
-                                'data_inicial' => $attend_start,
-                                'data_final' => $attend_end,
-                                'status_id' => 1
-                            ]); 
-                        }
-                    
-                    } else {
-                        $diference = intval($request->months) - $service_order->months;
-                        $service_order->update([
-                        'nome_cliente' => $request->nome_cliente,
-                        'rua_cliente' => $request->rua_cliente,
-                        'numero_cliente' => $request->numero_cliente,
-                        'bairro_cliente' => $request->bairro_cliente,
-                        'cidade_cliente' => $request->cidade_cliente,
-                        'contato_cliente' => $request->contato_cliente,
-                        'descricao_servico' => $request->descricao_servico,
-                        'id_service' => $request->id_service,
-                        'data_ordem' => $request->data_ordem,
-                        'hora_ordem' => $request->hora_ordem,
-                        'type_id' => $request->type,
-                        'recurrence' => $request->recurrence,
-                        'months' => $request->months,
-                        'situation_id' => $request->situation,
-                        'insurance' => $request->insurance,
-                        'insurance' => $request->insurance_cod,
-                        'duration' => $request->duration
-                    ]);
-                    $oldAttendLast = $service_order->attends()->orderBy('data_inicial', 'desc')->pluck('data_inicial')->first();
-                    $newAttendLast = date('Y-m-d H:i:s', strtotime($oldAttendLast. ''.$diference.' months')); //diminuir meses
-                    $service_order->attends()->where('status_id', 1)->whereBetween('data_inicial', [$newAttendLast, $oldAttendLast])->delete();                                                                       //menor
-                    }
-                }
-                
-            } else {   //data inicial diferente
-
-                $service_order->update([
-                    'nome_cliente' => $request->nome_cliente,
-                    'rua_cliente' => $request->rua_cliente,
-                    'numero_cliente' => $request->numero_cliente,
-                    'bairro_cliente' => $request->bairro_cliente,
-                    'cidade_cliente' => $request->cidade_cliente,
-                    'contato_cliente' => $request->contato_cliente,
-                    'descricao_servico' => $request->descricao_servico,
-                    'id_service' => $request->id_service,
-                    'data_ordem' => $request->data_ordem,
-                    'hora_ordem' => $request->hora_ordem,
-                    'type_id' => $request->type,
-                    'recurrence' => $request->recurrence,
-                    'months' => $request->months,
-                    'situation_id' => $request->situation,
-                    'insurance' => $request->insurance,
-                    'insurance' => $request->insurance_cod,
-                    'duration' => $request->duration
-                ]);
-                $service_order->attends()->where('status_id', 1)->delete(); //delete atendimentos que nao foram iniciados e nem agendados
-                $data_inicial = $service_order->data_ordem;
-                $hora_inicial = $service_order->hora_ordem; 
-                $add_days = '+'.$service_order->recurrence.' days';
-                $add_attend_duration = '+'.$request->duration.' hours';
-                $add_contract_duration = '+'.$request->months .' months';
-                $attend_start = date('Y-m-d H:i:s', strtotime($data_inicial.$hora_inicial));
-                $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-                $contract_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_contract_duration));
-  
-                while($attend_start <= $contract_end){
-                    $a = Attend::create([
-                        'order_id' => $service_order->id,
-                        'data_inicial' => $attend_start,
-                        'data_final' => $attend_end,
-                        'status_id' => 1
-                    ]);
-                    $attend_start = date('Y-m-d H:i:s', strtotime($attend_start. $add_days));
-                    $attend_end = date('Y-m-d H:i:s', strtotime($attend_start. $add_attend_duration));
-                }
-            }
-
-            return redirect('admin/OS');
-        } else {
-            return redirect('admin/OS');
+            return redirect()->back();
+                   
         }
-        
-    }
+
+    } 
 
 
     public function destroy(service_order $service_order, $id)

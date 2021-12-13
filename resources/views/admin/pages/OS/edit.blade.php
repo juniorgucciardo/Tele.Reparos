@@ -70,7 +70,7 @@ function showCheckboxes() {
             <!-- /.card-header -->
             <!-- form start -->
         
-            <form action="{{ route('OS.edit') }}" method="POST">
+            <form action="{{ route('OS.edit', $service_order->id) }}" method="POST">
               @csrf
               @method('PUT')
               <div class="card-body">
@@ -160,7 +160,7 @@ function showCheckboxes() {
                         <div class="col-md-4 col-12" data-toggle="tooltip" data-placement="top" title="A situação é responsável por determinar se o contrato ja esta apto para iniciar a ser executado ou se haverá algum processo anterior">
                           <label for="exampleInputEmail1">Situação:</label>
                           <select required name="situation" class="form-control">
-                            <option selected value="{{$service_order->situation}}">{{$service_order->situation->title}}</option>
+                            <option selected value="{{$service_order->situation->id}}">{{$service_order->situation->title}}</option>
                              @foreach ($situations as $situation)
                               <option value="{{$situation->id}}">{{$situation->title}}</option>
                             @endforeach
@@ -170,7 +170,7 @@ function showCheckboxes() {
                         <div class="row  my-1 d-flex align-items-center">
                         <div class="col-md-8 col-12">
                           <label for="exampleInputEmail1">Descrição:</label>
-                          <textarea type="text" value="{{$service_order->descricao_servico}}" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Descrição do serviço a ser realizado"></textarea>
+                          <textarea type="text" name="descricao_servico" class="form-control" id="exempleImputServiceTitle" placeholder="Descrição do serviço a ser realizado">{{$service_order->descricao_servico}}</textarea>
                         </div>
                       </div>
                       <label for="checkbox">Detalhes sobre o serviço</label>

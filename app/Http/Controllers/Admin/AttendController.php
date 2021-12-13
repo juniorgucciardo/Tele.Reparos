@@ -350,9 +350,6 @@ class AttendController extends Controller
                 }
             }
         }
-
-        die;
-
         
         Alert::success('Successo', 'Atualizado com sucesso');
         return redirect()->back();

@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+
     <title>IMPRESSÃO</title>
 
     <style type="text/css">
@@ -241,25 +242,33 @@
         </tbody>
     </table>
 
-
-    <table width="100%" footer>
-        <tbody>
+    <table width="100%">
+        <thead>
             @if(!$attend->orders->omit_duration)
                 <tr style="background-color: lightblue;">
                     <td align="center">Inicio do atendimento: <b>{{$attend->data_inicial->format('H:i')}}</b></td>
                     <td align="center">Fim do atendimento: <b>{{$attend->data_final->format('H:i')}}</b></td>
                 </tr>
-            @endif
-                <tr style="margin:30px 0">
-                    <td align="center" style="padding: 30px 0">
-                        <div>_____________________________</div>
-                        <div>Assinatura do cliente</div>
-                    </td>
-                    <td align="center" style="padding: 30px 0">
-                        <div>_____________________________</div>
-                        <div>Assinatura do prestador</div>
-                    </td>
+            @else
+                <tr style="background-color: lightblue;">
+                    <td align="center">Atendimento previsto para <b>{{$attend->data_inicial->translatedFormat('l')}}</b> apartir das: <b>{{$attend->data_inicial->format('H:i')}}</b></td>
                 </tr>
+            @endif
+        </thead>
+    </table>
+
+    <table width="100%" footer>
+        <tbody>
+            <tr style="margin:30px 0">
+                <td align="center" style="padding: 30px 0">
+                    <div>_____________________________</div>
+                    <div>Assinatura do cliente</div>
+                </td>
+                <td align="center" style="padding: 30px 0">
+                    <div>_____________________________</div>
+                    <div>Assinatura do prestador</div>
+                </td>
+            </tr>
         </tbody>
     </table>
     

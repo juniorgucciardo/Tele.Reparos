@@ -52,7 +52,7 @@
                             <i class="fas fa-eye"></i>
                         </button>
                     </a>
-                        <a href="{{url("admin/OS/editar/$order->id")}}">
+                        <a href="{{route('OS.edit', $order->id)}}">
                             <button class="mx-1 btn-sm btn-primary">
                                 <i class="fas fa-edit"></i>
                             </button>
