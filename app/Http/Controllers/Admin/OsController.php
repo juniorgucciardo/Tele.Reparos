@@ -370,7 +370,7 @@ class OsController extends Controller
         $checklistModels = $contract->checklists->where('attend_id', NULL);
         
         $futureAttends = Attend::attendsFuture()->where('order_id', $id)->with('users')->with('orders.service')->with('status')->with('orders.type')->get();
-        $attendInExec = Attend::attendsForExecute()->attendsFuture()->select('id')->where('order_id', $id)->whereIn('status_id', [2, 3])->orderBy('status_id', 'desc')->first();
+        $attendInExec = Attend::attendsForExecute()->attendsFuture()->select(['id', 'data_inicial'])->where('order_id', $id)->whereIn('status_id', [2, 3])->orderBy('status_id', 'desc')->first();
 
         if( ($attendInExec === null) OR ($attendInExec->checklists->isEmpty()) ){ //não existe atendimento no momento OU o atedimento em execução nao possui checklists?
             //nao existe atendimento no mommento

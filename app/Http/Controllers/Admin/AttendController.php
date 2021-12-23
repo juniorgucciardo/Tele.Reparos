@@ -371,7 +371,7 @@ class AttendController extends Controller
             
             $name = \Str::slug($attend->orders->nome_cliente.'-'.$attend->orders->data_ordem);
 
-            return $pdf->stream($name);
+            return $pdf->stream($name.'.pdf');
         } else {
             return 'voce nao pode acessar uma OS de uma demanda que ainda nao esta agendada';
         }

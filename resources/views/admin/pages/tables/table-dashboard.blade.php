@@ -65,13 +65,13 @@
                             }
                     @endphp
         <tr>
-            <td class="cliente"><a href="{{ route('OS.contract', $a->orders->id) }}">{{mb_strimwidth($a->orders->nome_cliente, 0, 25, "...")}}</a></td>
+            <td class="cliente"><a href="{{ route('OS.contract', $a->orders->id) }}" data-toggle="tooltip" data-placement="top" title="{{$a->orders->nome_cliente}}">{{mb_strimwidth($a->orders->nome_cliente, 0, 25, "...")}}</a></td>
             <td>
                
-                {{$a->data_inicial->format('d m y')}}
+                {{$a->data_inicial->translatedFormat('l - d/m/y')}}
             </td>
             <td>
-                {{$a->data_inicial->format('h:i')}}
+                {{$a->data_inicial->format('H:i')}}
             </td>
             <td>{{ $a->orders->service->service_title }}</td>
             <td>
@@ -115,6 +115,9 @@
 </table>
 
 <script>
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
     $(document).ready( function () {
     $('#table').DataTable( {
 

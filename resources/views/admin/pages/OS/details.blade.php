@@ -105,9 +105,6 @@
                         <div class="card-body">
                             <strong>Cadastrado em:</strong><br>
                             <span>{{ $contract->created_at->translatedFormat('l \, j \d\e F \à\s H:i A') }}</span>
-                            @isset($executing->id)
-                                <p>Atendimento em execução agora: {{$executing->id}}</p>
-                            @endisset
                             <a href="{{route('attend.create', $contract->id)}}" class="btn btn-outline-primary"><i class="fas fa-plus"></i> Atendimento</a>
                             <a href="{{route('OS.edit', $contract->id)}}" class="btn btn-outline-primary"><i class="fas fa-pen"></i> Editar</a>
                         </div>
@@ -210,9 +207,18 @@
                     </div>
 
                     <div class="card card-info card-outline px-0">
-                        <div class="card-header d-flex">
-                            <i class="fas fa-clipboard-list mx-1"></i> 
-                            <h6>Checklists</h6>
+                        <div class="card-header py-2">
+                            <div class="row d-flex align-items-center justify-content-between py-0">
+                                <div class="row d-flex justify-content-between">
+                                    <i class="fas fa-clipboard-list mx-1"></i> 
+                                    <h6>Checklists</h6>
+                                </div>
+                                @isset($executing->id)
+                                        <div class="row d-flex justify-content-between">
+                                            <a href=" {{route('attend.show', $executing->id)}} " class="px-4 btn-sm btn-warning">Atendimento em execução: {{$executing->data_inicial->TranslatedFormat('d/m/y')}}</a>
+                                        </div>
+                                @endisset
+                            </div>
                         </div>
                         <div class="card-body px-0 py-2">
 
@@ -221,10 +227,12 @@
                     @if($activities !== null)
                     @foreach ($activities as $checklist)
                     <div class="card">
-                        <div class="card-header bg-light py-2">
+                        <div class="card-header py-2" style="background-color: #FFFF99">
                             <div class="d-flex d-flex-row justify-content-between align-items-start">
                                 <h6 class="card-title">
-                                    {{$checklist->title}}
+                                    {{$checklist->title}}                   @isset($executing->id) 
+                                                                                - atendimento de {{$executing->data_inicial->translatedFormat('l')}}
+                                                                            @endisset
                                 </h6>
                                   <button class="btn-sm btn-danger" data-toggle="modal" data-target="#deleteChecklist{{$checklist->id}}"><i class="fas fa-trash-alt"></i></button>
                                   @include('admin.pages.modal.deleteChecklist') @include('admin.pages.modal.deleteChecklist')
